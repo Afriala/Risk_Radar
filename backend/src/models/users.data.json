@@ -1,0 +1,69 @@
+[
+  {
+    "id": "usr_admin_01",
+    "name": "Mahabubur Rahman (Admin)",
+    "email": "admin@riskradar.io",
+    "passwordHash": "$2a$10$SfmMIa0Ju10AshygYhBFguAF.thlbzP2FpfiSrVHOZ7JuTmH24sF2",
+    "role": "Admin",
+    "department": "Information Security",
+    "mfaEnabled": true,
+    "isActive": true,
+    "createdAt": "2026-11-05T05:21:58.694Z",
+    "updatedAt": "2026-11-05T17:13:24.133Z"
+  },
+  {
+    "id": "usr_analyst_01",
+    "name": "Afri Alam (Analyst)",
+    "email": "analyst@riskradar.io",
+    "passwordHash": "$2a$10$SfmMIa0Ju10AshygYhBFguAF.thlbzP2FpfiSrVHOZ7JuTmH24sF2",
+    "role": "Analyst",
+    "department": "SOC / Threat Intelligence",
+    "mfaEnabled": false,
+    "isActive": true,
+    "createdAt": "2026-11-05T05:21:58.695Z"
+  },
+  {
+    "id": "usr_exec_01",
+    "name": "Executive Leader",
+    "email": "executive@riskradar.io",
+    "passwordHash": "$2a$10$SfmMIa0Ju10AshygYhBFguAF.thlbzP2FpfiSrVHOZ7JuTmH24sF2",
+    "role": "Executive",
+    "department": "Executive Board",
+    "mfaEnabled": true,
+    "isActive": true,
+    "createdAt": "2026-11-05T05:21:58.695Z"
+  },
+  {
+    "id": "usr_auditor_01",
+    "name": "External Auditor",
+    "email": "auditor@riskradar.io",
+    "passwordHash": "$2a$10$SfmMIa0Ju10AshygYhBFguAF.thlbzP2FpfiSrVHOZ7JuTmH24sF2",
+    "role": "Auditor",
+    "department": "Compliance & Audit",
+    "mfaEnabled": false,
+    "isActive": true,
+    "createdAt": "2026-11-05T05:21:58.695Z"
+  },
+  {
+    "id": "usr_1793856413719_zjix",
+    "name": "Afri Alam (SecOps)",
+    "email": "afri.sec@riskradar.io",
+    "passwordHash": "$2a$10$Nxp633uP0RX5teavvjaPKOOsuY80wx4mFdWssxli2d.w8jsnSfW8e",
+    "role": "Analyst",
+    "department": "Threat Response",
+    "mfaEnabled": false,
+    "isActive": true,
+    "createdAt": "2026-11-05T05:26:53.719Z"
+  },
+  {
+    "id": "usr_1793899204961_i9ml",
+    "name": "Afri Alam Dipto",
+    "email": "afri.gobeent@gmail.com",
+    "passwordHash": "$2a$10$bZG/xt2GU3/zy7Gny57FzOZ3rLquss6KcD3i4SjvTn4DQL/ZpxLzq",
+    "role": "Analyst",
+    "department": "Cyber Defense",
+    "mfaEnabled": false,
+    "isActive": true,
+    "createdAt": "2026-11-05T17:20:04.961Z"
+  }
+]
