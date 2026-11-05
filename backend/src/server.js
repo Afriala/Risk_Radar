@@ -21,6 +21,18 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Welcome Root Route
+app.get('/', (req, res) => {
+  res.json({
+    project: 'RiskRadar Enterprise Cybersecurity Risk Management API',
+    status: 'online',
+    version: '1.0.0 (Module 1 Active)',
+    motto: 'See the Risk. Secure the Future.',
+    healthCheck: '/api/health',
+    endpoints: ['/api/auth', '/api/users'],
+  });
+});
+
 // API Health Check
 app.get('/api/health', (req, res) => {
   res.json({
