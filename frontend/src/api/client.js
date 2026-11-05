@@ -1,5 +1,21 @@
 // Base API Client Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Automatically connects to Render backend in production and localhost in development
+
+const getApiBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  // When running on live cloud domain (e.g. *.vercel.app), automatically route to Render backend
+  if (
+    typeof window !== 'undefined' &&
+    window.location.hostname &&
+    !window.location.hostname.includes('localhost') &&
+    !window.location.hostname.includes('127.0.0.1')
+  ) {
+    return 'https://risk-radar-ojqp.onrender.com/api';
+  }
+  return 'http://localhost:5000/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 export async function apiRequest(endpoint, options = {}) {
   const token = localStorage.getItem('riskradar_token');
@@ -11,7 +27,8 @@ export async function apiRequest(endpoint, options = {}) {
   };
 
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 3500);
+  // 35s timeout allows Render free instance to spin up smoothly if it was in cold-sleep
+  const timeoutId = setTimeout(() => controller.abort(), 35000);
 
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -31,7 +48,7 @@ export async function apiRequest(endpoint, options = {}) {
   } catch (err) {
     clearTimeout(timeoutId);
     if (err.name === 'AbortError') {
-      throw new Error('Backend server is taking too long to respond. Please ensure the backend is running.');
+      throw new Error('Cloud backend is waking up (cold start). Please wait 15-20 seconds and click Sign In again.');
     }
     throw err;
   }
