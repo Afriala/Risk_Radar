@@ -10,7 +10,7 @@ const getApiBaseUrl = () => {
     !window.location.hostname.includes('localhost') &&
     !window.location.hostname.includes('127.0.0.1')
   ) {
-    return 'https://risk-radar-ojqp.onrender.com/api';
+    return 'https://riskradar-backend-6edw.onrender.com/api';
   }
   return 'http://localhost:5000/api';
 };
