@@ -2,7 +2,11 @@
 // Automatically connects to Render backend in production and localhost in development
 
 const getApiBaseUrl = () => {
-  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  const envUrl = import.meta.env.VITE_API_URL;
+  // If envUrl is a valid http/https URL, use it
+  if (envUrl && typeof envUrl === 'string' && envUrl.startsWith('http')) {
+    return envUrl.endsWith('/') ? envUrl.slice(0, -1) : envUrl;
+  }
   // When running on live cloud domain (e.g. *.vercel.app), automatically route to Render backend
   if (
     typeof window !== 'undefined' &&
