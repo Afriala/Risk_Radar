@@ -23,6 +23,8 @@ import {
   Menu,
   X,
   ChevronRight,
+  Github,
+  Linkedin,
 } from 'lucide-react';
 
 export default function Landing() {
@@ -661,35 +663,83 @@ export default function Landing() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Contributor Card 1 */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-              <div className="flex items-center gap-4 mb-3.5">
-                <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 font-black text-lg shrink-0">
-                  MR
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-4 mb-3.5">
+                  <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 font-black text-lg shrink-0">
+                    MR
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">Mahabubur Rahman</h3>
+                    <p className="text-xs font-mono text-emerald-700 font-semibold">Student ID: 232-35-706</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Mahabubur Rahman</h3>
-                  <p className="text-xs font-mono text-emerald-700 font-semibold">Student ID: 232-35-706</p>
-                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Focused on secure credential management, session invalidation, automated risk scoring engines, and heatmap matrix visualizations.
+                </p>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Focused on secure credential management, session invalidation, automated risk scoring engines, and heatmap matrix visualizations.
-              </p>
+
+              {/* Social Profiles */}
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2.5">
+                <a
+                  href="https://www.linkedin.com/in/mahabubur-rahman-sakib-09b46b43a/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition active:scale-95 cursor-pointer"
+                >
+                  <Linkedin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span>LinkedIn</span>
+                </a>
+                <a
+                  href="https://github.com/Mrsakib13"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200 transition active:scale-95 cursor-pointer"
+                >
+                  <Github className="w-3.5 h-3.5 text-slate-800 shrink-0" />
+                  <span>GitHub</span>
+                </a>
+              </div>
             </div>
 
             {/* Contributor Card 2 */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-              <div className="flex items-center gap-4 mb-3.5">
-                <div className="w-12 h-12 rounded-full bg-cyan-100 border border-cyan-300 flex items-center justify-center text-cyan-800 font-black text-lg shrink-0">
-                  AA
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-4 mb-3.5">
+                  <div className="w-12 h-12 rounded-full bg-cyan-100 border border-cyan-300 flex items-center justify-center text-cyan-800 font-black text-lg shrink-0">
+                    AA
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-slate-900">Afri Alam</h3>
+                    <p className="text-xs font-mono text-cyan-700 font-semibold">Student ID: 232-35-643</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900">Afri Alam</h3>
-                  <p className="text-xs font-mono text-cyan-700 font-semibold">Student ID: 232-35-643</p>
-                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Focused on user onboarding & authentication workflows, asset inventory CRUD, threat severity logging, and executive KPI dashboards.
+                </p>
               </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Focused on user onboarding & authentication workflows, asset inventory CRUD, threat severity logging, and executive KPI dashboards.
-              </p>
+
+              {/* Social Profiles */}
+              <div className="mt-5 pt-4 border-t border-slate-100 flex items-center gap-2.5">
+                <a
+                  href="https://www.linkedin.com/in/afri-alam/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 transition active:scale-95 cursor-pointer"
+                >
+                  <Linkedin className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                  <span>LinkedIn</span>
+                </a>
+                <a
+                  href="https://github.com/Afriala"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200 transition active:scale-95 cursor-pointer"
+                >
+                  <Github className="w-3.5 h-3.5 text-slate-800 shrink-0" />
+                  <span>GitHub</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
