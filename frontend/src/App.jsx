@@ -1,9 +1,10 @@
 // RiskRadar Frontend - Application Root
 // Clean Corporate White Theme
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { apiRequest } from './api/client';
 import Navbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Landing from './pages/Landing';
@@ -13,6 +14,11 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 
 export default function App() {
+  // Silent background pre-warm of Render cloud backend to eliminate cold-start delay
+  useEffect(() => {
+    apiRequest('/health').catch(() => {});
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>

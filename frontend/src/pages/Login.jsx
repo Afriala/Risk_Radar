@@ -2,16 +2,23 @@
 // Clean Corporate White Theme
 // Features official branding, email validation, password verification, error handling & quick demo role selectors
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Lock, Mail, AlertCircle, ArrowRight, KeyRound } from 'lucide-react';
+import { apiRequest } from '../api/client';
+import { Lock, Mail, AlertCircle, ArrowRight, KeyRound, Activity } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [wakingUp, setWakingUp] = useState(false);
+
+  // Pre-warm backend when user lands on Login page
+  useEffect(() => {
+    apiRequest('/health').catch(() => {});
+  }, []);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -20,6 +27,12 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
+    setWakingUp(false);
+
+    // If server is cold-sleeping, alert the user after 2.5s that it's spinning up
+    const wakeTimer = setTimeout(() => {
+      setWakingUp(true);
+    }, 2500);
 
     try {
       await login(email, password);
@@ -27,7 +40,9 @@ export default function Login() {
     } catch (err) {
       setError(err.message || 'Authentication failed. Please verify credentials.');
     } finally {
+      clearTimeout(wakeTimer);
       setLoading(false);
+      setWakingUp(false);
     }
   };
 
@@ -107,9 +122,21 @@ export default function Login() {
               disabled={loading}
               className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
             >
-              {loading ? 'Authenticating...' : 'Sign In Securely'}
+              {loading ? (wakingUp ? 'Waking Cloud Server...' : 'Authenticating...') : 'Sign In Securely'}
               <ArrowRight className="w-4 h-4" />
             </button>
+
+            {loading && wakingUp && (
+              <div className="mt-3 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5 animate-pulse">
+                <Activity className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div className="space-y-0.5">
+                  <p className="font-semibold text-amber-900">Cloud backend is waking up (Cold Start)</p>
+                  <p className="text-[11px] text-amber-700 leading-relaxed">
+                    Render Free Tier spins down after 15 min of inactivity. Initial boot takes ~25-35s — once awake, all operations are instant!
+                  </p>
+                </div>
+              </div>
+            )}
           </form>
 
           {/* Quick Demo Role Selectors (1-Click Fill) */}
