@@ -95,7 +95,7 @@ export const UserStore = {
     return users.find((u) => u.id === id);
   },
 
-  create: ({ name, email, passwordHash, role, department }) => {
+  create: ({ name, email, passwordHash, role, department, isActive = false }) => {
     const users = loadUsers();
     const newUser = {
       id: `usr_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
@@ -104,13 +104,24 @@ export const UserStore = {
       passwordHash,
       role: role || 'Analyst',
       department: department || 'General IT',
-      mfaEnabled: false,
-      isActive: true,
+      mfaEnabled: true,
+      isActive: Boolean(isActive),
+      status: isActive ? 'active' : 'pending_approval',
       createdAt: new Date().toISOString(),
     };
     users.push(newUser);
     saveUsers(users);
     return newUser;
+  },
+
+  updatePassword: (email, newPasswordHash) => {
+    const users = loadUsers();
+    const user = users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) return null;
+    user.passwordHash = newPasswordHash;
+    user.updatedAt = new Date().toISOString();
+    saveUsers(users);
+    return user;
   },
 
   update: (id, updates) => {

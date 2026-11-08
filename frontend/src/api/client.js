@@ -45,7 +45,11 @@ export async function apiRequest(endpoint, options = {}) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data.message || 'An unexpected error occurred.');
+      const error = new Error(data.message || 'An unexpected error occurred.');
+      error.status = response.status;
+      error.field = data.field || null;
+      error.data = data;
+      throw error;
     }
 
     return data;

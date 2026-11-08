@@ -15,12 +15,13 @@
     "id": "usr_analyst_01",
     "name": "Afri Alam (Analyst)",
     "email": "analyst@riskradar.io",
-    "passwordHash": "$2a$10$SfmMIa0Ju10AshygYhBFguAF.thlbzP2FpfiSrVHOZ7JuTmH24sF2",
+    "passwordHash": "$2a$10$6w7q.eu3F/lmjTS9uzyPXetn.i5JFGOpe1v1U8VlmEbRtdqg/zPMS",
     "role": "Analyst",
     "department": "SOC / Threat Intelligence",
     "mfaEnabled": false,
     "isActive": true,
-    "createdAt": "2026-11-05T05:21:58.695Z"
+    "createdAt": "2026-11-05T05:21:58.695Z",
+    "updatedAt": "2026-11-08T12:24:30.369Z"
   },
   {
     "id": "usr_exec_01",

@@ -1,5 +1,5 @@
-// Authentication & RBAC Context
-// Manages authentication token, user identity, session state, and login/logout workflows
+// Authentication & RBAC Context - Enterprise Specification
+// Manages authentication token, user identity, session state, 2-Step MFA completion, and secure logout
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { authApi } from '../api/auth.api';
@@ -35,9 +35,11 @@ export function AuthProvider({ children }) {
     verifySession();
   }, [token]);
 
+  // Step 1 of Login: Validates credentials and triggers 2-Step MFA
   const login = async (email, password) => {
     const res = await authApi.login({ email, password });
-    if (res.success && res.token) {
+    // If backend returns immediate token (direct fallback)
+    if (res.success && res.token && !res.mfaRequired) {
       setToken(res.token);
       setUser(res.user);
       localStorage.setItem('riskradar_token', res.token);
@@ -46,14 +48,17 @@ export function AuthProvider({ children }) {
     return res;
   };
 
+  // Step 2 of Login: Called after 6-digit MFA challenge succeeds
+  const completeMfaLogin = (jwtToken, userData) => {
+    setToken(jwtToken);
+    setUser(userData);
+    localStorage.setItem('riskradar_token', jwtToken);
+    localStorage.setItem('riskradar_user', JSON.stringify(userData));
+  };
+
+  // Enterprise Registration (Requires Admin approval)
   const register = async (userData) => {
     const res = await authApi.register(userData);
-    if (res.success && res.token) {
-      setToken(res.token);
-      setUser(res.user);
-      localStorage.setItem('riskradar_token', res.token);
-      localStorage.setItem('riskradar_user', JSON.stringify(res.user));
-    }
     return res;
   };
 
@@ -87,6 +92,7 @@ export function AuthProvider({ children }) {
         isAuthenticated: !!token,
         role: user?.role || null,
         login,
+        completeMfaLogin,
         register,
         logout,
         refreshProfile,

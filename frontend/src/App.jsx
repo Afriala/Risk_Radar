@@ -9,6 +9,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 
@@ -26,10 +27,27 @@ export default function App() {
               {/* Public Authentication Pages */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
 
-              {/* Protected Workspaces (Module 1 Session Guard) */}
+              {/* Protected Workspaces (Strict Session & MFA Guards) */}
               <Route
                 path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/assets"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/risks"
                 element={
                   <ProtectedRoute>
                     <Dashboard />
