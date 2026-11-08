@@ -7,6 +7,7 @@ import { UserStore } from '../models/user.store.js';
 import { revokedTokens } from '../middleware/auth.middleware.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]).{8,}$/;
 const ALLOWED_ROLES = ['Admin', 'Analyst', 'Executive', 'Auditor'];
 
 // Helper to sign JWT token
@@ -44,10 +45,10 @@ export const register = async (req, res) => {
       });
     }
 
-    if (password.length < 6) {
+    if (!PASSWORD_REGEX.test(password)) {
       return res.status(400).json({
         success: false,
-        message: 'Password must be at least 6 characters long.',
+        message: 'Password must be at least 8 characters long and contain a combination of letters, numbers, and special characters (e.g. #, @, $, !).',
       });
     }
 
@@ -116,7 +117,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid email or password credentials.',
+        message: 'No account found with this email address.',
       });
     }
 
@@ -132,7 +133,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid email or password credentials.',
+        message: 'Incorrect password. Please verify and try again.',
       });
     }
 
