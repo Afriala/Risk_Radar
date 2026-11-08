@@ -5,7 +5,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { UserPlus, Mail, KeyRound, Building, UserCheck, AlertCircle, Activity } from 'lucide-react';
+import { UserPlus, Mail, KeyRound, Building, UserCheck, AlertCircle } from 'lucide-react';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -17,7 +17,6 @@ export default function Register() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [wakingUp, setWakingUp] = useState(false);
 
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -36,22 +35,13 @@ export default function Register() {
     }
 
     setLoading(true);
-    setWakingUp(false);
-
-    // If server is cold-sleeping, alert the user after 2.5s that it's spinning up
-    const wakeTimer = setTimeout(() => {
-      setWakingUp(true);
-    }, 2500);
-
     try {
       await register(formData);
       navigate('/');
     } catch (err) {
       setError(err.message || 'Registration failed.');
     } finally {
-      clearTimeout(wakeTimer);
       setLoading(false);
-      setWakingUp(false);
     }
   };
 
@@ -180,20 +170,8 @@ export default function Register() {
               disabled={loading}
               className="w-full mt-4 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
             >
-              {loading ? (wakingUp ? 'Waking Cloud Server...' : 'Creating Account...') : 'Complete Registration & Launch'}
+              {loading ? 'Creating Account...' : 'Complete Registration & Launch'}
             </button>
-
-            {loading && wakingUp && (
-              <div className="mt-3 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5 animate-pulse">
-                <Activity className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <p className="font-semibold text-amber-900">Cloud backend is waking up (Cold Start)</p>
-                  <p className="text-[11px] text-amber-700 leading-relaxed">
-                    Render Free Tier spins down after 15 min of inactivity. Initial boot takes ~25-35s — once awake, all operations are instant!
-                  </p>
-                </div>
-              </div>
-            )}
           </form>
 
           <div className="mt-6 text-center text-xs text-slate-600">

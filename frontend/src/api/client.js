@@ -31,8 +31,8 @@ export async function apiRequest(endpoint, options = {}) {
   };
 
   const controller = new AbortController();
-  // 60s timeout allows Render free instance to spin up smoothly if it was in cold-sleep
-  const timeoutId = setTimeout(() => controller.abort(), 60000);
+  // 35s timeout allows Render free instance to spin up smoothly if it was in cold-sleep
+  const timeoutId = setTimeout(() => controller.abort(), 35000);
 
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
