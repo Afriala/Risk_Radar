@@ -51,8 +51,12 @@ export default function Profile() {
       return;
     }
 
-    if (newPassword.length < 6) {
-      setSecurityMsg({ text: 'New password must be at least 6 characters.', type: 'error' });
+    const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]).{8,}$/;
+    if (!PASSWORD_REGEX.test(newPassword)) {
+      setSecurityMsg({
+        text: 'New password must be at least 8 characters long and contain uppercase, lowercase, a number, and a special character (!@#$%^&*).',
+        type: 'error',
+      });
       return;
     }
 
@@ -73,7 +77,7 @@ export default function Profile() {
   const handleToggleMFA = async () => {
     const nextState = !mfaEnabled;
     try {
-      await userApi.updateProfile({ mfaEnabled: nextState });
+      await userApi.updateCredentials({ mfaEnabled: nextState });
       setMfaEnabled(nextState);
       await refreshProfile();
       setSecurityMsg({

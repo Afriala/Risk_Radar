@@ -4,6 +4,9 @@
 import bcrypt from 'bcryptjs';
 import { UserStore } from '../models/user.store.js';
 
+// Minimum 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special symbol
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]).{8,}$/;
+
 // 1. Get Authenticated User Profile
 export const getProfile = async (req, res) => {
   try {
@@ -29,14 +32,15 @@ export const getProfile = async (req, res) => {
   }
 };
 
-// 2. Update Profile Details (Name, Department)
+// 2. Update Profile Details (Name, Department, MFA Preference)
 export const updateProfile = async (req, res) => {
   try {
-    const { name, department } = req.body;
+    const { name, department, mfaEnabled } = req.body;
 
     const updates = {};
     if (name && name.trim()) updates.name = name.trim();
     if (department && department.trim()) updates.department = department.trim();
+    if (typeof mfaEnabled === 'boolean') updates.mfaEnabled = mfaEnabled;
 
     const updatedUser = UserStore.update(req.user.id, updates);
     if (!updatedUser) {
@@ -89,10 +93,11 @@ export const updateSecurityCredentials = async (req, res) => {
         });
       }
 
-      if (newPassword.length < 6) {
+      // Enforce strict 8+ char enterprise password complexity policy
+      if (!PASSWORD_REGEX.test(newPassword)) {
         return res.status(400).json({
           success: false,
-          message: 'New password must be at least 6 characters long.',
+          message: 'New password must be at least 8 characters long and contain uppercase, lowercase, a number, and a special character (!@#$%^&*).',
         });
       }
 
