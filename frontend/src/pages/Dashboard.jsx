@@ -37,33 +37,33 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 bg-white min-h-[calc(100vh-4rem)]">
-      {/* Welcome & Role Banner - Clean White Corporate */}
-      <div className="bg-gradient-to-r from-slate-50 via-white to-emerald-50/50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      {/* Welcome & Role Banner - Enterprise Green Theme */}
+      <div className="bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-700 text-white border border-emerald-500/30 rounded-2xl p-6 sm:p-8 shadow-lg shadow-emerald-700/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-800/60 border border-emerald-400/40 text-emerald-100 text-xs font-mono font-semibold">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
             <span>SESSION AUTHENTICATED • MODULE 1 ACTIVE</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Welcome back, <span className="text-emerald-600">{user?.name}</span>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Welcome back, <span className="text-emerald-200 underline decoration-emerald-400/50 underline-offset-4">{user?.name}</span>
           </h1>
-          <p className="text-slate-600 text-sm max-w-2xl leading-relaxed">
+          <p className="text-emerald-100 text-sm max-w-2xl leading-relaxed">
             You are operating under the{' '}
-            <strong className="text-slate-900 font-semibold">{user?.role}</strong> role in the{' '}
-            <span className="text-emerald-700 font-mono font-medium">{user?.department}</span> department.
+            <strong className="text-white font-semibold">{user?.role}</strong> role in the{' '}
+            <span className="text-emerald-200 font-mono font-medium bg-emerald-800/40 px-2 py-0.5 rounded border border-emerald-500/30">{user?.department}</span> department.
             Granular access controls enforce role-specific capabilities.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm">
-            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">Assigned Role</span>
-            <span className="text-base font-bold text-emerald-600">{user?.role}</span>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <div className="px-5 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-center shadow-sm flex-1 md:flex-none">
+            <span className="block text-xs text-emerald-200/80 uppercase tracking-wider font-mono">Assigned Role</span>
+            <span className="text-base font-extrabold text-white">{user?.role}</span>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm">
-            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">MFA Shield</span>
-            <span className={`text-base font-bold ${user?.mfaEnabled ? 'text-emerald-600' : 'text-amber-600'}`}>
-              {user?.mfaEnabled ? 'Enabled' : 'Disabled'}
+          <div className="px-5 py-3 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-center shadow-sm flex-1 md:flex-none">
+            <span className="block text-xs text-emerald-200/80 uppercase tracking-wider font-mono">MFA Shield</span>
+            <span className={`text-base font-extrabold ${user?.mfaEnabled ? 'text-emerald-300' : 'text-amber-300'}`}>
+              {user?.mfaEnabled ? 'Active' : 'Disabled'}
             </span>
           </div>
         </div>
