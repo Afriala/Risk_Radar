@@ -11,12 +11,13 @@ import {
   logout,
 } from '../controllers/auth.controller.js';
 import { verifyToken } from '../middleware/auth.middleware.js';
+import { loginRateLimiter } from '../middleware/rateLimit.middleware.js';
 
 const router = Router();
 
 // Registration & Authentication
 router.post('/register', register);
-router.post('/login', login);
+router.post('/login', loginRateLimiter, login);
 router.post('/verify-mfa', verifyMfa);
 router.post('/resend-mfa', resendMfa);
 
