@@ -21,8 +21,17 @@ const getApiBaseUrl = () => {
 
 const API_BASE_URL = getApiBaseUrl();
 
+// Clean up any legacy localStorage session data to enforce strict tab-session lifecycle
+if (typeof window !== 'undefined') {
+  try {
+    localStorage.removeItem('riskradar_token');
+    localStorage.removeItem('riskradar_user');
+  } catch (e) {}
+}
+
 export async function apiRequest(endpoint, options = {}) {
-  const token = localStorage.getItem('riskradar_token');
+  // Read token strictly from sessionStorage (tab-scoped session)
+  const token = typeof window !== 'undefined' ? sessionStorage.getItem('riskradar_token') : null;
 
   const headers = {
     'Content-Type': 'application/json',

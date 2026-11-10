@@ -28,16 +28,9 @@ import {
 } from 'lucide-react';
 
 export default function Login() {
-  const { login, completeMfaLogin, isAuthenticated } = useAuth();
+  const { login, completeMfaLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
-  // If already authenticated, redirect directly to dashboard portal
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [isAuthenticated, navigate]);
 
   // Step state: 'credentials' (Step 1) or 'mfa' (Step 2)
   const [step, setStep] = useState('credentials');
@@ -65,11 +58,16 @@ export default function Login() {
 
   // Success message from Password Reset redirect
   const [resetSuccess, setResetSuccess] = useState(false);
+  // Idle timeout notice from automatic session expiration
+  const [idleTimeoutNotice, setIdleTimeoutNotice] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('reset') === 'success') {
       setResetSuccess(true);
+    }
+    if (params.get('reason') === 'idle_timeout') {
+      setIdleTimeoutNotice(true);
     }
   }, [location.search]);
 
@@ -208,6 +206,19 @@ export default function Login() {
 
       <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
         <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-2xl sm:px-10">
+
+          {/* Idle Timeout Warning Banner */}
+          {idleTimeoutNotice && (
+            <div className="mb-5 p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs flex items-start gap-2.5 shadow-sm">
+              <Clock className="w-5 h-5 shrink-0 text-amber-600 mt-0.5" />
+              <div>
+                <p className="font-bold">Session Timed Out (15m Inactivity)</p>
+                <p className="text-amber-800 mt-0.5">
+                  You were automatically signed out after 15 minutes of inactivity for enterprise data protection. Please sign in again.
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Success Banner (e.g. from password reset) */}
           {resetSuccess && (

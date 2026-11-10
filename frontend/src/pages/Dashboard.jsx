@@ -66,6 +66,10 @@ export default function Dashboard() {
               {user?.mfaEnabled ? 'Enabled' : 'Disabled'}
             </span>
           </div>
+          <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm">
+            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">Session Guard</span>
+            <span className="text-base font-bold text-emerald-600">Active (15m Idle)</span>
+          </div>
         </div>
       </div>
 
