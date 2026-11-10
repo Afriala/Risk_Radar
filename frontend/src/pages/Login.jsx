@@ -28,9 +28,16 @@ import {
 } from 'lucide-react';
 
 export default function Login() {
-  const { login, completeMfaLogin } = useAuth();
+  const { login, completeMfaLogin, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // If already authenticated, redirect directly to dashboard portal
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   // Step state: 'credentials' (Step 1) or 'mfa' (Step 2)
   const [step, setStep] = useState('credentials');
