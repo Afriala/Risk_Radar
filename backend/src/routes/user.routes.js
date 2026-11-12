@@ -5,6 +5,7 @@ import {
   updateProfile,
   updateSecurityCredentials,
   listUsers,
+  provisionUserByAdmin,
   updateUserRole,
   updateUserStatus,
   toggleUserMfa,
@@ -23,6 +24,7 @@ router.put('/credentials', verifyToken, updateSecurityCredentials);
 
 // Granular Role-Based Access Control (Admin Clearance Level 4)
 router.get('/', verifyToken, requireRole('Admin'), listUsers);
+router.post('/', verifyToken, requireRole('Admin'), provisionUserByAdmin);
 router.get('/audit-logs', verifyToken, requireRole('Admin'), getAuditLogs);
 router.put('/:id/role', verifyToken, requireRole('Admin'), updateUserRole);
 router.put('/:id/status', verifyToken, requireRole('Admin'), updateUserStatus);

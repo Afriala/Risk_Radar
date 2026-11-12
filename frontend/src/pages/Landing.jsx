@@ -55,7 +55,7 @@ export default function Landing() {
 
       {/* Main Navigation Header - Clean White Corporate */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
+        <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
 
           {/* Brand Logo - Responsive sizing across all devices */}
           <Link
@@ -285,7 +285,7 @@ export default function Landing() {
           backgroundSize: '24px 24px',
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
             {/* Left Column */}
@@ -445,7 +445,7 @@ export default function Landing() {
 
       {/* Section: The 4 Specialized Stakeholder Portals (Clean White Cards) */}
       <section id="roles" className="w-full py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
 
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-mono font-bold">
@@ -572,7 +572,7 @@ export default function Landing() {
 
       {/* Section: Business Value (Side-by-Side Cards) */}
       <section id="problem-solution" className="w-full py-16 sm:py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 
             {/* The Problem */}
@@ -647,7 +647,7 @@ export default function Landing() {
 
       {/* Section: About Us (Side-by-Side Team Cards) */}
       <section id="about-us" className="w-full py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <span className="px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-mono font-bold">
               ABOUT OUR PROJECT & TEAM
@@ -809,7 +809,7 @@ export default function Landing() {
 
       {/* Academic Project Footer */}
       <footer id="compliance" className="w-full bg-slate-50 py-12 border-t border-slate-200 text-slate-600 text-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-200 text-center md:text-left">
 
             <div className="flex items-center justify-center">

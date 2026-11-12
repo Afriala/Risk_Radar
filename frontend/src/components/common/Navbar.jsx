@@ -46,8 +46,8 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 text-slate-800 shadow-sm transition-all duration-200">
-      {/* Top Navbar Row - Matching Public Site height (h-20 sm:h-24) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 sm:h-24 flex items-center justify-between gap-3">
+      {/* Top Navbar Row - Responsive Wide Container (w-full max-w-[1680px]) */}
+      <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 h-20 sm:h-24 flex items-center justify-between gap-3">
         
         {/* Brand Logo - Same prominent size as Public Site */}
         <Link

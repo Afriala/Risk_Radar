@@ -130,7 +130,98 @@ export const updateSecurityCredentials = async (req, res) => {
   }
 };
 
-// 4. Admin Only: List All Registered Users with Extended RBAC Metrics
+// 4. Admin Only: Direct Provisioning of New User (Path 2: Instant Active Account)
+export const provisionUserByAdmin = async (req, res) => {
+  try {
+    const { name, email, password, role, department, mfaEnabled = true } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Full name and email address are required fields.',
+      });
+    }
+
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!EMAIL_REGEX.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a valid corporate email address.',
+      });
+    }
+
+    const existingUser = UserStore.findByEmail(email);
+    if (existingUser) {
+      return res.status(409).json({
+        success: false,
+        message: 'An account with this email address already exists in the directory.',
+      });
+    }
+
+    const ALLOWED_ROLES = ['Admin', 'Analyst', 'Executive', 'Auditor'];
+    const assignedRole = ALLOWED_ROLES.includes(role) ? role : 'Analyst';
+
+    // Password validation: user provided or default 'Password123!'
+    const initialPassword = password && password.trim() ? password.trim() : 'Password123!';
+    if (!PASSWORD_REGEX.test(initialPassword)) {
+      return res.status(400).json({
+        success: false,
+        message:
+          'Initial password must be at least 8 characters long and contain uppercase, lowercase, a number, and a special character (!@#$%^&*).',
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(initialPassword, salt);
+
+    // Save with isActive: true (Instantly active because Administrator directly provisioned it)
+    const newUser = UserStore.create({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      passwordHash,
+      role: assignedRole,
+      department: department?.trim() || 'General IT',
+      isActive: true,
+    });
+
+    // Update with status active and MFA preference
+    UserStore.update(newUser.id, {
+      mfaEnabled: Boolean(mfaEnabled),
+      status: 'active',
+    });
+
+    AuditStore.log({
+      action: 'USER_PROVISIONED',
+      actor: `${req.user.name} (${req.user.role})`,
+      target: `${newUser.name} (${newUser.email})`,
+      details: `Administrator directly provisioned and activated account under '${assignedRole}' role in '${department || 'General IT'}'.`,
+      severity: 'SUCCESS',
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: `User '${newUser.name}' provisioned and activated successfully under '${assignedRole}' role.`,
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        department: newUser.department,
+        mfaEnabled: Boolean(mfaEnabled),
+        status: 'active',
+      },
+      initialPassword,
+    });
+  } catch (error) {
+    console.error('Provisioning error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during user provisioning.',
+    });
+  }
+};
+
+// 5. Admin Only: List All Registered Users with Extended RBAC Metrics
 export const listUsers = async (req, res) => {
   try {
     const users = UserStore.findAll().map((u) => ({

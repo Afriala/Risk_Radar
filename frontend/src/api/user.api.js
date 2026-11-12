@@ -19,6 +19,12 @@ export const userApi = {
   // Admin Level-4 Operations
   listUsers: () => apiRequest('/users'),
 
+  provisionUser: (payload) =>
+    apiRequest('/users', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+
   updateUserRole: (id, payload) =>
     apiRequest(`/users/${id}/role`, {
       method: 'PUT',
