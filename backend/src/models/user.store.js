@@ -138,5 +138,14 @@ export const UserStore = {
     saveUsers(users);
     return users[index];
   },
+
+  delete: (id) => {
+    const users = loadUsers();
+    const index = users.findIndex((u) => u.id === id);
+    if (index === -1) return false;
+    const removed = users.splice(index, 1)[0];
+    saveUsers(users);
+    return removed;
+  },
 };
 

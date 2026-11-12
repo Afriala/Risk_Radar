@@ -3,6 +3,7 @@
 
 import bcrypt from 'bcryptjs';
 import { UserStore } from '../models/user.store.js';
+import { AuditStore } from '../models/audit.store.js';
 
 // Minimum 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special symbol
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]).{8,}$/;
@@ -129,7 +130,7 @@ export const updateSecurityCredentials = async (req, res) => {
   }
 };
 
-// 4. Admin Only: List All Registered Users
+// 4. Admin Only: List All Registered Users with Extended RBAC Metrics
 export const listUsers = async (req, res) => {
   try {
     const users = UserStore.findAll().map((u) => ({
@@ -138,8 +139,9 @@ export const listUsers = async (req, res) => {
       email: u.email,
       role: u.role,
       department: u.department,
-      mfaEnabled: u.mfaEnabled,
-      isActive: u.isActive,
+      mfaEnabled: Boolean(u.mfaEnabled),
+      isActive: Boolean(u.isActive),
+      status: u.status || (u.isActive ? 'active' : 'pending_approval'),
       createdAt: u.createdAt,
     }));
 
@@ -150,5 +152,214 @@ export const listUsers = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Failed to fetch users.' });
+  }
+};
+
+// 5. Admin Only: Change User Role & Department (RBAC with Self-Demotion Lock)
+export const updateUserRole = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role, department } = req.body;
+    const ALLOWED_ROLES = ['Admin', 'Analyst', 'Executive', 'Auditor'];
+
+    const targetUser = UserStore.findById(id);
+    if (!targetUser) {
+      return res.status(404).json({ success: false, message: 'Target user not found.' });
+    }
+
+    // Zero-loophole safety: Admin cannot demote their own account to prevent lockout
+    if (req.user.id === id && role && role !== 'Admin') {
+      return res.status(400).json({
+        success: false,
+        message: 'Security Violation: Administrators cannot demote their own account.',
+      });
+    }
+
+    const updates = {};
+    if (role) {
+      if (!ALLOWED_ROLES.includes(role)) {
+        return res.status(400).json({ success: false, message: `Role must be one of [${ALLOWED_ROLES.join(', ')}].` });
+      }
+      updates.role = role;
+    }
+
+    if (department && department.trim()) {
+      updates.department = department.trim();
+    }
+
+    const oldRole = targetUser.role;
+    const updatedUser = UserStore.update(id, updates);
+
+    // Audit log
+    AuditStore.log({
+      action: 'ROLE_UPDATED',
+      actor: `${req.user.name} (${req.user.role})`,
+      target: `${updatedUser.name} (${updatedUser.email})`,
+      details: `Role updated from '${oldRole}' to '${updatedUser.role}'${department ? ` and department to '${updatedUser.department}'` : ''}.`,
+      severity: 'WARNING',
+    });
+
+    return res.json({
+      success: true,
+      message: `User '${updatedUser.name}' role successfully updated to '${updatedUser.role}'.`,
+      user: updatedUser,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to update user role.' });
+  }
+};
+
+// 6. Admin Only: Approve, Suspend, or Activate User Account
+export const updateUserStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { action } = req.body; // 'approve' | 'suspend' | 'activate'
+
+    const targetUser = UserStore.findById(id);
+    if (!targetUser) {
+      return res.status(404).json({ success: false, message: 'Target user not found.' });
+    }
+
+    // Zero-loophole safety: Admin cannot suspend their own account
+    if (req.user.id === id && action === 'suspend') {
+      return res.status(400).json({
+        success: false,
+        message: 'Security Violation: You cannot suspend your own active administrative account.',
+      });
+    }
+
+    const updates = {};
+    let auditAction = 'STATUS_CHANGE';
+    let severity = 'INFO';
+    let feedbackMsg = '';
+
+    if (action === 'approve') {
+      updates.isActive = true;
+      updates.status = 'active';
+      auditAction = 'USER_APPROVED';
+      severity = 'SUCCESS';
+      feedbackMsg = `Account for '${targetUser.name}' has been approved and activated.`;
+    } else if (action === 'suspend') {
+      updates.isActive = false;
+      updates.status = 'suspended';
+      auditAction = 'USER_SUSPENDED';
+      severity = 'WARNING';
+      feedbackMsg = `Account for '${targetUser.name}' has been suspended. Access revoked.`;
+    } else if (action === 'activate') {
+      updates.isActive = true;
+      updates.status = 'active';
+      auditAction = 'USER_ACTIVATED';
+      severity = 'SUCCESS';
+      feedbackMsg = `Account for '${targetUser.name}' has been reactivated.`;
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid action. Permitted actions: 'approve', 'suspend', 'activate'.",
+      });
+    }
+
+    const updatedUser = UserStore.update(id, updates);
+
+    AuditStore.log({
+      action: auditAction,
+      actor: `${req.user.name} (${req.user.role})`,
+      target: `${updatedUser.name} (${updatedUser.email})`,
+      details: feedbackMsg,
+      severity,
+    });
+
+    return res.json({
+      success: true,
+      message: feedbackMsg,
+      user: updatedUser,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to update user status.' });
+  }
+};
+
+// 7. Admin Only: Force Toggle MFA for a User
+export const toggleUserMfa = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { mfaEnabled } = req.body;
+
+    const targetUser = UserStore.findById(id);
+    if (!targetUser) {
+      return res.status(404).json({ success: false, message: 'Target user not found.' });
+    }
+
+    const nextState = typeof mfaEnabled === 'boolean' ? mfaEnabled : !targetUser.mfaEnabled;
+    const updatedUser = UserStore.update(id, { mfaEnabled: nextState });
+
+    AuditStore.log({
+      action: 'MFA_POLICY_TOGGLED',
+      actor: `${req.user.name} (${req.user.role})`,
+      target: `${updatedUser.name} (${updatedUser.email})`,
+      details: `Administrator ${nextState ? 'enforced' : 'disabled'} mandatory MFA shield.`,
+      severity: nextState ? 'SUCCESS' : 'WARNING',
+    });
+
+    return res.json({
+      success: true,
+      message: `MFA shield successfully ${nextState ? 'enabled' : 'disabled'} for ${updatedUser.name}.`,
+      user: updatedUser,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to toggle MFA.' });
+  }
+};
+
+// 8. Admin Only: Permanently Delete User Account
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const targetUser = UserStore.findById(id);
+    if (!targetUser) {
+      return res.status(404).json({ success: false, message: 'Target user not found.' });
+    }
+
+    // Zero-loophole safety: Admin cannot delete themselves
+    if (req.user.id === id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Security Violation: Administrators cannot delete their own account.',
+      });
+    }
+
+    const removed = UserStore.delete(id);
+    if (!removed) {
+      return res.status(500).json({ success: false, message: 'Failed to delete user.' });
+    }
+
+    AuditStore.log({
+      action: 'USER_DELETED',
+      actor: `${req.user.name} (${req.user.role})`,
+      target: `${targetUser.name} (${targetUser.email})`,
+      details: `User account '${targetUser.name}' was permanently removed by Administrator.`,
+      severity: 'ALERT',
+    });
+
+    return res.json({
+      success: true,
+      message: `User '${targetUser.name}' has been permanently deleted from directory.`,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to delete user.' });
+  }
+};
+
+// 9. Admin Only: Get Security Audit Trail Logs
+export const getAuditLogs = async (req, res) => {
+  try {
+    const logs = AuditStore.findAll(50);
+    return res.json({
+      success: true,
+      count: logs.length,
+      logs,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to retrieve audit trail logs.' });
   }
 };

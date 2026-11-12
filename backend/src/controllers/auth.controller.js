@@ -5,6 +5,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { UserStore } from '../models/user.store.js';
+import { AuditStore } from '../models/audit.store.js';
 import { revokedTokens } from '../middleware/auth.middleware.js';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -108,6 +109,14 @@ export const register = async (req, res) => {
       role: assignedRole,
       department: department || 'General IT',
       isActive: false, // Strict requirement: Must be approved by Administrator
+    });
+
+    AuditStore.log({
+      action: 'USER_REGISTERED',
+      actor: name,
+      target: email,
+      details: `New registration with authorization code '${cleanInvite}'. Status: pending_approval.`,
+      severity: 'INFO',
     });
 
     return res.status(201).json({
@@ -232,6 +241,14 @@ export const verifyMfa = async (req, res) => {
     // MFA Verified: issue final signed JWT session token
     const token = generateToken(session.user);
     mfaSessions.delete(email.toLowerCase());
+
+    AuditStore.log({
+      action: 'AUTH_SUCCESS',
+      actor: session.user.name,
+      target: session.user.email,
+      details: `Identity verified. Authenticated under role '${session.user.role}' via 2-Step MFA challenge.`,
+      severity: 'SUCCESS',
+    });
 
     return res.json({
       success: true,

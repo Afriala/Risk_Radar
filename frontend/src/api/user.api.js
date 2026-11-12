@@ -16,5 +16,31 @@ export const userApi = {
       body: JSON.stringify(payload),
     }),
 
+  // Admin Level-4 Operations
   listUsers: () => apiRequest('/users'),
+
+  updateUserRole: (id, payload) =>
+    apiRequest(`/users/${id}/role`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+
+  updateUserStatus: (id, action) =>
+    apiRequest(`/users/${id}/status`, {
+      method: 'PUT',
+      body: JSON.stringify({ action }),
+    }),
+
+  toggleUserMfa: (id, mfaEnabled) =>
+    apiRequest(`/users/${id}/mfa-force`, {
+      method: 'PUT',
+      body: JSON.stringify({ mfaEnabled }),
+    }),
+
+  deleteUser: (id) =>
+    apiRequest(`/users/${id}`, {
+      method: 'DELETE',
+    }),
+
+  getAuditLogs: () => apiRequest('/users/audit-logs'),
 };
