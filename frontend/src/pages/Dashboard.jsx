@@ -292,47 +292,67 @@ export default function Dashboard() {
 
   return (
     <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-8 space-y-8 bg-white min-h-[calc(100vh-4rem)]">
-      {/* Welcome & Role Banner - Clean White Corporate */}
-      <div className="bg-gradient-to-r from-slate-50 via-white to-emerald-50/50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+      {/* Welcome & Role Banner - Eye-Catching Enterprise White Theme */}
+      <div className="bg-gradient-to-r from-slate-50 via-white to-emerald-50/60 border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="space-y-2.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-mono font-bold tracking-wide">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
             <span>SESSION AUTHENTICATED • MODULE 1 ACTIVE</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Welcome back, <span className="text-emerald-600">{user?.name}</span>
           </h1>
-          <p className="text-slate-600 text-sm max-w-2xl leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
             You are operating under the{' '}
-            <strong className="text-slate-900 font-semibold">{user?.role}</strong> role in the{' '}
-            <span className="text-emerald-700 font-mono font-medium">{user?.department}</span> department.
+            <strong className="text-slate-900 font-bold">{user?.role}</strong> role in the{' '}
+            <span className="text-emerald-700 font-mono font-semibold">{user?.department}</span> department.
             Granular access controls enforce role-specific capabilities.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm">
-            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">Assigned Role</span>
-            <span className="text-base font-bold text-emerald-600">{user?.role}</span>
-          </div>
-          <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm">
-            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">MFA Shield</span>
-            <span className={`text-base font-bold ${user?.mfaEnabled ? 'text-emerald-600' : 'text-amber-600'}`}>
-              {user?.mfaEnabled ? 'Enabled' : 'Disabled'}
+        <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto">
+          {/* Card 1: Role */}
+          <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[150px] flex flex-col justify-center">
+            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono font-bold mb-1">
+              Assigned Role
+            </span>
+            <span className="text-lg font-extrabold text-emerald-700 tracking-tight">
+              {user?.role}
             </span>
           </div>
-          <div className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-center shadow-sm flex flex-col justify-between items-center min-w-[140px]">
-            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">Session Guard</span>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="text-sm font-bold text-emerald-600">Active (15m)</span>
+
+          {/* Card 2: MFA Shield */}
+          <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[150px] flex flex-col justify-center">
+            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono font-bold mb-1">
+              MFA Security
+            </span>
+            <span
+              className={`text-lg font-extrabold tracking-tight ${
+                user?.mfaEnabled ? 'text-emerald-700' : 'text-amber-600'
+              }`}
+            >
+              {user?.mfaEnabled ? '✓ Enabled' : '⚠ Off'}
+            </span>
+          </div>
+
+          {/* Card 3: Session Guard */}
+          <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[165px] flex flex-col justify-between items-center">
+            <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono font-bold mb-1">
+              Session Guard
+            </span>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Protected
+              </span>
               <button
                 type="button"
                 onClick={handleSessionExtend}
                 disabled={extendingSession}
                 title="Renew 15-minute rolling idle session (NIST SP 800-63B)"
-                className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 transition active:scale-95 cursor-pointer inline-flex items-center gap-1"
+                className="px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition active:scale-95 cursor-pointer inline-flex items-center gap-1 shadow-2xs"
               >
-                <Clock className="w-3 h-3" />
+                <Clock className="w-3.5 h-3.5 text-emerald-600" />
                 <span>{extendingSession ? '...' : '+15m'}</span>
               </button>
             </div>
@@ -359,11 +379,11 @@ export default function Dashboard() {
           {/* Admin Header with Actions */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                <Users className="w-5 h-5 text-red-600" />
+              <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2.5">
+                <Users className="w-6 h-6 text-red-600" />
                 <span>Admin User Management & RBAC Governance</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-sm text-slate-600 mt-1">
                 Restricted to Admin Level 4. Manage user approvals, role assignments, MFA policies, and account access.
               </p>
             </div>
@@ -375,14 +395,14 @@ export default function Dashboard() {
                   setProvError('');
                   setShowProvisionModal(true);
                 }}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/20 transition active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md shadow-emerald-600/20 transition active:scale-95 cursor-pointer"
               >
                 <UserPlus className="w-3.5 h-3.5" />
                 <span>+ Add New User</span>
               </button>
 
               {/* Organization Invite Code Badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-300 text-xs font-mono">
+              <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-300 text-sm font-mono">
                 <span className="text-slate-500 font-sans font-medium">Invite Code:</span>
                 <span className="font-bold text-emerald-700">{INVITE_CODE}</span>
                 <button
@@ -400,7 +420,7 @@ export default function Dashboard() {
                   fetchLogs();
                 }}
                 title="Refresh directory data"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-sm transition"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold shadow-sm transition"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${loadingUsers || loadingLogs ? 'animate-spin' : ''}`} />
                 <span>Refresh</span>
@@ -435,7 +455,7 @@ export default function Dashboard() {
             ) : (
               <div className="overflow-x-auto w-full">
                 <table className="w-full text-left text-sm text-slate-700 min-w-[760px]">
-                  <thead className="bg-slate-50 text-xs uppercase font-mono text-slate-600 border-b border-slate-200">
+                  <thead className="bg-slate-100/90 text-xs uppercase font-mono font-bold tracking-wider text-slate-700 border-b border-slate-300">
                     <tr>
                       <th className="py-3 px-4 font-semibold whitespace-nowrap">User</th>
                       <th className="py-3 px-4 font-semibold whitespace-nowrap">Email</th>
@@ -456,26 +476,26 @@ export default function Dashboard() {
                         <tr key={u.id} className="hover:bg-slate-50/70 transition">
                           {/* Name */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
-                            <div className="font-semibold text-slate-900 flex items-center gap-1.5">
+                            <div className="font-bold text-slate-900 text-sm flex items-center gap-2">
                               <span>{u.name}</span>
                               {isSelf && (
-                                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                                <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-slate-100 text-slate-700 border border-slate-300">
                                   You
                                 </span>
                               )}
                             </div>
-                            <span className="text-[11px] text-slate-400 font-mono">
+                            <span className="text-xs text-slate-500 font-mono">
                               Joined {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : 'N/A'}
                             </span>
                           </td>
 
                           {/* Email */}
-                          <td className="py-3.5 px-4 font-mono text-xs text-slate-600 whitespace-nowrap">{u.email}</td>
+                          <td className="py-4 px-4 font-mono text-sm text-slate-700 font-medium whitespace-nowrap">{u.email}</td>
 
                           {/* Role Dropdown (RBAC) */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
                             {isSelf ? (
-                              <span className="px-2.5 py-1 rounded-md text-xs font-mono font-bold border bg-red-50 text-red-700 border-red-200 inline-block">
+                              <span className="px-3 py-1.5 rounded-xl text-xs font-mono font-bold border bg-red-50 text-red-700 border-red-200 inline-block">
                                 Admin (Protected)
                               </span>
                             ) : (
@@ -504,9 +524,7 @@ export default function Dashboard() {
                           </td>
 
                           {/* Department */}
-                          <td className="py-3.5 px-4 text-xs text-slate-600 whitespace-nowrap font-medium">
-                            {u.department}
-                          </td>
+                          <td className="py-4 px-4 text-sm text-slate-800 whitespace-nowrap font-medium">{u.department}</td>
 
                           {/* MFA Shield Toggle */}
                           <td className="py-3.5 px-4 whitespace-nowrap">
@@ -527,12 +545,12 @@ export default function Dashboard() {
                           <td className="py-3.5 px-4 whitespace-nowrap">
                             {isPending ? (
                               <div className="flex items-center gap-1.5">
-                                <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-50 text-amber-700 border border-amber-300 animate-pulse">
+                                <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-amber-50 text-amber-700 border border-amber-300 animate-pulse">
                                   Pending Approval
                                 </span>
                               </div>
                             ) : isSuspended ? (
-                              <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-red-50 text-red-700 border border-red-300">
+                              <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-red-50 text-red-700 border border-red-300">
                                 Suspended
                               </span>
                             ) : (
@@ -606,11 +624,9 @@ export default function Dashboard() {
             <div className="px-5 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-emerald-400" />
-                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-200">
-                  System Security Audit Trail (SOC Real-Time Log)
-                </h3>
+                <h3 className="text-sm font-mono font-bold tracking-wider uppercase text-slate-100">System Security Audit Trail (SOC Real-Time Log)</h3>
               </div>
-              <span className="text-[11px] font-mono text-emerald-400 font-semibold flex items-center gap-1.5">
+              <span className="text-xs font-mono font-bold text-emerald-400 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 LIVE AUDIT MONITOR
               </span>
@@ -623,7 +639,7 @@ export default function Dashboard() {
                 auditLogs.map((log) => (
                   <div key={log.id} className="p-3.5 hover:bg-slate-800/40 transition flex items-start gap-3">
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0 mt-0.5 ${log.severity === 'SUCCESS'
+                      className={`px-2.5 py-1 rounded-md text-xs font-mono font-bold shrink-0 mt-0.5 ${log.severity === 'SUCCESS'
                           ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                           : log.severity === 'WARNING'
                             ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
@@ -636,14 +652,14 @@ export default function Dashboard() {
                     </span>
                     <div className="flex-1 space-y-0.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-slate-300 font-semibold">
-                          {log.actor} ➔ <span className="text-slate-400 font-normal">{log.target}</span>
+                        <span className="text-slate-200 font-bold text-sm">
+                          {log.actor} ➔ <span className="text-slate-300 font-medium">{log.target}</span>
                         </span>
-                        <span className="text-[10px] text-slate-500 shrink-0">
+                        <span className="text-xs text-slate-400 font-mono shrink-0">
                           {new Date(log.timestamp).toLocaleTimeString()}
                         </span>
                       </div>
-                      <p className="text-slate-400 text-[11px] font-sans">{log.details}</p>
+                      <p className="text-slate-300 text-xs font-sans leading-relaxed">{log.details}</p>
                     </div>
                   </div>
                 ))
@@ -660,18 +676,18 @@ export default function Dashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <div>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-cyan-100 text-cyan-800 border border-cyan-300">
+                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-100 text-cyan-800 border border-cyan-300">
                   CLEARANCE LEVEL 3
                 </span>
-                <span className="text-xs font-semibold text-slate-500 font-mono">
+                <span className="text-xs font-bold text-slate-600 font-mono">
                   PoLP ENFORCED
                 </span>
               </div>
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mt-1">
-                <ShieldCheck className="w-5 h-5 text-cyan-600" />
+              <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2.5 mt-1">
+                <ShieldCheck className="w-6 h-6 text-cyan-600" />
                 <span>Cybersecurity Analyst Operations & SOC Workspace</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-sm text-slate-600 mt-1">
                 Authorized for Threat Logging, Asset Inventories & Risk Lifecycle Operations under Principle of Least Privilege.
               </p>
             </div>
@@ -713,7 +729,7 @@ export default function Dashboard() {
                   <Shield className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900">My RBAC Clearance Matrix (Security Operations Level 3)</h3>
+                  <h3 className="text-lg font-extrabold text-slate-900">My RBAC Clearance Matrix (Security Operations Level 3)</h3>
                   <p className="text-xs text-slate-500">Explicit Capabilities Granted vs Restricted (PoLP Enforced)</p>
                 </div>
               </div>
@@ -814,17 +830,15 @@ export default function Dashboard() {
             <div className="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50/60">
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                    <Users className="w-4 h-4 text-cyan-600" />
+                  <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2.5">
+                    <Users className="w-5 h-5 text-cyan-600" />
                     <span>SOC Team Directory & Personnel Roster</span>
                   </h3>
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-600 border border-slate-300">
                     READ-ONLY (PoLP)
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Directory of organization personnel for cross-functional threat escalation. Edit/Delete actions are disabled for Level 3 Analysts.
-                </p>
+                <p className="text-sm text-slate-600 mt-1">Directory of organization personnel for cross-functional threat escalation. Edit/Delete actions are disabled for Level 3 Analysts.</p>
               </div>
 
               {/* Search Bar */}
@@ -872,12 +886,10 @@ export default function Dashboard() {
                                 <div className="font-bold text-slate-900 flex items-center gap-1.5">
                                   <span>{u.name}</span>
                                   {isMe && (
-                                    <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-cyan-100 text-cyan-800 border border-cyan-300">
-                                      You
-                                    </span>
+                                    <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-cyan-100 text-cyan-800 border border-cyan-300">You</span>
                                   )}
                                 </div>
-                                <span className="text-[11px] text-slate-500 font-mono">{u.email}</span>
+                                <span className="text-xs text-slate-600 font-mono">{u.email}</span>
                               </div>
                             </div>
                           </td>
@@ -914,7 +926,7 @@ export default function Dashboard() {
                               Active
                             </span>
                           </td>
-                          <td className="py-3.5 px-4 whitespace-nowrap text-right font-mono text-[11px]">
+                          <td className="py-4 px-4 whitespace-nowrap text-right font-mono text-xs font-bold">
                             <span className="text-slate-500">
                               {u.role === 'Admin'
                                 ? 'Level 4 • Governance'
@@ -939,11 +951,9 @@ export default function Dashboard() {
             <div className="px-5 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-cyan-400" />
-                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-200">
-                  My Personal Security Activity Log (Analyst Audit Trail)
-                </h3>
+                <h3 className="text-sm font-mono font-bold tracking-wider uppercase text-slate-100">My Personal Security Activity Log (Analyst Audit Trail)</h3>
               </div>
-              <span className="text-[11px] font-mono text-cyan-400 font-semibold flex items-center gap-1.5">
+              <span className="text-xs font-mono font-bold text-cyan-400 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                 LIVE PERSONAL MONITOR
               </span>
@@ -958,7 +968,7 @@ export default function Dashboard() {
                 analystLogs.map((log) => (
                   <div key={log.id} className="p-3.5 hover:bg-slate-800/40 transition flex items-start gap-3">
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0 mt-0.5 ${
+                      className={`px-2.5 py-1 rounded-md text-xs font-mono font-bold shrink-0 mt-0.5 ${
                         log.severity === 'SUCCESS'
                           ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                           : log.severity === 'WARNING'
@@ -972,14 +982,14 @@ export default function Dashboard() {
                     </span>
                     <div className="flex-1 space-y-0.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-slate-300 font-semibold">
-                          {log.actor} ➔ <span className="text-slate-400 font-normal">{log.target}</span>
+                        <span className="text-slate-200 font-bold text-sm">
+                          {log.actor} ➔ <span className="text-slate-300 font-medium">{log.target}</span>
                         </span>
-                        <span className="text-[10px] text-slate-500 shrink-0">
+                        <span className="text-xs text-slate-400 font-mono shrink-0">
                           {new Date(log.timestamp).toLocaleTimeString()}
                         </span>
                       </div>
-                      <p className="text-slate-400 text-[11px] font-sans">{log.details}</p>
+                      <p className="text-slate-300 text-xs font-sans leading-relaxed">{log.details}</p>
                     </div>
                   </div>
                 ))
@@ -1002,8 +1012,8 @@ export default function Dashboard() {
                   EXECUTIVE OVERSIGHT
                 </span>
               </div>
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mt-1">
-                <Activity className="w-5 h-5 text-emerald-600" />
+              <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2.5 mt-1">
+                <Activity className="w-6 h-6 text-emerald-600" />
                 <span>Executive Risk & Strategic KPI Insights</span>
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -1114,8 +1124,8 @@ export default function Dashboard() {
                   COMPLIANCE AUDIT
                 </span>
               </div>
-              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mt-1">
-                <FileCheck2 className="w-5 h-5 text-amber-600" />
+              <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2.5 mt-1">
+                <FileCheck2 className="w-6 h-6 text-amber-600" />
                 <span>External Compliance & Security Audit Trail</span>
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
@@ -1161,11 +1171,9 @@ export default function Dashboard() {
             <div className="px-5 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Terminal className="w-4 h-4 text-amber-400" />
-                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-200">
-                  Regulatory Compliance Audit Trail (Read-Only Attestation)
-                </h3>
+                <h3 className="text-sm font-mono font-bold tracking-wider uppercase text-slate-100">Regulatory Compliance Audit Trail (Read-Only Attestation)</h3>
               </div>
-              <span className="text-[11px] font-mono text-amber-400 font-semibold flex items-center gap-1.5">
+              <span className="text-xs font-mono font-bold text-amber-400 flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                 IMMUTABLE AUDIT STREAM
               </span>
@@ -1178,7 +1186,7 @@ export default function Dashboard() {
                 analystLogs.map((log) => (
                   <div key={log.id} className="p-3.5 hover:bg-slate-800/40 transition flex items-start gap-3">
                     <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0 mt-0.5 ${
+                      className={`px-2.5 py-1 rounded-md text-xs font-mono font-bold shrink-0 mt-0.5 ${
                         log.severity === 'SUCCESS'
                           ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                           : log.severity === 'WARNING'
@@ -1192,14 +1200,14 @@ export default function Dashboard() {
                     </span>
                     <div className="flex-1 space-y-0.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-slate-300 font-semibold">
-                          {log.actor} ➔ <span className="text-slate-400 font-normal">{log.target}</span>
+                        <span className="text-slate-200 font-bold text-sm">
+                          {log.actor} ➔ <span className="text-slate-300 font-medium">{log.target}</span>
                         </span>
-                        <span className="text-[10px] text-slate-500 shrink-0">
+                        <span className="text-xs text-slate-400 font-mono shrink-0">
                           {new Date(log.timestamp).toLocaleTimeString()}
                         </span>
                       </div>
-                      <p className="text-slate-400 text-[11px] font-sans">{log.details}</p>
+                      <p className="text-slate-300 text-xs font-sans leading-relaxed">{log.details}</p>
                     </div>
                   </div>
                 ))
@@ -1216,8 +1224,7 @@ export default function Dashboard() {
             <Lock className="w-4 h-4" />
             <span>Module 1 Completed</span>
           </div>
-          <h3 className="text-base font-bold text-slate-900 mb-1">User Management & RBAC</h3>
-          <p className="text-xs text-slate-600 leading-relaxed">
+          <h3 className="text-lg font-extrabold text-slate-900 mb-1">User Management & RBAC</h3><p className="text-sm text-slate-600 leading-relaxed">
             JWT session handling, password hashing, user registration, profile updates, and role-based permissions.
           </p>
         </div>
@@ -1227,8 +1234,7 @@ export default function Dashboard() {
             <Layers className="w-4 h-4" />
             <span>Module 2 (Upcoming)</span>
           </div>
-          <h3 className="text-base font-bold text-slate-700 mb-1">Asset Inventory & Risks</h3>
-          <p className="text-xs text-slate-500 leading-relaxed">
+          <h3 className="text-lg font-extrabold text-slate-800 mb-1">Asset Inventory & Risks</h3><p className="text-sm text-slate-600 leading-relaxed">
             Hardware, software, and data asset tracking with risk lifecycle status workflows.
           </p>
         </div>
@@ -1238,8 +1244,7 @@ export default function Dashboard() {
             <Activity className="w-4 h-4" />
             <span>Module 3 (Upcoming)</span>
           </div>
-          <h3 className="text-base font-bold text-slate-700 mb-1">Risk Scoring & Heatmap</h3>
-          <p className="text-xs text-slate-500 leading-relaxed">
+          <h3 className="text-lg font-extrabold text-slate-800 mb-1">Risk Scoring & Heatmap</h3><p className="text-sm text-slate-600 leading-relaxed">
             Dynamic 5 × 5 risk matrix, automated calculations, and PDF/CSV report exports.
           </p>
         </div>

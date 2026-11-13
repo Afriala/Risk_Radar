@@ -201,7 +201,7 @@ export default function Profile() {
             <Shield className="w-3.5 h-3.5 text-emerald-600" />
             <span>SECURITY CREDENTIALS & PROFILE MANAGEMENT • FR-06 & FR-07</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2.5">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 flex items-center gap-3 tracking-tight">
             <User className="w-7 h-7 text-emerald-600" />
             <span>User Profile & Security Governance</span>
           </h1>
@@ -257,7 +257,7 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="space-y-3 pt-4 border-t border-slate-200 text-xs">
+            <div className="space-y-3.5 pt-4 border-t border-slate-200 text-sm">
               <div className="flex justify-between items-center">
                 <span className="text-slate-600">Department</span>
                 <span className="text-slate-900 font-semibold">{user?.department || 'Information Security'}</span>
@@ -341,7 +341,7 @@ export default function Profile() {
         <div className="lg:col-span-2 space-y-8">
           {/* Section 1: Basic Profile Details */}
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-extrabold text-slate-900 mb-4 flex items-center gap-2.5">
               <Shield className="w-5 h-5 text-emerald-600" />
               <span>Personal Identity & Department (FR-06)</span>
             </h3>
@@ -365,7 +365,7 @@ export default function Profile() {
 
             <form onSubmit={handleUpdateProfile} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Full Name</label>
+                <label className="block font-bold text-slate-800 text-sm mb-1.5">Full Name</label>
                 <input
                   type="text"
                   required
@@ -376,7 +376,7 @@ export default function Profile() {
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Enterprise Email (Immutable)</label>
+                <label className="block font-bold text-slate-800 text-sm mb-1.5">Enterprise Email (Immutable)</label>
                 <input
                   type="email"
                   disabled
@@ -386,7 +386,7 @@ export default function Profile() {
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Department</label>
+                <label className="block font-bold text-slate-800 text-sm mb-1.5">Department</label>
                 <input
                   type="text"
                   value={department}
@@ -407,7 +407,7 @@ export default function Profile() {
 
           {/* Section 2: Security Credentials & Password */}
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-extrabold text-slate-900 mb-4 flex items-center gap-2.5">
               <KeyRound className="w-5 h-5 text-emerald-600" />
               <span>Rotate Security Password (Cryptographic Policy)</span>
             </h3>
@@ -431,7 +431,7 @@ export default function Profile() {
 
             <form onSubmit={handleUpdatePassword} className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Current Password</label>
+                <label className="block font-bold text-slate-800 text-sm mb-1.5">Current Password</label>
                 <input
                   type="password"
                   required
@@ -444,7 +444,7 @@ export default function Profile() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">New Password (8+ Chars)</label>
+                  <label className="block font-bold text-slate-800 text-sm mb-1.5">New Password (8+ Chars)</label>
                   <input
                     type="password"
                     required
@@ -455,7 +455,7 @@ export default function Profile() {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Confirm New Password</label>
+                  <label className="block font-bold text-slate-800 text-sm mb-1.5">Confirm New Password</label>
                   <input
                     type="password"
                     required
@@ -480,7 +480,7 @@ export default function Profile() {
           {/* Section 3: 2-Step Multi-Factor Authentication (MFA) */}
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
                 <Smartphone className="w-5 h-5 text-emerald-600" />
                 <span>2-Step Multi-Factor Authentication (MFA Shield)</span>
               </h4>
@@ -505,7 +505,7 @@ export default function Profile() {
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
                   <Key className="w-5 h-5 text-cyan-600" />
                   <span>Personal SOC & Developer API Key (FR-06)</span>
                 </h4>
@@ -590,7 +590,7 @@ export default function Profile() {
 
           {/* Section 5: SOC Security Notification & Alert Preferences (FR-06) */}
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-            <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
               <Bell className="w-5 h-5 text-emerald-600" />
               <span>SOC Security Notification Preferences</span>
             </h4>
