@@ -16,6 +16,23 @@ export const userApi = {
       body: JSON.stringify(payload),
     }),
 
+  // Operational Analyst & General User Operations (PoLP compliant)
+  getTeamRoster: () => apiRequest('/users/team-roster'),
+
+  getMyLogs: () => apiRequest('/users/my-logs'),
+
+  extendSession: () =>
+    apiRequest('/users/extend-session', {
+      method: 'POST',
+    }),
+
+  getApiKey: () => apiRequest('/users/api-key'),
+
+  regenerateApiKey: () =>
+    apiRequest('/users/api-key/regenerate', {
+      method: 'POST',
+    }),
+
   // Admin Level-4 Operations
   listUsers: () => apiRequest('/users'),
 

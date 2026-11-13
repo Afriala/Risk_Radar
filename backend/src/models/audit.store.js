@@ -96,3 +96,4 @@ export const AuditStore = {
     return newEntry;
   },
 };
+

@@ -4,6 +4,11 @@ import {
   getProfile,
   updateProfile,
   updateSecurityCredentials,
+  getTeamRoster,
+  getMyAuditLogs,
+  extendUserSession,
+  getApiKey,
+  regenerateApiKey,
   listUsers,
   provisionUserByAdmin,
   updateUserRole,
@@ -17,10 +22,15 @@ import { requireRole } from '../middleware/role.middleware.js';
 
 const router = Router();
 
-// Profile operations (Any authenticated user)
+// Profile & Personal Security Operations (Any authenticated user)
 router.get('/profile', verifyToken, getProfile);
 router.put('/profile', verifyToken, updateProfile);
 router.put('/credentials', verifyToken, updateSecurityCredentials);
+router.get('/team-roster', verifyToken, getTeamRoster);
+router.get('/my-logs', verifyToken, getMyAuditLogs);
+router.post('/extend-session', verifyToken, extendUserSession);
+router.get('/api-key', verifyToken, getApiKey);
+router.post('/api-key/regenerate', verifyToken, regenerateApiKey);
 
 // Granular Role-Based Access Control (Admin Clearance Level 4)
 router.get('/', verifyToken, requireRole('Admin'), listUsers);

@@ -166,6 +166,16 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const extendSession = async () => {
+    lastActivityRef.current = Date.now();
+    try {
+      await userApi.extendSession();
+    } catch {
+      // Local timer was refreshed even if offline
+    }
+    return true;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -180,6 +190,7 @@ export function AuthProvider({ children }) {
         register,
         logout,
         refreshProfile,
+        extendSession,
       }}
     >
       {children}

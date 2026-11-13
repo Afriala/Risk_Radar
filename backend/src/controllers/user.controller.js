@@ -104,11 +104,26 @@ export const updateSecurityCredentials = async (req, res) => {
 
       const salt = await bcrypt.genSalt(10);
       updates.passwordHash = await bcrypt.hash(newPassword, salt);
+
+      AuditStore.log({
+        action: 'PASSWORD_CHANGED',
+        actor: `${user.name} (${user.role})`,
+        target: user.email,
+        details: 'User successfully updated security account password under strict cryptographic policy.',
+        severity: 'SUCCESS',
+      });
     }
 
     // If user toggles MFA preference
     if (typeof mfaEnabled === 'boolean') {
       updates.mfaEnabled = mfaEnabled;
+      AuditStore.log({
+        action: mfaEnabled ? 'MFA_ENABLED' : 'MFA_DISABLED',
+        actor: `${user.name} (${user.role})`,
+        target: user.email,
+        details: `User personally turned ${mfaEnabled ? 'ON' : 'OFF'} 2-Step MFA protection.`,
+        severity: mfaEnabled ? 'SUCCESS' : 'WARNING',
+      });
     }
 
     const updatedUser = UserStore.update(req.user.id, updates);
@@ -127,6 +142,145 @@ export const updateSecurityCredentials = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Failed to update credentials.' });
+  }
+};
+
+// 3a. Read-Only SOC Team Directory (Accessible to any authenticated user under PoLP)
+export const getTeamRoster = async (req, res) => {
+  try {
+    const users = UserStore.findAll().map((u) => ({
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      role: u.role,
+      department: u.department,
+      mfaEnabled: Boolean(u.mfaEnabled),
+      isActive: Boolean(u.isActive),
+      status: u.status || (u.isActive ? 'active' : 'pending_approval'),
+      createdAt: u.createdAt,
+    }));
+
+    return res.json({
+      success: true,
+      count: users.length,
+      users,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to retrieve SOC team roster.' });
+  }
+};
+
+// 3b. My Personal Security Activity Log (Filtered for authenticated user)
+export const getMyAuditLogs = async (req, res) => {
+  try {
+    const user = req.user;
+    const allLogs = AuditStore.findAll(100);
+    const myEmail = (user.email || '').toLowerCase();
+    const myName = (user.name || '').toLowerCase();
+
+    // Filter logs matching current user
+    const filtered = allLogs.filter((log) => {
+      const actor = (log.actor || '').toLowerCase();
+      const target = (log.target || '').toLowerCase();
+      const details = (log.details || '').toLowerCase();
+      return (
+        actor.includes(myEmail) ||
+        actor.includes(myName) ||
+        target.includes(myEmail) ||
+        target.includes(myName) ||
+        details.includes(myEmail) ||
+        details.includes(myName)
+      );
+    });
+
+    // If few personal logs exist, include base system security policy logs for context
+    let logs = filtered;
+    if (filtered.length < 3) {
+      const baseLogs = allLogs.filter(
+        (l) => l.action.startsWith('SYSTEM_') || l.action.startsWith('POLICY_') || l.action.startsWith('RATE_LIMIT_')
+      );
+      logs = [...filtered, ...baseLogs].slice(0, 25);
+    }
+
+    return res.json({
+      success: true,
+      count: logs.length,
+      logs,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to retrieve personal activity log.' });
+  }
+};
+
+// 3c. Active Session Extender (+15 Minutes Inactivity Guard)
+export const extendUserSession = async (req, res) => {
+  try {
+    const user = req.user;
+    AuditStore.log({
+      action: 'SESSION_EXTENDED',
+      actor: `${user.name || user.email} (${user.role})`,
+      target: 'Active Session Guard',
+      details: 'Active session idle timer refreshed (+15 mins) under NIST SP 800-63B specification.',
+      severity: 'SUCCESS',
+    });
+
+    return res.json({
+      success: true,
+      message: 'Active session successfully extended for 15 minutes.',
+      extendedAt: new Date().toISOString(),
+      idleTimeoutMinutes: 15,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to extend session.' });
+  }
+};
+
+// 3d. Get or Generate Personal SOC / Developer API Key
+export const getApiKey = async (req, res) => {
+  try {
+    const user = UserStore.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found.' });
+
+    let apiKey = user.apiKey;
+    if (!apiKey) {
+      apiKey = `rr_live_soc_${(user.role || 'analyst').toLowerCase()}_${Math.random().toString(36).substring(2, 8)}${Date.now().toString(36)}`;
+      UserStore.update(user.id, { apiKey });
+    }
+
+    return res.json({
+      success: true,
+      apiKey,
+      scopes: ['threats:read-write', 'assets:read-write', 'audit:read-own'],
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to load API key.' });
+  }
+};
+
+// 3e. Regenerate Personal SOC / Developer API Key
+export const regenerateApiKey = async (req, res) => {
+  try {
+    const user = UserStore.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found.' });
+
+    const newApiKey = `rr_live_soc_${(user.role || 'analyst').toLowerCase()}_${Math.random().toString(36).substring(2, 8)}${Date.now().toString(36)}`;
+    UserStore.update(user.id, { apiKey: newApiKey });
+
+    AuditStore.log({
+      action: 'API_KEY_ROTATED',
+      actor: `${user.name} (${user.role})`,
+      target: 'Developer Security Token',
+      details: 'SOC / Developer API token was revoked and regenerated by user.',
+      severity: 'WARNING',
+    });
+
+    return res.json({
+      success: true,
+      message: 'New API Key generated successfully. Your previous key has been immediately invalidated.',
+      apiKey: newApiKey,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to regenerate API key.' });
   }
 };
 

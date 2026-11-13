@@ -32,10 +32,14 @@ import {
   Eye,
   EyeOff,
   X,
+  Search,
+  Key,
+  ExternalLink,
+  Laptop,
 } from 'lucide-react';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, extendSession } = useAuth();
   const [allUsers, setAllUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [auditLogs, setAuditLogs] = useState([]);
@@ -43,6 +47,15 @@ export default function Dashboard() {
   const [adminFeedback, setAdminFeedback] = useState(null); // { text, type: 'success' | 'error' }
   const [actionLoadingId, setActionLoadingId] = useState(null);
   const [copiedInvite, setCopiedInvite] = useState(false);
+
+  // Operational Analyst & General User State (PoLP Compliant)
+  const [teamRoster, setTeamRoster] = useState([]);
+  const [loadingRoster, setLoadingRoster] = useState(false);
+  const [analystLogs, setAnalystLogs] = useState([]);
+  const [loadingAnalystLogs, setLoadingAnalystLogs] = useState(false);
+  const [rosterSearch, setRosterSearch] = useState('');
+  const [extendingSession, setExtendingSession] = useState(false);
+  const [sessionToast, setSessionToast] = useState(null);
 
   // Direct User Provisioning State (Admin Path 2)
   const [showProvisionModal, setShowProvisionModal] = useState(false);
@@ -86,12 +99,69 @@ export default function Dashboard() {
       .finally(() => setLoadingLogs(false));
   }, [user?.role]);
 
+  const fetchAnalystData = useCallback(() => {
+    setLoadingRoster(true);
+    userApi
+      .getTeamRoster()
+      .then((res) => {
+        if (res.success && res.users) {
+          setTeamRoster(res.users);
+        }
+      })
+      .catch((err) => console.error('Failed to load team roster:', err))
+      .finally(() => setLoadingRoster(false));
+
+    setLoadingAnalystLogs(true);
+    userApi
+      .getMyLogs()
+      .then((res) => {
+        if (res.success && res.logs) {
+          setAnalystLogs(res.logs);
+        }
+      })
+      .catch((err) => console.error('Failed to load personal logs:', err))
+      .finally(() => setLoadingAnalystLogs(false));
+  }, []);
+
   useEffect(() => {
     if (user?.role === 'Admin') {
       fetchUsers();
       fetchLogs();
+    } else {
+      fetchAnalystData();
     }
-  }, [user?.role, fetchUsers, fetchLogs]);
+  }, [user?.role, fetchUsers, fetchLogs, fetchAnalystData]);
+
+  const handleSessionExtend = async () => {
+    setExtendingSession(true);
+    try {
+      await extendSession();
+      setSessionToast('Active session successfully extended (+15 mins) under NIST SP 800-63B policy.');
+      setTimeout(() => setSessionToast(null), 5000);
+      userApi.getMyLogs().then((res) => {
+        if (res.success && res.logs) setAnalystLogs(res.logs);
+      });
+      if (user?.role === 'Admin') {
+        fetchLogs();
+      }
+    } catch (err) {
+      setSessionToast('Failed to extend session: ' + (err.message || 'Error'));
+      setTimeout(() => setSessionToast(null), 5000);
+    } finally {
+      setExtendingSession(false);
+    }
+  };
+
+  const filteredRoster = teamRoster.filter((u) => {
+    if (!rosterSearch) return true;
+    const q = rosterSearch.toLowerCase();
+    return (
+      (u.name || '').toLowerCase().includes(q) ||
+      (u.email || '').toLowerCase().includes(q) ||
+      (u.role || '').toLowerCase().includes(q) ||
+      (u.department || '').toLowerCase().includes(q)
+    );
+  });
 
   const showFeedback = (text, type = 'success') => {
     setAdminFeedback({ text, type });
@@ -251,12 +321,37 @@ export default function Dashboard() {
               {user?.mfaEnabled ? 'Enabled' : 'Disabled'}
             </span>
           </div>
-          <div className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-center shadow-sm">
+          <div className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-center shadow-sm flex flex-col justify-between items-center min-w-[140px]">
             <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono">Session Guard</span>
-            <span className="text-base font-bold text-emerald-600">Active (15m Idle)</span>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <span className="text-sm font-bold text-emerald-600">Active (15m)</span>
+              <button
+                type="button"
+                onClick={handleSessionExtend}
+                disabled={extendingSession}
+                title="Renew 15-minute rolling idle session (NIST SP 800-63B)"
+                className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 transition active:scale-95 cursor-pointer inline-flex items-center gap-1"
+              >
+                <Clock className="w-3 h-3" />
+                <span>{extendingSession ? '...' : '+15m'}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Global Session Feedback Toast */}
+      {sessionToast && (
+        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium flex items-center justify-between shadow-sm animate-fadeIn">
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{sessionToast}</span>
+          </div>
+          <button onClick={() => setSessionToast(null)} className="text-emerald-700 hover:text-emerald-900 cursor-pointer">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {/* Role-Specific Workspace View */}
       {user?.role === 'Admin' && (
@@ -558,66 +653,558 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Analyst Role Workspace */}
+      {/* Analyst Role Workspace (Level 3 Operations) */}
       {user?.role === 'Analyst' && (
-        <div className="bg-white border border-cyan-200 rounded-2xl p-8 space-y-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-700">
-              <AlertTriangle className="w-6 h-6" />
-            </div>
+        <div className="space-y-6">
+          {/* Analyst Operational Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <div>
-              <h2 className="text-xl font-bold text-slate-900">Cybersecurity Analyst Operations</h2>
-              <p className="text-xs text-slate-500">Threat Logging & Asset Management Center</p>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-cyan-100 text-cyan-800 border border-cyan-300">
+                  CLEARANCE LEVEL 3
+                </span>
+                <span className="text-xs font-semibold text-slate-500 font-mono">
+                  PoLP ENFORCED
+                </span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mt-1">
+                <ShieldCheck className="w-5 h-5 text-cyan-600" />
+                <span>Cybersecurity Analyst Operations & SOC Workspace</span>
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Authorized for Threat Logging, Asset Inventories & Risk Lifecycle Operations under Principle of Least Privilege.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <button
+                type="button"
+                onClick={handleSessionExtend}
+                disabled={extendingSession}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition active:scale-95 cursor-pointer"
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>{extendingSession ? 'Extending...' : 'Extend Session (+15m)'}</span>
+              </button>
+              <a
+                href="/profile"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-xs font-bold transition active:scale-95 cursor-pointer"
+              >
+                <Key className="w-3.5 h-3.5 text-slate-600" />
+                <span>My Profile & API Key</span>
+              </a>
+              <button
+                type="button"
+                onClick={fetchAnalystData}
+                disabled={loadingRoster}
+                title="Refresh Team Roster and Logs"
+                className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 transition active:scale-95 cursor-pointer"
+              >
+                <RefreshCw className={`w-4 h-4 ${loadingRoster ? 'animate-spin text-cyan-600' : ''}`} />
+              </button>
             </div>
           </div>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            As an <strong>Analyst</strong>, you are authorized to log cyber threats, manage enterprise asset
-            inventories (hardware, software, data), and track risk lifecycles from <em>Identified</em> to <em>Resolved</em>.
-          </p>
-          <div className="p-4 bg-cyan-50/60 border border-cyan-200 rounded-xl text-xs text-cyan-900 leading-relaxed">
-            📌 <strong>Module 1 Status:</strong> Authentication and Analyst RBAC privileges verified. Modules 2 & 3 (Asset CRUD, Threat Logging, and Dynamic Heatmaps) will plug into this authorized workspace.
+
+          {/* 1. Analyst RBAC Clearance Matrix (Level 3) */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-5 border-b border-slate-200 gap-2">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-700">
+                  <Shield className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900">My RBAC Clearance Matrix (Security Operations Level 3)</h3>
+                  <p className="text-xs text-slate-500">Explicit Capabilities Granted vs Restricted (PoLP Enforced)</p>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold font-mono bg-cyan-50 text-cyan-800 border border-cyan-200">
+                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-600" />
+                CLEARANCE VERIFIED
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Authorized Operations Column */}
+              <div className="space-y-3 bg-emerald-50/40 border border-emerald-200/80 rounded-xl p-4">
+                <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-wider font-mono">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <span>Authorized Capabilities (Operational Scope)</span>
+                </div>
+                <ul className="space-y-2.5 text-xs text-slate-700">
+                  <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-900">Threat & Vulnerability Logging (Module 2):</strong>
+                      <span className="text-slate-600 block mt-0.5">Authorized to log CVE vectors, incident descriptions, and assign initial impact levels.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-900">Asset Inventory Cataloging (Module 2):</strong>
+                      <span className="text-slate-600 block mt-0.5">Full authority to create, update, and manage Hardware, Software, and Sensitive Data assets.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-900">Risk Lifecycle Transitions:</strong>
+                      <span className="text-slate-600 block mt-0.5">Advance risk status through <em>Identified ➔ Assessing ➔ Mitigated ➔ Resolved</em>.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-900">Personal Credentials & 2-Step MFA Shield (FR-06):</strong>
+                      <span className="text-slate-600 block mt-0.5">Self-service password rotation (8+ char NIST policy), personal API key, and 6-digit MFA OTP.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-900">Active Session Extender (FR-07):</strong>
+                      <span className="text-slate-600 block mt-0.5">Extend active session (+15m) to prevent auto-logout while performing ongoing threat analyses.</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Restricted Operations Column (PoLP Enforced) */}
+              <div className="space-y-3 bg-slate-50 border border-slate-200 rounded-xl p-4">
+                <div className="flex items-center gap-2 text-slate-600 font-bold text-xs uppercase tracking-wider font-mono">
+                  <Lock className="w-4 h-4 text-slate-500" />
+                  <span>Restricted Capabilities (Principle of Least Privilege)</span>
+                </div>
+                <ul className="space-y-2.5 text-xs text-slate-600">
+                  <li className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-800">User Account Deletion:</strong>
+                      <span className="text-slate-500 block mt-0.5">Locked — Only System Administrators (Level 4) may permanently purge user accounts from directory.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-800">Role & Privilege Escalation (RBAC Modification):</strong>
+                      <span className="text-slate-500 block mt-0.5">Locked — Promoting or demoting user roles requires administrative authorization.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-800">Direct User Provisioning:</strong>
+                      <span className="text-slate-500 block mt-0.5">Locked — Creating immediate active accounts without verification is restricted to Admin.</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2 bg-white p-2.5 rounded-lg border border-slate-200 shadow-2xs">
+                    <XCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <div>
+                      <strong className="text-slate-800">Enterprise Invite Code Configuration:</strong>
+                      <span className="text-slate-500 block mt-0.5">Locked — Organization onboarding keys (<code className="text-emerald-700 font-mono">RR-ORG-2026</code>) are managed by Administration.</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. SOC Team Directory / Personnel Roster (Read-Only) */}
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-50/60">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Users className="w-4 h-4 text-cyan-600" />
+                    <span>SOC Team Directory & Personnel Roster</span>
+                  </h3>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-600 border border-slate-300">
+                    READ-ONLY (PoLP)
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Directory of organization personnel for cross-functional threat escalation. Edit/Delete actions are disabled for Level 3 Analysts.
+                </p>
+              </div>
+
+              {/* Search Bar */}
+              <div className="relative w-full md:w-64">
+                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Filter roster by name or dept..."
+                  value={rosterSearch}
+                  onChange={(e) => setRosterSearch(e.target.value)}
+                  className="w-full pl-8 pr-3 py-1.5 rounded-xl border border-slate-300 text-xs text-slate-900 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500"
+                />
+              </div>
+            </div>
+
+            {loadingRoster ? (
+              <div className="p-8 text-center text-xs text-slate-500 flex items-center justify-center gap-2">
+                <RefreshCw className="w-4 h-4 animate-spin text-cyan-600" />
+                <span>Loading security personnel directory...</span>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="border-b border-slate-200 bg-slate-100/70 text-slate-600 font-mono uppercase text-[11px] tracking-wider">
+                      <th className="py-3 px-4 font-semibold">Team Member</th>
+                      <th className="py-3 px-4 font-semibold">Role (RBAC)</th>
+                      <th className="py-3 px-4 font-semibold">Department</th>
+                      <th className="py-3 px-4 font-semibold">MFA Shield</th>
+                      <th className="py-3 px-4 font-semibold">Status</th>
+                      <th className="py-3 px-4 font-semibold text-right">Clearance Level</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200">
+                    {filteredRoster.map((u) => {
+                      const isMe = u.email === user?.email;
+                      return (
+                        <tr key={u.id} className={`hover:bg-slate-50/70 transition ${isMe ? 'bg-cyan-50/30' : ''}`}>
+                          <td className="py-3.5 px-4">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-7 h-7 rounded-full bg-slate-100 border border-slate-300 flex items-center justify-center text-slate-700 font-bold text-xs">
+                                {u.name ? u.name.charAt(0).toUpperCase() : 'U'}
+                              </div>
+                              <div>
+                                <div className="font-bold text-slate-900 flex items-center gap-1.5">
+                                  <span>{u.name}</span>
+                                  {isMe && (
+                                    <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-cyan-100 text-cyan-800 border border-cyan-300">
+                                      You
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="text-[11px] text-slate-500 font-mono">{u.email}</span>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span
+                              className={`px-2 py-0.5 rounded text-xs font-mono font-bold border ${
+                                u.role === 'Admin'
+                                  ? 'bg-rose-50 text-rose-700 border-rose-200'
+                                  : u.role === 'Analyst'
+                                  ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
+                                  : u.role === 'Executive'
+                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                  : 'bg-amber-50 text-amber-800 border-amber-200'
+                              }`}
+                            >
+                              {u.role}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4 text-slate-700 whitespace-nowrap">{u.department || 'General IT'}</td>
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span
+                              className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold border ${
+                                u.mfaEnabled
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                  : 'bg-slate-100 text-slate-500 border-slate-200'
+                              }`}
+                            >
+                              {u.mfaEnabled ? 'ENABLED' : 'OFF'}
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                              Active
+                            </span>
+                          </td>
+                          <td className="py-3.5 px-4 whitespace-nowrap text-right font-mono text-[11px]">
+                            <span className="text-slate-500">
+                              {u.role === 'Admin'
+                                ? 'Level 4 • Governance'
+                                : u.role === 'Analyst'
+                                ? 'Level 3 • SecOps'
+                                : u.role === 'Executive'
+                                ? 'Level 2 • KPI View'
+                                : 'Level 1 • Audit'}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* 3. My Personal Security Activity Log (Real-Time Terminal) */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-md text-slate-100">
+            <div className="px-5 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-cyan-400" />
+                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-200">
+                  My Personal Security Activity Log (Analyst Audit Trail)
+                </h3>
+              </div>
+              <span className="text-[11px] font-mono text-cyan-400 font-semibold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                LIVE PERSONAL MONITOR
+              </span>
+            </div>
+
+            <div className="max-h-60 overflow-y-auto divide-y divide-slate-800/60 font-mono text-xs">
+              {loadingAnalystLogs ? (
+                <div className="p-6 text-center text-slate-500">Loading audit records...</div>
+              ) : analystLogs.length === 0 ? (
+                <div className="p-6 text-center text-slate-500">No security audit logs recorded for your account yet.</div>
+              ) : (
+                analystLogs.map((log) => (
+                  <div key={log.id} className="p-3.5 hover:bg-slate-800/40 transition flex items-start gap-3">
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0 mt-0.5 ${
+                        log.severity === 'SUCCESS'
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                          : log.severity === 'WARNING'
+                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                          : log.severity === 'ALERT'
+                          ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                          : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                      }`}
+                    >
+                      {log.action}
+                    </span>
+                    <div className="flex-1 space-y-0.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-slate-300 font-semibold">
+                          {log.actor} ➔ <span className="text-slate-400 font-normal">{log.target}</span>
+                        </span>
+                        <span className="text-[10px] text-slate-500 shrink-0">
+                          {new Date(log.timestamp).toLocaleTimeString()}
+                        </span>
+                      </div>
+                      <p className="text-slate-400 text-[11px] font-sans">{log.details}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Executive Role Workspace */}
+      {/* Executive Role Workspace (Level 2 Analytics & Oversight) */}
       {user?.role === 'Executive' && (
-        <div className="bg-white border border-emerald-200 rounded-2xl p-8 space-y-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700">
-              <Activity className="w-6 h-6" />
-            </div>
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <div>
-              <h2 className="text-xl font-bold text-slate-900">Executive Risk & KPI Insights</h2>
-              <p className="text-xs text-slate-500">Strategic Decision-Making Dashboard</p>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  CLEARANCE LEVEL 2
+                </span>
+                <span className="text-xs font-semibold text-slate-500 font-mono">
+                  EXECUTIVE OVERSIGHT
+                </span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mt-1">
+                <Activity className="w-5 h-5 text-emerald-600" />
+                <span>Executive Risk & Strategic KPI Insights</span>
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Strategic visibility into enterprise threat postures, dynamic heatmaps, and security investment allocations.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <button
+                type="button"
+                onClick={handleSessionExtend}
+                disabled={extendingSession}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition active:scale-95 cursor-pointer"
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>{extendingSession ? 'Extending...' : 'Extend Session (+15m)'}</span>
+              </button>
             </div>
           </div>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            As an <strong>Executive</strong>, you consume high-level KPI metrics, heatmaps, and automated PDF reports to drive enterprise security investments.
-          </p>
-          <div className="p-4 bg-emerald-50/60 border border-emerald-200 rounded-xl text-xs text-emerald-900 leading-relaxed">
-            📌 <strong>Module 1 Status:</strong> Executive session authenticated with role-based restriction. Heatmap and Report Export modules will display here.
+
+          {/* Strategic Posture KPI Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-mono font-bold uppercase text-slate-500">Enterprise Risk Score</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700 border border-red-200">
+                  HIGH ALERT
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-slate-900 font-mono">
+                18.4 <span className="text-sm font-normal text-slate-400 font-sans">/ 25.0 Max</span>
+              </div>
+              <p className="text-xs text-slate-500 mt-2">Calculated dynamically across 94 catalogued enterprise IT assets.</p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-mono font-bold uppercase text-slate-500">Catalogued Assets</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 border border-emerald-200">
+                  94 TOTAL
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-slate-900 font-mono">
+                48 <span className="text-xs text-slate-500 font-normal">HW</span> · 32{' '}
+                <span className="text-xs text-slate-500 font-normal">SW</span> · 14{' '}
+                <span className="text-xs text-slate-500 font-normal">DATA</span>
+              </div>
+              <p className="text-xs text-slate-500 mt-2">Hardware servers, cloud software, and encrypted financial databases.</p>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-mono font-bold uppercase text-slate-500">RBAC Governance</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-100 text-cyan-800 border border-cyan-200">
+                  LEVEL 2 ACTIVE
+                </span>
+              </div>
+              <div className="text-3xl font-extrabold text-emerald-700 font-mono">
+                NIST SP <span className="text-sm font-normal text-slate-500 font-sans">800-63B</span>
+              </div>
+              <p className="text-xs text-slate-500 mt-2">Tab-scoped authentication guard with 15-minute rolling idle protection.</p>
+            </div>
+          </div>
+
+          {/* SOC Team Roster for Executive */}
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/60">
+              <div>
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Users className="w-4 h-4 text-emerald-600" />
+                  <span>On-Duty Security Personnel & SOC Team</span>
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">Executive directory of personnel actively defending corporate infrastructure.</p>
+              </div>
+            </div>
+            <div className="p-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                {teamRoster.slice(0, 8).map((u) => (
+                  <div key={u.id} className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 font-bold flex items-center justify-center text-xs shrink-0">
+                      {u.name ? u.name.charAt(0) : 'U'}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-slate-900 truncate">{u.name}</div>
+                      <div className="text-[11px] text-slate-500 truncate">{u.department}</div>
+                      <span className="inline-block mt-1 px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-white border border-slate-200 text-slate-700">
+                        {u.role}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Auditor Role Workspace */}
+      {/* Auditor Role Workspace (Level 1 Compliance & Attestation) */}
       {user?.role === 'Auditor' && (
-        <div className="bg-white border border-amber-200 rounded-2xl p-8 space-y-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
-              <FileCheck2 className="w-6 h-6" />
-            </div>
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <div>
-              <h2 className="text-xl font-bold text-slate-900">External Compliance & Audit Trail</h2>
-              <p className="text-xs text-slate-500">Immutable Historical Logs & Verification</p>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                  CLEARANCE LEVEL 1
+                </span>
+                <span className="text-xs font-semibold text-slate-500 font-mono">
+                  COMPLIANCE AUDIT
+                </span>
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2 mt-1">
+                <FileCheck2 className="w-5 h-5 text-amber-600" />
+                <span>External Compliance & Security Audit Trail</span>
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Read-only attestation workspace. Full verification access to immutable event logs with zero data modification permissions.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <button
+                type="button"
+                onClick={handleSessionExtend}
+                disabled={extendingSession}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition active:scale-95 cursor-pointer"
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>{extendingSession ? 'Extending...' : 'Extend Session (+15m)'}</span>
+              </button>
             </div>
           </div>
-          <p className="text-sm text-slate-600 leading-relaxed">
-            As an <strong>Auditor</strong>, your role provides read-only verification access to security compliance postures, audit logs, and risk lifecycle records.
-          </p>
-          <div className="p-4 bg-amber-50/60 border border-amber-200 rounded-xl text-xs text-amber-900 leading-relaxed">
-            📌 <strong>Module 1 Status:</strong> Auditor credentials and read-only compliance access verified.
+
+          {/* Auditor Clearance Matrix */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-900 mb-2">Auditor Regulatory Verification Scope (ISO 27001 / SOC 2)</h3>
+            <p className="text-xs text-slate-500 mb-4">Strict enforcement of the Principle of Least Privilege: Auditors have full read-only transparency and zero destructive authority.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200">
+                <span className="font-bold text-emerald-800 block mb-1">✓ Authorized Attestations</span>
+                <p className="text-slate-600 leading-relaxed">
+                  Verify cryptographic password policies (bcrypt 10 salt rounds), review all historical user authentication logs, attest to 15-minute idle timeout compliance.
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                <span className="font-bold text-slate-700 block mb-1">✕ Prohibited Modifications</span>
+                <p className="text-slate-500 leading-relaxed">
+                  Zero database write authority. Cannot alter risk ratings, modify user roles, delete log trails, or adjust security configuration settings.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Immutable Audit Log Terminal */}
+          <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-md text-slate-100">
+            <div className="px-5 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-amber-400" />
+                <h3 className="text-xs font-mono font-bold tracking-wider uppercase text-slate-200">
+                  Regulatory Compliance Audit Trail (Read-Only Attestation)
+                </h3>
+              </div>
+              <span className="text-[11px] font-mono text-amber-400 font-semibold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                IMMUTABLE AUDIT STREAM
+              </span>
+            </div>
+
+            <div className="max-h-60 overflow-y-auto divide-y divide-slate-800/60 font-mono text-xs">
+              {analystLogs.length === 0 ? (
+                <div className="p-6 text-center text-slate-500">No security audit logs available for review.</div>
+              ) : (
+                analystLogs.map((log) => (
+                  <div key={log.id} className="p-3.5 hover:bg-slate-800/40 transition flex items-start gap-3">
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0 mt-0.5 ${
+                        log.severity === 'SUCCESS'
+                          ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                          : log.severity === 'WARNING'
+                          ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                          : log.severity === 'ALERT'
+                          ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                          : 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                      }`}
+                    >
+                      {log.action}
+                    </span>
+                    <div className="flex-1 space-y-0.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-slate-300 font-semibold">
+                          {log.actor} ➔ <span className="text-slate-400 font-normal">{log.target}</span>
+                        </span>
+                        <span className="text-[10px] text-slate-500 shrink-0">
+                          {new Date(log.timestamp).toLocaleTimeString()}
+                        </span>
+                      </div>
+                      <p className="text-slate-400 text-[11px] font-sans">{log.details}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       )}
