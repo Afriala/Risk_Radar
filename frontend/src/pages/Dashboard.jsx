@@ -361,14 +361,14 @@ export default function Dashboard() {
             </div>
 
             {/* Card 3: Session Guard */}
-            <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[165px] flex flex-col justify-between items-center">
+            <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[190px] flex flex-col justify-between items-center">
               <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono font-bold mb-1">
                 Session Guard
               </span>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700">
+                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 font-mono">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Protected
+                  Active (15m Idle)
                 </span>
                 <button
                   type="button"
