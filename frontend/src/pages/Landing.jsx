@@ -43,16 +43,6 @@ export default function Landing() {
   return (
     <div className="w-full max-w-full overflow-x-hidden bg-white text-slate-900 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-900">
 
-      {/* Top Announcement Bar */}
-      <div className="bg-slate-100 border-b border-slate-200 text-xs text-slate-600 py-2.5 px-4 text-center flex items-center justify-center gap-2">
-        <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
-        <span className="font-semibold text-slate-700">SE331 Cybersecurity Lab Project • Group 08</span>
-        <span className="text-slate-300 hidden sm:inline">|</span>
-        <span className="hidden sm:inline text-emerald-700 font-mono font-semibold">
-          Module 1 Active: User Management & RBAC
-        </span>
-      </div>
-
       {/* Main Navigation Header - Clean White Corporate */}
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-200">
         <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 h-20 sm:h-24 flex items-center justify-between gap-3 sm:gap-4">
