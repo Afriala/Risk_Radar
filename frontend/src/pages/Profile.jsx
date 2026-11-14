@@ -1,6 +1,6 @@
 // RiskRadar - User Profile & Security Credentials Page
 // Clean Corporate White Theme
-// Fulfills Requirements FR-06 & FR-07: Account credential updates, profile management,
+// Account credential updates, profile management,
 // multi-factor security preferences, Developer/SOC API Keys, Alert preferences, and Active Session Guard
 
 import React, { useState, useEffect } from 'react';
@@ -199,7 +199,7 @@ export default function Profile() {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold mb-2">
             <Shield className="w-3.5 h-3.5 text-emerald-600" />
-            <span>SECURITY CREDENTIALS & PROFILE MANAGEMENT • FR-06 & FR-07</span>
+            <span>SECURITY CREDENTIALS & IDENTITY GOVERNANCE</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 flex items-center gap-3 tracking-tight">
             <User className="w-7 h-7 text-emerald-600" />
@@ -304,7 +304,7 @@ export default function Profile() {
           <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4 text-xs">
             <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
               <Laptop className="w-4 h-4 text-emerald-600" />
-              <span>Active Session & Device Guard (FR-07)</span>
+              <span>Active Session & Device Guard</span>
             </div>
             <p className="text-slate-600 text-[11px] leading-relaxed">
               Your session is isolated to this browser window tab using <code className="text-emerald-700 font-mono">sessionStorage</code>. Closing the tab immediately destroys the cryptographic token.
@@ -343,7 +343,7 @@ export default function Profile() {
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h3 className="text-lg font-extrabold text-slate-900 mb-4 flex items-center gap-2.5">
               <Shield className="w-5 h-5 text-emerald-600" />
-              <span>Personal Identity & Department (FR-06)</span>
+              <span>Personal Identity & Department</span>
             </h3>
 
             {profileMsg.text && (
@@ -507,7 +507,7 @@ export default function Profile() {
               <div>
                 <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
                   <Key className="w-5 h-5 text-cyan-600" />
-                  <span>Personal SOC & Developer API Key (FR-06)</span>
+                  <span>Personal SOC & Developer API Key</span>
                 </h4>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Authorize automated scripts, SIEM ingestion pipelines, and vulnerability scanners using your personal bearer token.

@@ -307,7 +307,7 @@ export default function Dashboard() {
         <div className="space-y-2.5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-mono font-bold tracking-wide">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>SESSION AUTHENTICATED • MODULE 1 ACTIVE</span>
+            <span>ENTERPRISE SESSION ACTIVE • JWT VERIFIED</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Welcome back, <span className="text-emerald-600">{user?.name}</span>
@@ -361,14 +361,14 @@ export default function Dashboard() {
             </div>
 
             {/* Card 3: Session Guard */}
-            <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[190px] flex flex-col justify-between items-center">
+            <div className="px-5 py-3.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs min-w-[165px] flex flex-col justify-between items-center">
               <span className="block text-xs text-slate-500 uppercase tracking-wider font-mono font-bold mb-1">
                 Session Guard
               </span>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-emerald-700 font-mono">
+                <span className="inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  Active (15m Idle)
+                  Protected
                 </span>
                 <button
                   type="button"
@@ -776,14 +776,14 @@ export default function Dashboard() {
                   <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900">Threat & Vulnerability Logging (Module 2):</strong>
+                      <strong className="text-slate-900">Threat & Vulnerability Logging:</strong>
                       <span className="text-slate-600 block mt-0.5">Authorized to log CVE vectors, incident descriptions, and assign initial impact levels.</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900">Asset Inventory Cataloging (Module 2):</strong>
+                      <strong className="text-slate-900">Asset Inventory Cataloging:</strong>
                       <span className="text-slate-600 block mt-0.5">Full authority to create, update, and manage Hardware, Software, and Sensitive Data assets.</span>
                     </div>
                   </li>
@@ -797,14 +797,14 @@ export default function Dashboard() {
                   <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900">Personal Credentials & 2-Step MFA Shield (FR-06):</strong>
+                      <strong className="text-slate-900">Personal Credentials & 2-Step MFA Shield:</strong>
                       <span className="text-slate-600 block mt-0.5">Self-service password rotation (8+ char NIST policy), personal API key, and 6-digit MFA OTP.</span>
                     </div>
                   </li>
                   <li className="flex items-start gap-2 bg-white/90 p-2.5 rounded-lg border border-emerald-100 shadow-2xs">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <strong className="text-slate-900">Active Session Extender (FR-07):</strong>
+                      <strong className="text-slate-900">Active Session Extender:</strong>
                       <span className="text-slate-600 block mt-0.5">Extend active session (+15m) to prevent auto-logout while performing ongoing threat analyses.</span>
                     </div>
                   </li>
@@ -1397,36 +1397,60 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Module Overview Cards */}
+      {/* Platform Architecture & Capability Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-        <div className="bg-white border border-emerald-200 rounded-xl p-5 shadow-sm">
-          <div className="flex items-center gap-2 text-emerald-700 text-xs font-mono font-bold uppercase mb-2">
-            <Lock className="w-4 h-4" />
-            <span>Module 1 Completed</span>
+        <div className="bg-white border border-emerald-200/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-emerald-700 text-xs font-mono font-bold uppercase mb-2.5">
+              <Lock className="w-4 h-4" />
+              <span>Identity & Access Layer</span>
+            </div>
+            <h3 className="text-lg font-extrabold text-slate-900 mb-1.5">Identity & RBAC Governance</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Stateless JWT authentication, adaptive bcrypt credential hashing, self-service profile controls, and multi-tier role authorization boundaries.
+            </p>
           </div>
-          <h3 className="text-lg font-extrabold text-slate-900 mb-1">User Management & RBAC</h3><p className="text-sm text-slate-600 leading-relaxed">
-            JWT session handling, password hashing, user registration, profile updates, and role-based permissions.
-          </p>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono">
+            <span className="text-slate-500">Security Engine</span>
+            <span className="font-bold text-emerald-700 flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Active & Enforced
+            </span>
+          </div>
         </div>
 
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div className="flex items-center gap-2 text-slate-500 text-xs font-mono font-bold uppercase mb-2">
-            <Layers className="w-4 h-4" />
-            <span>Module 2 (Upcoming)</span>
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-slate-600 text-xs font-mono font-bold uppercase mb-2.5">
+              <Layers className="w-4 h-4 text-emerald-600" />
+              <span>Asset & Threat Monitoring</span>
+            </div>
+            <h3 className="text-lg font-extrabold text-slate-900 mb-1.5">Asset Inventory & Threat Register</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Unified tracking for hardware devices, enterprise software licenses, and critical cloud repositories with continuous CVE exposure indexing.
+            </p>
           </div>
-          <h3 className="text-lg font-extrabold text-slate-800 mb-1">Asset Inventory & Risks</h3><p className="text-sm text-slate-600 leading-relaxed">
-            Hardware, software, and data asset tracking with risk lifecycle status workflows.
-          </p>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono">
+            <span className="text-slate-500">Inventory Status</span>
+            <span className="font-bold text-slate-800">94 Defended Assets</span>
+          </div>
         </div>
 
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-sm">
-          <div className="flex items-center gap-2 text-slate-500 text-xs font-mono font-bold uppercase mb-2">
-            <Activity className="w-4 h-4" />
-            <span>Module 3 (Upcoming)</span>
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 text-slate-600 text-xs font-mono font-bold uppercase mb-2.5">
+              <Activity className="w-4 h-4 text-emerald-600" />
+              <span>Quantitative Risk Engine</span>
+            </div>
+            <h3 className="text-lg font-extrabold text-slate-900 mb-1.5">Risk Scoring & 5×5 Heatmap</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Algorithmic likelihood-versus-impact calculations, real-time matrix distributions, threat thresholds, and automated CISO executive report exports.
+            </p>
           </div>
-          <h3 className="text-lg font-extrabold text-slate-800 mb-1">Risk Scoring & Heatmap</h3><p className="text-sm text-slate-600 leading-relaxed">
-            Dynamic 5 × 5 risk matrix, automated calculations, and PDF/CSV report exports.
-          </p>
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono">
+            <span className="text-slate-500">Calculations</span>
+            <span className="font-bold text-slate-800">Dynamic 5 × 5 Matrix</span>
+          </div>
         </div>
       </div>
 

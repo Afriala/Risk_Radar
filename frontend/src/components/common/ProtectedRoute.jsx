@@ -31,7 +31,7 @@ export default function ProtectedRoute({ allowedRoles, children }) {
           <ShieldAlert className="w-16 h-16 text-red-600 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Access Denied (403)</h2>
           <p className="text-slate-600 text-sm mb-4 leading-relaxed">
-            Your role is <strong className="text-emerald-700 font-bold">{user?.role}</strong>. You do not possess sufficient clearance privileges to access this enterprise module.
+            Your role is <strong className="text-emerald-700 font-bold">{user?.role}</strong>. You do not possess sufficient clearance privileges to access this enterprise resource.
           </p>
           <a
             href="/"
