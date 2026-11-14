@@ -646,7 +646,7 @@ export default function Landing() {
               Building the Future of Cyber Resilience
             </h2>
             <p className="text-slate-600 text-sm mt-3">
-              RiskRadar was designed as part of <strong>SE331 (Software Engineering Lab)</strong> to bridge the critical gap
+              RiskRadar was designed as an enterprise cyber resilience platform to bridge the critical gap
               between raw technical vulnerability data and executive decision-making.
             </p>
           </div>
@@ -789,15 +789,11 @@ export default function Landing() {
                 </a>
               </div>
             </div>
-
-            <p className="text-xs text-slate-500 pt-2 font-mono">
-              Department of Software Engineering • Daffodil International University (DIU)
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Academic Project Footer */}
+      {/* Enterprise Footer */}
       <footer id="compliance" className="w-full bg-slate-50 py-12 border-t border-slate-200 text-slate-600 text-xs">
         <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-slate-200 text-center md:text-left">
@@ -811,14 +807,14 @@ export default function Landing() {
             </div>
 
             <div className="space-y-1">
-              <p className="text-slate-800 font-semibold">SE331, Lab Section: B1 • Group No: 08 (Fall 2026)</p>
-              <p className="text-slate-500">Mahabubur Rahman (232-35-706) & Afri Alam (232-35-643)</p>
+              <p className="text-slate-800 font-semibold">Enterprise Cyber Risk Governance Platform</p>
+              <p className="text-slate-500">Continuous Threat Exposure & Risk Management</p>
             </div>
           </div>
 
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500 text-center sm:text-left">
             <p>© 2026 RiskRadar Enterprise. All rights reserved.</p>
-            <p className="font-mono text-xs">Decoupled Architecture: React (Vercel) + Node.js (Render)</p>
+            <p className="text-slate-400 font-sans text-xs">ISO 27001 • SOC 2 Type II • NIST SP 800-63B Architecture</p>
           </div>
         </div>
       </footer>
