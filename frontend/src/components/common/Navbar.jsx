@@ -33,7 +33,7 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const hideOnRoutes = ['/', '/login', '/register'];
+  const hideOnRoutes = ['/', '/login', '/register', '/dashboard'];
   if (!isAuthenticated || hideOnRoutes.includes(location.pathname)) return null;
 
   const handleLogout = async () => {
