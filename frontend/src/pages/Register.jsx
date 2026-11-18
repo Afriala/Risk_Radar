@@ -104,7 +104,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-900">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-900 overflow-x-hidden">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link to="/" className="inline-block mb-3">
           <img
@@ -114,17 +114,17 @@ export default function Register() {
           />
         </Link>
         <p className="text-xs text-slate-500 uppercase tracking-widest font-mono font-semibold">
-          Personnel Clearance Onboarding Portal
+          Organization Account Registration
         </p>
       </div>
 
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-lg px-4">
-        <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-2xl sm:px-10">
+      <div className="mt-6 w-full max-w-lg mx-auto px-4">
+        <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-xl sm:px-10">
 
           {/* VIEW A: REGISTRATION SUBMITTED (PENDING APPROVAL) */}
           {submittedData ? (
             <div className="text-center space-y-5 animate-in fade-in duration-200">
-              <div className="w-16 h-16 rounded-2xl bg-amber-100 border border-amber-300 text-amber-800 flex items-center justify-center mx-auto shadow-sm">
+              <div className="w-16 h-16 rounded-xl bg-amber-100 border border-amber-300 text-amber-800 flex items-center justify-center mx-auto shadow-sm">
                 <Clock className="w-8 h-8 text-amber-600 animate-pulse" />
               </div>
 
@@ -140,13 +140,13 @@ export default function Register() {
               {/* Security Policy Explanatory Box */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-left text-xs space-y-2">
                 <div className="flex items-center gap-2 font-bold text-slate-800 border-b border-slate-200 pb-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-700" />
                   <span>Enterprise Security Compliance Protocol</span>
                 </div>
                 <p className="text-slate-600 leading-relaxed">
-                  To prevent unauthorized public access, a <strong>System Administrator</strong> must verify your organizational credentials and activate your personnel clearance before you can sign in to the RiskRadar workspace.
+                  To prevent unauthorized public access, a <strong>System Administrator</strong> must verify your organizational credentials and approve your account before you can sign in to the RiskRadar workspace.
                 </p>
-                <div className="pt-2 border-t border-slate-200 font-mono text-[11px] text-slate-500 grid grid-cols-2 gap-2">
+                <div className="pt-2 border-t border-slate-200 font-mono text-xs text-slate-500 grid grid-cols-2 gap-2">
                   <div>
                     <span className="text-slate-400">Personnel:</span> {submittedData.name}
                   </div>
@@ -166,7 +166,7 @@ export default function Register() {
               <div className="pt-3">
                 <Link
                   to="/login"
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20"
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs"
                 >
                   <span>Return to Sign In Portal</span>
                   <ArrowRight className="w-4 h-4" />
@@ -177,8 +177,8 @@ export default function Register() {
             /* VIEW B: PERSONNEL ONBOARDING FORM */
             <div>
               <div className="mb-6 flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-emerald-600" />
-                <h2 className="text-lg font-bold text-slate-900">Personnel Clearance Application</h2>
+                <UserPlus className="w-5 h-5 text-emerald-700" />
+                <h2 className="text-lg font-bold text-slate-900">Create Account</h2>
               </div>
 
               {error && (
@@ -203,7 +203,7 @@ export default function Register() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="e.g. Afri Alam Dipto"
-                      className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
+                      className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 transition"
                     />
                   </div>
                 </div>
@@ -222,9 +222,8 @@ export default function Register() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="analyst@organization.io"
-                      className={`w-full bg-white border ${
-                        fieldError === 'email' ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
-                      } rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
+                      className={`w-full bg-white border ${fieldError === 'email' ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
+                        } rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
                     />
                   </div>
                   {fieldError === 'email' && (
@@ -238,7 +237,7 @@ export default function Register() {
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
                       Enterprise Admin Authorization Code
                     </label>
-                    <span className="text-[11px] text-emerald-700 font-mono font-semibold">e.g. RR-ORG-2026</span>
+                    <span className="text-xs text-emerald-700 font-mono font-semibold">e.g. RR-ORG-2026</span>
                   </div>
                   <div className="relative">
                     <Key className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -249,9 +248,8 @@ export default function Register() {
                       value={formData.inviteCode}
                       onChange={handleChange}
                       placeholder="RR-ORG-2026"
-                      className={`w-full bg-white border ${
-                        fieldError === 'inviteCode' ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
-                      } rounded-lg pl-10 pr-3.5 py-2.5 text-sm font-mono uppercase text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
+                      className={`w-full bg-white border ${fieldError === 'inviteCode' ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
+                        } rounded-lg pl-10 pr-3.5 py-2.5 text-sm font-mono uppercase text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
                     />
                   </div>
                   {fieldError === 'inviteCode' && (
@@ -273,20 +271,20 @@ export default function Register() {
                         value={formData.department}
                         onChange={handleChange}
                         placeholder="Information Security"
-                        className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
+                        className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 transition"
                       />
                     </div>
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Clearance Role
+                      Role
                     </label>
                     <select
                       name="role"
                       value={formData.role}
                       onChange={handleChange}
-                      className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
+                      className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 transition"
                     >
                       <option value="Analyst">Security Analyst</option>
                       <option value="Executive">Executive / Management</option>
@@ -302,7 +300,7 @@ export default function Register() {
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
                       Secure Password
                     </label>
-                    <span className="text-[11px] text-slate-400 font-mono">Policy: 8+ chars</span>
+                    <span className="text-xs text-slate-400 font-mono">Policy: 8+ chars</span>
                   </div>
                   <div className="relative">
                     <KeyRound className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -313,13 +311,12 @@ export default function Register() {
                       value={formData.password}
                       onChange={handleChange}
                       placeholder="e.g. SecurePass#2026"
-                      className={`w-full bg-white border ${
-                        formData.password && !isPasswordValid
+                      className={`w-full bg-white border ${formData.password && !isPasswordValid
                           ? 'border-amber-300 focus:border-amber-500 focus:ring-amber-500/20'
                           : formData.password && isPasswordValid
-                          ? 'border-emerald-400 focus:border-emerald-500 focus:ring-emerald-500/20'
-                          : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
-                      } rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
+                            ? 'border-emerald-400 focus:border-emerald-700 focus:ring-emerald-700/20'
+                            : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
+                        } rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
                     />
                     <button
                       type="button"
@@ -334,28 +331,28 @@ export default function Register() {
 
                   {/* Real-time 5-Point Password Policy Checklist */}
                   <div className="mt-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
-                    <p className="text-[11px] font-semibold text-slate-700 mb-1">
+                    <p className="text-xs font-semibold text-slate-700 mb-1">
                       Enterprise Password Policy:
                     </p>
-                    <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                    <div className="grid grid-cols-2 gap-1.5 text-xs">
                       <span className={`flex items-center gap-1.5 font-medium ${hasMinLen ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                        {hasMinLen ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                        {hasMinLen ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                         Min 8 characters
                       </span>
                       <span className={`flex items-center gap-1.5 font-medium ${hasUpper ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                        {hasUpper ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                        {hasUpper ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                         Uppercase (A–Z)
                       </span>
                       <span className={`flex items-center gap-1.5 font-medium ${hasLower ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                        {hasLower ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                        {hasLower ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                         Lowercase (a–z)
                       </span>
                       <span className={`flex items-center gap-1.5 font-medium ${hasNumber ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                        {hasNumber ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                        {hasNumber ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                         Number (0–9)
                       </span>
                       <span className={`flex items-center gap-1.5 font-medium col-span-2 ${hasSpecial ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                        {hasSpecial ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                        {hasSpecial ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                         Special symbol (!@#$%^&*)
                       </span>
                     </div>
@@ -365,7 +362,7 @@ export default function Register() {
                 <button
                   type="submit"
                   disabled={loading || !isPasswordValid}
-                  className="w-full mt-4 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                  className="w-full mt-4 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
                 >
                   {loading ? 'Submitting Application...' : 'Submit Application for Admin Approval'}
                   <ArrowRight className="w-4 h-4" />

@@ -22,12 +22,18 @@ import {
   Clock,
   Bell,
   Laptop,
-  LogOut,
-  Lock,
 } from 'lucide-react';
 
 export default function Profile() {
-  const { user, refreshProfile, extendSession, logout } = useAuth();
+  const { user, refreshProfile, extendSession } = useAuth();
+
+  const deviceEnv = (() => {
+    if (typeof navigator === 'undefined') return 'Web Browser';
+    const ua = navigator.userAgent;
+    const os = ua.includes('Windows') ? 'Windows' : ua.includes('Mac OS') ? 'macOS' : ua.includes('Android') ? 'Android' : ua.includes('iPhone') || ua.includes('iPad') ? 'iOS' : ua.includes('Linux') ? 'Linux' : 'Desktop';
+    const browser = ua.includes('Edg/') ? 'Edge' : ua.includes('Chrome/') ? 'Chrome' : ua.includes('Firefox/') ? 'Firefox' : ua.includes('Safari/') ? 'Safari' : 'Browser';
+    return `${os} / ${browser}`;
+  })();
 
   // Profile fields
   const [name, setName] = useState(user?.name || '');
@@ -67,8 +73,12 @@ export default function Profile() {
   const [extendingSession, setExtendingSession] = useState(false);
   const [sessionMsg, setSessionMsg] = useState('');
 
-  // Fetch API Key on Mount
+  // Strict RBAC: Only Admin & Analyst have Personal SOC & Developer API Keys
+  const canUseApiKey = user?.role === 'Admin' || user?.role === 'Analyst';
+
+  // Fetch API Key on Mount (Admin & Analyst only)
   useEffect(() => {
+    if (!canUseApiKey) return;
     userApi
       .getApiKey()
       .then((res) => {
@@ -77,7 +87,7 @@ export default function Profile() {
         }
       })
       .catch((err) => console.error('Failed to load API key:', err));
-  }, []);
+  }, [canUseApiKey]);
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
@@ -173,7 +183,7 @@ export default function Profile() {
     setAlertPrefs(updated);
     try {
       localStorage.setItem('riskradar_alert_prefs', JSON.stringify(updated));
-    } catch {}
+    } catch { }
     setAlertToast(`Notification preference for '${key}' updated.`);
     setTimeout(() => setAlertToast(''), 3000);
   };
@@ -182,7 +192,7 @@ export default function Profile() {
     setExtendingSession(true);
     try {
       await extendSession();
-      setSessionMsg('Active session successfully renewed (+15 mins) under NIST SP 800-63B policy.');
+      setSessionMsg('Session renewed for another 15 minutes.');
       setTimeout(() => setSessionMsg(''), 5000);
     } catch (err) {
       setSessionMsg('Failed to extend session: ' + err.message);
@@ -193,48 +203,30 @@ export default function Profile() {
   };
 
   return (
-    <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-10 space-y-8 bg-white min-h-[calc(100vh-4rem)]">
+    <div className="w-full max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-12 py-10 space-y-8 bg-white min-h-[calc(100vh-4rem)] overflow-x-hidden font-sans">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="pb-6 border-b border-slate-200">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-semibold mb-2">
-            <Shield className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold tracking-wider uppercase mb-2">
+            <Shield className="w-3.5 h-3.5 text-emerald-700" />
             <span>SECURITY CREDENTIALS & IDENTITY GOVERNANCE</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 flex items-center gap-3 tracking-tight">
-            <User className="w-7 h-7 text-emerald-600" />
+          <h1 className="text-2xl font-semibold tracking-tight text-slate-900 flex items-center gap-3">
+            <User className="w-7 h-7 text-emerald-700" />
             <span>User Profile & Security Governance</span>
           </h1>
-          <p className="text-slate-600 text-sm mt-1 max-w-3xl leading-relaxed">
-            Manage your personal enterprise identity, cryptographic passwords, 2-Step MFA protection, SOC API automation tokens, and active session duration.
+          <p className="text-sm text-slate-500 leading-relaxed mt-1 max-w-3xl">
+            {canUseApiKey
+              ? 'Manage your account profile, password, two-factor authentication, API keys, and active session settings.'
+              : 'Manage your account profile, password, two-factor authentication, and active session settings.'}
           </p>
-        </div>
-
-        <div className="flex items-center gap-2.5">
-          <button
-            type="button"
-            onClick={handleExtendSessionClick}
-            disabled={extendingSession}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-sm transition active:scale-95 cursor-pointer"
-          >
-            <Clock className="w-3.5 h-3.5" />
-            <span>{extendingSession ? 'Extending...' : 'Extend Session (+15m)'}</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => logout()}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 border border-slate-300 hover:border-red-200 text-xs font-bold transition active:scale-95 cursor-pointer"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            <span>Logout</span>
-          </button>
         </div>
       </div>
 
       {/* Session Toast Notification */}
       {sessionMsg && (
-        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-medium flex items-center gap-2 shadow-sm animate-fadeIn">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[13px] font-medium flex items-center gap-2 shadow-sm animate-fadeIn">
+          <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
           <span>{sessionMsg}</span>
         </div>
       )}
@@ -243,85 +235,84 @@ export default function Profile() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Account Summary Card & Device Security */}
         <div className="space-y-6">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
             <div className="flex items-center gap-4 mb-5">
-              <div className="w-16 h-16 rounded-2xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 font-extrabold text-2xl">
+              <div className="w-16 h-16 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 font-semibold text-2xl">
                 {user?.name?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">
-                <h2 className="text-lg font-bold text-slate-900 truncate">{user?.name}</h2>
-                <p className="text-xs text-slate-500 font-mono truncate">{user?.email}</p>
-                <span className="inline-block mt-1 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                <h2 className="text-base font-semibold text-slate-900 truncate">{user?.name}</h2>
+                <p className="text-[13px] text-slate-500 truncate">{user?.email}</p>
+                <span className="inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
                   {user?.role} Role
                 </span>
               </div>
             </div>
 
-            <div className="space-y-3.5 pt-4 border-t border-slate-200 text-sm">
+            <div className="space-y-3.5 pt-4 border-t border-slate-200">
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Department</span>
-                <span className="text-slate-900 font-semibold">{user?.department || 'Information Security'}</span>
+                <span className="text-[13px] font-medium text-slate-500">Department</span>
+                <span className="text-[13px] font-semibold text-slate-800">{user?.department || 'Information Security'}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Account ID</span>
-                <span className="text-slate-500 font-mono">{user?.id?.substring(0, 14)}...</span>
+                <span className="text-[13px] font-medium text-slate-500">Account ID</span>
+                <span className="font-mono text-xs text-slate-600">{user?.id?.substring(0, 14)}...</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Account Status</span>
-                <span className="inline-flex items-center gap-1 font-bold text-emerald-700">
+                <span className="text-[13px] font-medium text-slate-500">Account Status</span>
+                <span className="inline-flex items-center gap-1 text-[13px] font-semibold text-emerald-700">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                   Active & Approved
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">MFA Shield</span>
+                <span className="text-[13px] font-medium text-slate-500">MFA Shield</span>
                 <span
-                  className={`px-2 py-0.5 rounded font-mono font-bold ${
-                    mfaEnabled
-                      ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                      : 'bg-slate-100 text-slate-500 border border-slate-200'
-                  }`}
+                  className={`px-2 py-0.5 rounded text-xs font-medium ${mfaEnabled
+                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    : 'bg-slate-100 text-slate-500 border border-slate-200'
+                    }`}
                 >
                   {mfaEnabled ? 'ENABLED' : 'OFF'}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-600">Clearance Level</span>
-                <span className="font-mono text-slate-700 font-bold">
+                <span className="text-[13px] font-medium text-slate-500">Access Role</span>
+                <span className="text-[13px] font-semibold text-slate-800">
                   {user?.role === 'Admin'
-                    ? 'Level 4 (Admin Governance)'
+                    ? 'Administrator'
                     : user?.role === 'Analyst'
-                    ? 'Level 3 (SOC Operations)'
-                    : user?.role === 'Executive'
-                    ? 'Level 2 (Executive KPI)'
-                    : 'Level 1 (Auditor)'}
+                      ? 'Security Analyst'
+                      : user?.role === 'Executive'
+                        ? 'Executive'
+                        : 'External Auditor'}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Active Session & Device Information Card (FR-07) */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4 text-xs">
-            <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-              <Laptop className="w-4 h-4 text-emerald-600" />
-              <span>Active Session & Device Guard</span>
+          {/* Active Session & Device Information Card */}
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+            <div className="flex items-center gap-2 text-base font-semibold text-slate-900 tracking-tight">
+              <Laptop className="w-4 h-4 text-emerald-700" />
+              <span>Active Session</span>
             </div>
-            <p className="text-slate-600 text-[11px] leading-relaxed">
-              Your session is isolated to this browser window tab using <code className="text-emerald-700 font-mono">sessionStorage</code>. Closing the tab immediately destroys the cryptographic token.
+            <p className="text-[13px] text-slate-500 leading-relaxed">
+              Your session is scoped to this browser tab and ends automatically when the tab is closed.
             </p>
 
             <div className="space-y-2.5 pt-2 border-t border-slate-200">
               <div className="flex justify-between items-center">
-                <span className="text-slate-500">Device Environment</span>
-                <span className="font-semibold text-slate-800">Windows 11 / Chrome</span>
+                <span className="text-[13px] font-medium text-slate-500">Device Environment</span>
+                <span className="text-[13px] font-semibold text-slate-800">{deviceEnv}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500">Inactivity Timeout</span>
-                <span className="font-mono font-bold text-emerald-700">15-Min Rolling (NIST)</span>
+                <span className="text-[13px] font-medium text-slate-500">Inactivity Timeout</span>
+                <span className="text-[13px] font-semibold text-emerald-700">15-Min Rolling</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-slate-500">Auth Token Protocol</span>
-                <span className="font-mono text-slate-700">JWT + 2-Step Challenge</span>
+                <span className="text-[13px] font-medium text-slate-500">Authentication</span>
+                <span className="text-[13px] font-semibold text-slate-800">JWT + 2-Step Verification</span>
               </div>
             </div>
 
@@ -329,7 +320,7 @@ export default function Profile() {
               type="button"
               onClick={handleExtendSessionClick}
               disabled={extendingSession}
-              className="w-full py-2 px-3 rounded-xl bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-300 font-bold text-xs transition active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
+              className="w-full py-2 px-3 rounded-xl bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-300 text-[13px] font-medium tracking-normal transition active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 shadow-2xs"
             >
               <Clock className="w-3.5 h-3.5" />
               <span>{extendingSession ? 'Extending...' : 'Extend Active Session (+15m)'}</span>
@@ -340,22 +331,21 @@ export default function Profile() {
         {/* Right 2 Columns: Profile Details, Password, MFA, API Key, Alerts */}
         <div className="lg:col-span-2 space-y-8">
           {/* Section 1: Basic Profile Details */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-lg font-extrabold text-slate-900 mb-4 flex items-center gap-2.5">
-              <Shield className="w-5 h-5 text-emerald-600" />
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+            <h3 className="text-base font-semibold text-slate-900 tracking-tight mb-4 flex items-center gap-2.5">
+              <Shield className="w-5 h-5 text-emerald-700" />
               <span>Personal Identity & Department</span>
             </h3>
 
             {profileMsg.text && (
               <div
-                className={`mb-4 p-3 rounded-xl text-xs flex items-center gap-2 ${
-                  profileMsg.type === 'success'
-                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                    : 'bg-red-50 border border-red-200 text-red-700'
-                }`}
+                className={`mb-4 p-3 rounded-xl text-[13px] font-medium flex items-center gap-2 ${profileMsg.type === 'success'
+                  ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+                  : 'bg-red-50 border border-red-200 text-red-700'
+                  }`}
               >
                 {profileMsg.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                 ) : (
                   <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                 )}
@@ -363,42 +353,42 @@ export default function Profile() {
               </div>
             )}
 
-            <form onSubmit={handleUpdateProfile} className="space-y-4 text-xs">
+            <form onSubmit={handleUpdateProfile} className="space-y-4">
               <div>
-                <label className="block font-bold text-slate-800 text-sm mb-1.5">Full Name</label>
+                <label className="block text-[13px] font-medium text-slate-700 mb-1.5">Full Name</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-800 text-sm mb-1.5">Enterprise Email (Immutable)</label>
+                <label className="block text-[13px] font-medium text-slate-700 mb-1.5">Work Email</label>
                 <input
                   type="email"
                   disabled
                   value={user?.email || ''}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-500 cursor-not-allowed font-mono"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-500 placeholder:text-slate-400 cursor-not-allowed"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-800 text-sm mb-1.5">Department</label>
+                <label className="block text-[13px] font-medium text-slate-700 mb-1.5">Department</label>
                 <input
                   type="text"
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={profileLoading}
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-sm disabled:opacity-50 cursor-pointer"
+                className="px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-[13px] font-medium tracking-normal transition shadow-sm disabled:opacity-50 cursor-pointer"
               >
                 {profileLoading ? 'Saving...' : 'Update Profile Details'}
               </button>
@@ -406,22 +396,21 @@ export default function Profile() {
           </div>
 
           {/* Section 2: Security Credentials & Password */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h3 className="text-lg font-extrabold text-slate-900 mb-4 flex items-center gap-2.5">
-              <KeyRound className="w-5 h-5 text-emerald-600" />
-              <span>Rotate Security Password (Cryptographic Policy)</span>
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+            <h3 className="text-base font-semibold text-slate-900 tracking-tight mb-4 flex items-center gap-2.5">
+              <KeyRound className="w-5 h-5 text-emerald-700" />
+              <span>Change Password</span>
             </h3>
 
             {securityMsg.text && (
               <div
-                className={`mb-4 p-3 rounded-xl text-xs flex items-center gap-2 ${
-                  securityMsg.type === 'success'
-                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                    : 'bg-red-50 border border-red-200 text-red-700'
-                }`}
+                className={`mb-4 p-3 rounded-xl text-[13px] font-medium flex items-center gap-2 ${securityMsg.type === 'success'
+                  ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+                  : 'bg-red-50 border border-red-200 text-red-700'
+                  }`}
               >
                 {securityMsg.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
                 ) : (
                   <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
                 )}
@@ -429,40 +418,40 @@ export default function Profile() {
               </div>
             )}
 
-            <form onSubmit={handleUpdatePassword} className="space-y-4 text-xs">
+            <form onSubmit={handleUpdatePassword} className="space-y-4">
               <div>
-                <label className="block font-bold text-slate-800 text-sm mb-1.5">Current Password</label>
+                <label className="block text-[13px] font-medium text-slate-700 mb-1.5">Current Password</label>
                 <input
                   type="password"
                   required
                   placeholder="Enter current password"
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-slate-800 text-sm mb-1.5">New Password (8+ Chars)</label>
+                  <label className="block text-[13px] font-medium text-slate-700 mb-1.5">New Password (8+ Chars)</label>
                   <input
                     type="password"
                     required
                     placeholder="Uppercase, lowercase, number, symbol"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20"
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-800 text-sm mb-1.5">Confirm New Password</label>
+                  <label className="block text-[13px] font-medium text-slate-700 mb-1.5">Confirm New Password</label>
                   <input
                     type="password"
                     required
                     placeholder="Re-enter new password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20"
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20"
                   />
                 </div>
               </div>
@@ -470,155 +459,154 @@ export default function Profile() {
               <button
                 type="submit"
                 disabled={securityLoading}
-                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition disabled:opacity-50 cursor-pointer"
+                className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-[13px] font-medium tracking-normal transition disabled:opacity-50 cursor-pointer"
               >
-                {securityLoading ? 'Verifying...' : 'Set New Cryptographic Password'}
+                {securityLoading ? 'Updating...' : 'Update Password'}
               </button>
             </form>
           </div>
 
           {/* Section 3: 2-Step Multi-Factor Authentication (MFA) */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-                <Smartphone className="w-5 h-5 text-emerald-600" />
+              <h4 className="text-base font-semibold text-slate-900 tracking-tight flex items-center gap-2.5">
+                <Smartphone className="w-5 h-5 text-emerald-700" />
                 <span>2-Step Multi-Factor Authentication (MFA Shield)</span>
               </h4>
-              <p className="text-xs text-slate-500 max-w-md leading-relaxed">
+              <p className="text-[13px] text-slate-500 max-w-md leading-relaxed">
                 Requires a 6-digit verification code sent via secure challenge on every login, protecting your account against credential theft.
               </p>
             </div>
             <button
               type="button"
               onClick={handleToggleMFA}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold transition uppercase tracking-wider cursor-pointer border ${
-                mfaEnabled
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
-                  : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200'
-              }`}
+              className={`px-4 py-2.5 rounded-xl text-[13px] font-medium tracking-normal transition cursor-pointer border ${mfaEnabled
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100'
+                : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200'
+                }`}
             >
               {mfaEnabled ? '✓ MFA Shield Enabled' : 'Enable MFA Shield'}
             </button>
           </div>
 
-          {/* Section 4: Personal Developer & SOC API Key (FR-06) */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-                  <Key className="w-5 h-5 text-cyan-600" />
-                  <span>Personal SOC & Developer API Key</span>
-                </h4>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Authorize automated scripts, SIEM ingestion pipelines, and vulnerability scanners using your personal bearer token.
-                </p>
+          {/* Section 4: Personal Developer & SOC API Key (Admin & Analyst Only) */}
+          {canUseApiKey && (
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h4 className="text-base font-semibold text-slate-900 tracking-tight flex items-center gap-2.5">
+                    <Key className="w-5 h-5 text-cyan-600" />
+                    <span>Personal SOC & Developer API Key</span>
+                  </h4>
+                  <p className="text-[13px] text-slate-500 leading-relaxed mt-0.5">
+                    Authorize automated scripts, SIEM ingestion pipelines, and vulnerability scanners using your personal bearer token.
+                  </p>
+                </div>
+                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-50 text-cyan-800 border border-cyan-200 shrink-0">
+                  SCOPES: READ/WRITE
+                </span>
               </div>
-              <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 shrink-0">
-                SCOPES: READ/WRITE
-              </span>
-            </div>
 
-            {keyMsg.text && (
-              <div
-                className={`p-3 rounded-xl text-xs flex items-center gap-2 ${
-                  keyMsg.type === 'success'
+              {keyMsg.text && (
+                <div
+                  className={`p-3 rounded-xl text-[13px] font-medium flex items-center gap-2 ${keyMsg.type === 'success'
                     ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
                     : 'bg-red-50 border border-red-200 text-red-700'
-                }`}
-              >
-                {keyMsg.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                ) : (
-                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-                )}
-                <span>{keyMsg.text}</span>
-              </div>
-            )}
+                    }`}
+                >
+                  {keyMsg.type === 'success' ? (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                  )}
+                  <span>{keyMsg.text}</span>
+                </div>
+              )}
 
-            {/* API Key Box */}
-            <div className="flex items-center gap-2">
-              <div className="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-800 flex items-center justify-between">
-                <span>
-                  {showApiKey
-                    ? apiKey || 'rr_live_soc_analyst_••••••••••••••••'
-                    : apiKey
-                    ? `${apiKey.substring(0, 15)}••••••••••••••••••••••••`
-                    : 'Loading token...'}
-                </span>
+              {/* API Key Box */}
+              <div className="flex items-center gap-2">
+                <div className="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-800 flex items-center justify-between">
+                  <span>
+                    {showApiKey
+                      ? apiKey || 'rr_live_soc_analyst_••••••••••••••••'
+                      : apiKey
+                        ? `${apiKey.substring(0, 15)}••••••••••••••••••••••••`
+                        : 'Loading token...'}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="text-slate-400 hover:text-slate-700 transition ml-2 cursor-pointer"
+                    title={showApiKey ? 'Hide key' : 'Show full key'}
+                  >
+                    {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+
                 <button
                   type="button"
-                  onClick={() => setShowApiKey(!showApiKey)}
-                  className="text-slate-400 hover:text-slate-700 transition ml-2 cursor-pointer"
-                  title={showApiKey ? 'Hide key' : 'Show full key'}
+                  onClick={handleCopyApiKey}
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-[13px] font-medium tracking-normal transition flex items-center gap-1.5 cursor-pointer active:scale-95"
                 >
-                  {showApiKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {copiedKey ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedKey ? 'Copied' : 'Copy'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleRegenerateApiKey}
+                  disabled={keyLoading}
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[13px] font-medium tracking-normal transition flex items-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${keyLoading ? 'animate-spin' : ''}`} />
+                  <span>Regenerate</span>
                 </button>
               </div>
 
-              <button
-                type="button"
-                onClick={handleCopyApiKey}
-                className="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95"
-              >
-                {copiedKey ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedKey ? 'Copied' : 'Copy'}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleRegenerateApiKey}
-                disabled={keyLoading}
-                className="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer active:scale-95 disabled:opacity-50"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${keyLoading ? 'animate-spin' : ''}`} />
-                <span>Regenerate</span>
-              </button>
+              <div className="flex flex-wrap gap-2 text-xs font-medium">
+                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                  scope: threats:read-write
+                </span>
+                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                  scope: assets:read-write
+                </span>
+                <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
+                  {user?.role === 'Admin' ? 'scope: audit:read-all' : 'scope: audit:read-own'}
+                </span>
+              </div>
             </div>
+          )}
 
-            <div className="flex flex-wrap gap-2 text-[11px] font-mono">
-              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
-                scope: threats:read-write
-              </span>
-              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
-                scope: assets:read-write
-              </span>
-              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">
-                scope: audit:read-own
-              </span>
-            </div>
-          </div>
-
-          {/* Section 5: SOC Security Notification & Alert Preferences (FR-06) */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-            <h4 className="text-lg font-extrabold text-slate-900 flex items-center gap-2.5">
-              <Bell className="w-5 h-5 text-emerald-600" />
-              <span>SOC Security Notification Preferences</span>
+          {/* Section 5: Security Notification & Alert Preferences */}
+          <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+            <h4 className="text-base font-semibold text-slate-900 tracking-tight flex items-center gap-2.5">
+              <Bell className="w-5 h-5 text-emerald-700" />
+              <span>Security Notification Preferences</span>
             </h4>
-            <p className="text-xs text-slate-500">
-              Customize real-time dispatch channels for automated risk alerts and threat intelligence feeds.
+            <p className="text-[13px] text-slate-500 leading-relaxed">
+              Customize real-time notification channels for security alerts and posture summaries.
             </p>
 
             {alertToast && (
-              <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-[13px] font-medium flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-700" />
                 <span>{alertToast}</span>
               </div>
             )}
 
-            <div className="space-y-3 pt-2 text-xs">
+            <div className="space-y-3 pt-2">
               <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
                 <div>
-                  <strong className="text-slate-900 block">Critical CVSS Risk In-App Alerts</strong>
-                  <span className="text-slate-500">Instant visual alert banner when a High/Critical CVE is logged.</span>
+                  <strong className="text-[13px] font-semibold text-slate-900 block">Critical CVSS Risk In-App Alerts</strong>
+                  <span className="text-[13px] text-slate-500 leading-relaxed">Instant visual alert banner when a High/Critical CVE is logged.</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleToggleAlert('criticalRisks')}
-                  className={`px-3 py-1 rounded-lg font-bold font-mono transition cursor-pointer text-xs ${
-                    alertPrefs.criticalRisks
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-slate-200 text-slate-700'
-                  }`}
+                  className={`px-3 py-1 rounded-lg text-[13px] font-medium tracking-normal transition cursor-pointer ${alertPrefs.criticalRisks
+                    ? 'bg-emerald-700 text-white'
+                    : 'bg-slate-200 text-slate-700'
+                    }`}
                 >
                   {alertPrefs.criticalRisks ? 'ON' : 'OFF'}
                 </button>
@@ -626,17 +614,16 @@ export default function Profile() {
 
               <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
                 <div>
-                  <strong className="text-slate-900 block">Daily Morning SOC Threat Digest Email</strong>
-                  <span className="text-slate-500">Daily 08:00 AM summary of catalogued vulnerabilities and heatmaps.</span>
+                  <strong className="text-[13px] font-semibold text-slate-900 block">Daily Morning Threat Digest Email</strong>
+                  <span className="text-[13px] text-slate-500 leading-relaxed">Daily 08:00 AM summary of catalogued vulnerabilities and heatmaps.</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleToggleAlert('dailyDigest')}
-                  className={`px-3 py-1 rounded-lg font-bold font-mono transition cursor-pointer text-xs ${
-                    alertPrefs.dailyDigest
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-slate-200 text-slate-700'
-                  }`}
+                  className={`px-3 py-1 rounded-lg text-[13px] font-medium tracking-normal transition cursor-pointer ${alertPrefs.dailyDigest
+                    ? 'bg-emerald-700 text-white'
+                    : 'bg-slate-200 text-slate-700'
+                    }`}
                 >
                   {alertPrefs.dailyDigest ? 'ON' : 'OFF'}
                 </button>
@@ -644,17 +631,16 @@ export default function Profile() {
 
               <div className="flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition">
                 <div>
-                  <strong className="text-slate-900 block">Session & Unrecognized IP Login Alerts</strong>
-                  <span className="text-slate-500">Immediate security email if account is accessed from a new device or IP.</span>
+                  <strong className="text-[13px] font-semibold text-slate-900 block">Session & Unrecognized IP Login Alerts</strong>
+                  <span className="text-[13px] text-slate-500 leading-relaxed">Immediate security email if account is accessed from a new device or IP.</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleToggleAlert('anomalyAlerts')}
-                  className={`px-3 py-1 rounded-lg font-bold font-mono transition cursor-pointer text-xs ${
-                    alertPrefs.anomalyAlerts
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-slate-200 text-slate-700'
-                  }`}
+                  className={`px-3 py-1 rounded-lg text-[13px] font-medium tracking-normal transition cursor-pointer ${alertPrefs.anomalyAlerts
+                    ? 'bg-emerald-700 text-white'
+                    : 'bg-slate-200 text-slate-700'
+                    }`}
                 >
                   {alertPrefs.anomalyAlerts ? 'ON' : 'OFF'}
                 </button>

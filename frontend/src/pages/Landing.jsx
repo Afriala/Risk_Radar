@@ -55,7 +55,7 @@ export default function Landing() {
             <img
               src="/riskradar-logo.jpg"
               alt="RiskRadar - See the Risk. Secure the Future."
-              className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-none object-contain rounded-xl bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-sm border border-slate-200 hover:shadow-emerald-500/20 transition"
+              className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-none object-contain rounded-xl bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-sm border border-slate-200  transition"
             />
           </Link>
 
@@ -63,31 +63,31 @@ export default function Landing() {
           <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-semibold text-slate-700 whitespace-nowrap">
             <a
               href="#overview"
-              className="hover:text-emerald-600 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              className="hover:text-emerald-700 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
             >
               Platform
             </a>
             <a
               href="#roles"
-              className="hover:text-emerald-600 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              className="hover:text-emerald-700 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
             >
               4 Stakeholder Roles
             </a>
             <a
               href="#problem-solution"
-              className="hover:text-emerald-600 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              className="hover:text-emerald-700 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
             >
               Business Value
             </a>
             <a
               href="#about-us"
-              className="hover:text-emerald-600 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              className="hover:text-emerald-700 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
             >
               About Us
             </a>
             <a
               href="#compliance"
-              className="hover:text-emerald-600 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              className="hover:text-emerald-700 transition-all duration-150 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
             >
               Compliance
             </a>
@@ -106,7 +106,7 @@ export default function Landing() {
               <div className="flex items-center gap-2">
                 <Link
                   to="/dashboard"
-                  className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-200 shadow-md shadow-emerald-600/20 hover:scale-105 active:scale-95 cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all duration-200 shadow-xs hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <span>Workspace ({user?.role})</span>
                   <ArrowRight className="w-4 h-4" />
@@ -130,7 +130,7 @@ export default function Landing() {
                 </Link>
                 <Link
                   to="/login"
-                  className="px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-200 shadow-md shadow-emerald-600/25 hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all duration-200 shadow-xs hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5"
                 >
                   <span>Launch Portal</span>
                   <ArrowRight className="w-4 h-4" />
@@ -144,7 +144,7 @@ export default function Landing() {
             {isAuthenticated ? (
               <Link
                 to="/dashboard"
-                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-sm flex items-center gap-1"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs flex items-center gap-1"
               >
                 <span>Workspace</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -152,7 +152,7 @@ export default function Landing() {
             ) : (
               <Link
                 to="/login"
-                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow-sm"
+                className="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs"
               >
                 Launch Portal
               </Link>
@@ -222,7 +222,7 @@ export default function Landing() {
                   <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                     <div>
                       <p className="text-xs font-bold text-slate-900">{user?.name}</p>
-                      <p className="text-[11px] font-mono text-emerald-700 font-semibold">{user?.role} • {user?.department}</p>
+                      <p className="text-xs font-mono text-emerald-700 font-semibold">{user?.role} • {user?.department}</p>
                     </div>
                     <button
                       onClick={() => {
@@ -237,7 +237,7 @@ export default function Landing() {
                   <Link
                     to="/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20"
+                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs"
                   >
                     <span>Enter Stakeholder Workspace</span>
                     <ArrowRight className="w-4 h-4" />
@@ -255,7 +255,7 @@ export default function Landing() {
                   <Link
                     to="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center py-2.5 px-3 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/20"
+                    className="flex items-center justify-center py-2.5 px-3 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs"
                   >
                     Launch Portal
                   </Link>
@@ -282,15 +282,15 @@ export default function Landing() {
             <div className="lg:col-span-7 space-y-6">
 
               {/* Category Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold hover:scale-105 transition-all duration-200 shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse shrink-0"></span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-medium hover:scale-105 transition-all duration-200 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-700 animate-pulse shrink-0"></span>
                 <span>ENTERPRISE CYBERSECURITY RISK MANAGEMENT</span>
               </div>
 
               {/* Main Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
                 Identify & Visualize Your Organization's{' '}
-                <span className="text-emerald-600 underline decoration-emerald-500/40 decoration-4">
+                <span className="text-emerald-700 underline decoration-emerald-500/40 decoration-4">
                   Cybersecurity Risks
                 </span>
               </h1>
@@ -307,7 +307,7 @@ export default function Landing() {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/login"
-                  className="px-6 py-3.5 rounded-xl text-base font-bold bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-200 shadow-lg shadow-emerald-600/25 hover:scale-105 hover:-translate-y-0.5 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                  className="px-6 py-3.5 rounded-xl text-base font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-all duration-200 shadow-xs hover:scale-105 hover:-translate-y-0.5 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
                 >
                   <span>Access Stakeholder Portal</span>
                   <ArrowRight className="w-5 h-5" />
@@ -323,7 +323,7 @@ export default function Landing() {
               {/* Metric Highlights Row (Side-by-Side) */}
               <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-6 border-t border-slate-200 text-center sm:text-left">
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:scale-105 transition-all duration-200">
-                  <div className="text-2xl sm:text-3xl font-black text-emerald-600">100%</div>
+                  <div className="text-2xl sm:text-3xl font-black text-emerald-700">100%</div>
                   <div className="text-xs text-slate-600 font-medium mt-0.5">Automated Scoring</div>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:scale-105 transition-all duration-200">
@@ -331,7 +331,7 @@ export default function Landing() {
                   <div className="text-xs text-slate-600 font-medium mt-0.5">Dynamic Heatmap</div>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:scale-105 transition-all duration-200">
-                  <div className="text-2xl sm:text-3xl font-black text-emerald-600">4 Roles</div>
+                  <div className="text-2xl sm:text-3xl font-black text-emerald-700">4 Roles</div>
                   <div className="text-xs text-slate-600 font-medium mt-0.5">Strict RBAC Portals</div>
                 </div>
               </div>
@@ -339,7 +339,7 @@ export default function Landing() {
 
             {/* Right Column: Clean White Posture Preview Card */}
             <div className="lg:col-span-5 w-full max-w-full">
-              <div className="relative bg-white border border-slate-200 rounded-2xl p-6 shadow-xl shadow-slate-200/80 hover:shadow-2xl transition-all duration-300">
+              <div className="relative bg-white border border-slate-200 rounded-xl p-6 shadow-xl shadow-slate-200/80 hover:shadow-lg transition-all duration-300">
 
                 {/* Window Bar */}
                 <div className="flex items-center justify-between pb-3.5 border-b border-slate-200 mb-5">
@@ -374,7 +374,7 @@ export default function Landing() {
                     <span className="text-xs font-bold text-slate-700">5×5 Risk Matrix Heatmap Preview</span>
                     <span className="text-xs text-slate-500 font-mono">Impact × Likelihood</span>
                   </div>
-                  <div className="grid grid-cols-5 gap-1.5 p-3 rounded-xl bg-slate-50 border border-slate-200 text-[10px] font-mono text-center">
+                  <div className="grid grid-cols-5 gap-1.5 p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-mono text-center">
                     {/* Row 5 */}
                     <div className="p-2 rounded bg-amber-100 text-amber-900 font-bold border border-amber-200">15</div>
                     <div className="p-2 rounded bg-amber-200 text-amber-950 font-bold border border-amber-300">18</div>
@@ -413,15 +413,15 @@ export default function Landing() {
                 {/* Asset Counter */}
                 <div className="grid grid-cols-3 gap-2 text-center text-xs">
                   <div className="p-2 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-slate-500 block text-[10px] uppercase font-mono font-semibold">Hardware</span>
+                    <span className="text-slate-500 block text-xs uppercase font-mono font-semibold">Hardware</span>
                     <span className="font-bold text-slate-900 text-sm">48 Assets</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-slate-500 block text-[10px] uppercase font-mono font-semibold">Software</span>
+                    <span className="text-slate-500 block text-xs uppercase font-mono font-semibold">Software</span>
                     <span className="font-bold text-emerald-700 text-sm">32 Assets</span>
                   </div>
                   <div className="p-2 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-slate-500 block text-[10px] uppercase font-mono font-semibold">Data Assets</span>
+                    <span className="text-slate-500 block text-xs uppercase font-mono font-semibold">Data Assets</span>
                     <span className="font-bold text-red-600 text-sm">14 Assets</span>
                   </div>
                 </div>
@@ -441,7 +441,7 @@ export default function Landing() {
             <span className="px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-mono font-bold">
               ROLE-BASED ACCESS CONTROL (RBAC)
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3">
+            <h2 className="text-xl font-semibold tracking-tight text-slate-900 mt-3">
               Four Specialized Stakeholder Portals
             </h2>
             <p className="text-slate-600 text-sm mt-3">
@@ -453,7 +453,7 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
             {/* Role 1: Analyst */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-cyan-400 cursor-pointer flex flex-col justify-between group">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-cyan-400 cursor-pointer flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-700 mb-4 group-hover:scale-110 transition">
                   <Shield className="w-6 h-6" />
@@ -479,7 +479,7 @@ export default function Landing() {
             </div>
 
             {/* Role 2: Admin */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-red-400 cursor-pointer flex flex-col justify-between group">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-red-400 cursor-pointer flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-red-50 border border-red-200 flex items-center justify-center text-red-700 mb-4 group-hover:scale-110 transition">
                   <Lock className="w-6 h-6" />
@@ -505,7 +505,7 @@ export default function Landing() {
             </div>
 
             {/* Role 3: Executive */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-emerald-400 cursor-pointer flex flex-col justify-between group">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-emerald-400 cursor-pointer flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 mb-4 group-hover:scale-110 transition">
                   <Activity className="w-6 h-6" />
@@ -531,7 +531,7 @@ export default function Landing() {
             </div>
 
             {/* Role 4: Auditor */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-amber-400 cursor-pointer flex flex-col justify-between group">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-amber-400 cursor-pointer flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 mb-4 group-hover:scale-110 transition">
                   <FileCheck2 className="w-6 h-6" />
@@ -566,7 +566,7 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 
             {/* The Problem */}
-            <div className="p-8 rounded-2xl bg-red-50/70 border border-red-200 flex flex-col justify-between shadow-sm">
+            <div className="p-8 rounded-xl bg-red-50/70 border border-red-200 flex flex-col justify-between shadow-sm">
               <div>
                 <span className="text-xs font-mono font-bold text-red-700 uppercase tracking-wider">
                   The Business Problem
@@ -599,7 +599,7 @@ export default function Landing() {
             </div>
 
             {/* The Solution */}
-            <div className="p-8 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between shadow-sm">
+            <div className="p-8 rounded-xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between shadow-sm">
               <div>
                 <span className="text-xs font-mono font-bold text-emerald-800 uppercase tracking-wider">
                   The RiskRadar Solution
@@ -613,15 +613,15 @@ export default function Landing() {
                 </p>
                 <ul className="space-y-2.5 mt-4 text-sm text-slate-700">
                   <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                     <span>Dynamic scoring formula combining likelihood & impact per critical asset.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                     <span>Dynamic visual heatmaps offering real-time departmental visibility.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                     <span>Integrated automated PDF/CSV report generation for strategic board decisions.</span>
                   </li>
                 </ul>
@@ -642,7 +642,7 @@ export default function Landing() {
             <span className="px-3.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-mono font-bold">
               ABOUT OUR PROJECT & TEAM
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3">
+            <h2 className="text-xl font-semibold tracking-tight text-slate-900 mt-3">
               Building the Future of Cyber Resilience
             </h2>
             <p className="text-slate-600 text-sm mt-3">
@@ -653,7 +653,7 @@ export default function Landing() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {/* Contributor Card 1 */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-4 mb-3.5">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 font-black text-lg shrink-0">
@@ -693,7 +693,7 @@ export default function Landing() {
             </div>
 
             {/* Contributor Card 2 */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-4 mb-3.5">
                   <div className="w-12 h-12 rounded-full bg-cyan-100 border border-cyan-300 flex items-center justify-center text-cyan-800 font-black text-lg shrink-0">
@@ -738,14 +738,14 @@ export default function Landing() {
       {/* Section: Contact Us (Clean Corporate Card) */}
       <section id="contact-us" className="w-full py-16 sm:py-20 bg-white border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-emerald-50 via-slate-50 to-white border border-emerald-200 rounded-3xl p-8 sm:p-12 text-center space-y-4 shadow-lg">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 sm:p-12 text-center space-y-4 shadow-xs">
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-mono font-bold border border-emerald-300">
-              <Mail className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-mono font-medium border border-emerald-200">
+              <Mail className="w-3.5 h-3.5 text-emerald-700" />
               <span>OFFICIAL CONTACT POINT</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
+            <h2 className="text-xl font-semibold tracking-tight text-slate-900">
               Contact Enterprise Security Team
             </h2>
 
@@ -755,8 +755,8 @@ export default function Landing() {
 
             {/* Email Box & Actions */}
             <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <div className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-white border border-slate-300 rounded-xl px-5 py-3 shadow-sm">
-                <Mail className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="w-full sm:w-auto flex items-center justify-center gap-2.5 bg-white border border-slate-300 rounded-xl px-5 py-3 shadow-xs">
+                <Mail className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span className="font-mono text-sm sm:text-base font-bold text-slate-900 break-all select-all">
                   {officialEmail}
                 </span>
@@ -782,7 +782,7 @@ export default function Landing() {
 
                 <a
                   href={`mailto:${officialEmail}?subject=RiskRadar%20Inquiry`}
-                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition cursor-pointer shadow-sm shadow-emerald-600/20"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-5 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition cursor-pointer shadow-sm shadow-xs"
                 >
                   <span>Send Mail</span>
                   <ExternalLink className="w-3.5 h-3.5" />

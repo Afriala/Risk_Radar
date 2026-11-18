@@ -144,7 +144,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-900">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-900 overflow-x-hidden">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link to="/" className="inline-block mb-3">
           <img
@@ -158,27 +158,27 @@ export default function ForgotPassword() {
         </p>
       </div>
 
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-2xl sm:px-10">
+      <div className="mt-6 w-full max-w-md mx-auto px-4">
+        <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-xl sm:px-10">
 
           {/* Stepper Progress Header */}
           <div className="mb-6 pb-4 border-b border-slate-100 flex items-center justify-between text-xs">
             <span className={`font-semibold flex items-center gap-1.5 ${step === 1 ? 'text-emerald-700' : 'text-slate-400'}`}>
-              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${step >= 1 ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${step >= 1 ? 'bg-emerald-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
                 1
               </span>
               Verify Email
             </span>
             <span className="text-slate-300">──</span>
             <span className={`font-semibold flex items-center gap-1.5 ${step === 2 ? 'text-emerald-700' : 'text-slate-400'}`}>
-              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${step >= 2 ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${step >= 2 ? 'bg-emerald-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
                 2
               </span>
               6-Digit OTP
             </span>
             <span className="text-slate-300">──</span>
             <span className={`font-semibold flex items-center gap-1.5 ${step === 3 ? 'text-emerald-700' : 'text-slate-400'}`}>
-              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${step === 3 ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-600'}`}>
+              <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${step === 3 ? 'bg-emerald-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
                 3
               </span>
               New Password
@@ -197,8 +197,8 @@ export default function ForgotPassword() {
           {simulatedCode && step >= 2 && (
             <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs shadow-sm">
               <div className="flex items-center gap-2 font-bold text-emerald-800 mb-1">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Enterprise Security Dispatch (Simulated Email)</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                <span>Password Reset Code</span>
               </div>
               <p className="text-slate-700 leading-relaxed">
                 Your single-use 6-digit identity recovery code is:
@@ -236,7 +236,7 @@ export default function ForgotPassword() {
                     }}
                     placeholder="e.g. analyst@riskradar.io"
                     className={`w-full bg-white border ${
-                      fieldError === 'email' ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
+                      fieldError === 'email' ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
                     } rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
                   />
                 </div>
@@ -251,7 +251,7 @@ export default function ForgotPassword() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs disabled:opacity-50 cursor-pointer"
               >
                 {loading ? 'Validating Directory...' : 'Send Verification Code'}
                 <ArrowRight className="w-4 h-4" />
@@ -295,7 +295,7 @@ export default function ForgotPassword() {
                       if (error) setError('');
                     }}
                     placeholder="123456"
-                    className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3.5 py-2.5 text-base font-mono tracking-widest text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition text-center"
+                    className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-3.5 py-2.5 text-base font-mono tracking-widest text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 transition text-center"
                   />
                 </div>
               </div>
@@ -322,7 +322,7 @@ export default function ForgotPassword() {
               <button
                 type="submit"
                 disabled={loading || code.length !== 6}
-                className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs disabled:opacity-50 cursor-pointer"
               >
                 {loading ? 'Verifying Code...' : 'Verify & Continue'}
                 <ArrowRight className="w-4 h-4" />
@@ -356,7 +356,7 @@ export default function ForgotPassword() {
                       if (error) setError('');
                     }}
                     placeholder="Enter at least 8 characters"
-                    className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
+                    className="w-full bg-white border border-slate-300 rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 transition"
                   />
                   <button
                     type="button"
@@ -370,26 +370,26 @@ export default function ForgotPassword() {
 
               {/* Live Password Checklist */}
               <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
-                <p className="text-[11px] font-semibold text-slate-600 mb-1">Complexity Requirements:</p>
-                <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                <p className="text-xs font-semibold text-slate-600 mb-1">Complexity Requirements:</p>
+                <div className="grid grid-cols-2 gap-1.5 text-xs">
                   <span className={`flex items-center gap-1.5 font-medium ${hasMinLen ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                    {hasMinLen ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                    {hasMinLen ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                     Min 8 characters
                   </span>
                   <span className={`flex items-center gap-1.5 font-medium ${hasUpper ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                    {hasUpper ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                    {hasUpper ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                     Uppercase (A–Z)
                   </span>
                   <span className={`flex items-center gap-1.5 font-medium ${hasLower ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                    {hasLower ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                    {hasLower ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                     Lowercase (a–z)
                   </span>
                   <span className={`flex items-center gap-1.5 font-medium ${hasNumber ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                    {hasNumber ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                    {hasNumber ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                     Number (0–9)
                   </span>
                   <span className={`flex items-center gap-1.5 font-medium col-span-2 ${hasSpecial ? 'text-emerald-700 font-bold' : 'text-slate-500'}`}>
-                    {hasSpecial ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
+                    {hasSpecial ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <span className="w-1.5 h-1.5 rounded-full bg-slate-300 ml-1 mr-0.5"></span>}
                     Special symbol (!@#$%^&*)
                   </span>
                 </div>
@@ -414,7 +414,7 @@ export default function ForgotPassword() {
                     className={`w-full bg-white border ${
                       confirmPassword && !passwordsMatch
                         ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20'
-                        : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
+                        : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
                     } rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition`}
                   />
                   <button
@@ -433,7 +433,7 @@ export default function ForgotPassword() {
               <button
                 type="submit"
                 disabled={loading || !isPasswordValid || !passwordsMatch}
-                className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 cursor-pointer"
+                className="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs disabled:opacity-50 cursor-pointer"
               >
                 {loading ? 'Updating Credentials...' : 'Save & Secure Account'}
                 <CheckCircle2 className="w-4 h-4" />

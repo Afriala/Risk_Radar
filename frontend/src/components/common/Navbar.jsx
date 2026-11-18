@@ -57,7 +57,7 @@ export default function Navbar() {
           <img
             src="/riskradar-logo.jpg"
             alt="RiskRadar - See the Risk. Secure the Future."
-            className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-none object-contain rounded-xl bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-sm border border-slate-200 hover:shadow-emerald-500/20 transition"
+            className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto max-w-[180px] sm:max-w-[220px] md:max-w-none object-contain rounded-xl bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 shadow-xs border border-slate-200 transition"
           />
         </Link>
 
@@ -67,11 +67,11 @@ export default function Navbar() {
             to="/dashboard"
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-150 ${
               isActive('/dashboard')
-                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm'
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4 text-emerald-600" />
+            <LayoutDashboard className="w-4 h-4 text-emerald-700" />
             <span>Workspace</span>
           </Link>
 
@@ -79,11 +79,11 @@ export default function Navbar() {
             to="/profile"
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-150 ${
               isActive('/profile')
-                ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm'
+                ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             }`}
           >
-            <User className="w-4 h-4 text-emerald-600" />
+            <User className="w-4 h-4 text-emerald-700" />
             <span>Profile & Security</span>
           </Link>
 
@@ -92,7 +92,7 @@ export default function Navbar() {
             title="View Public Landing Page"
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 transition"
           >
-            <Globe className="w-3.5 h-3.5 text-emerald-600" />
+            <Globe className="w-3.5 h-3.5 text-emerald-700" />
             <span>Public Site</span>
           </Link>
         </nav>
@@ -105,20 +105,20 @@ export default function Navbar() {
             </span>
             <div className="flex items-center justify-end gap-1.5 mt-0.5">
               <span
-                className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded border ${
+                className={`text-xs font-mono font-medium px-2 py-0.5 rounded border ${
                   roleBadgeColors[user?.role] || 'bg-slate-100 text-slate-700 border-slate-200'
                 }`}
               >
                 {user?.role}
               </span>
-              <span className="text-[11px] text-slate-500 truncate max-w-[120px]">• {user?.department}</span>
+              <span className="text-xs text-slate-500 truncate max-w-[120px]">• {user?.department}</span>
             </div>
           </div>
 
           <button
             onClick={handleLogout}
             title="Secure Logout"
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-red-700 hover:bg-red-50 border border-slate-200 hover:border-red-200 transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 hover:text-red-700 hover:bg-red-50 border border-slate-200 hover:border-red-200 transition-all duration-150 hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
           >
             <LogOut className="w-4 h-4 text-red-500" />
             <span>Logout</span>
@@ -129,7 +129,7 @@ export default function Navbar() {
         <div className="flex md:hidden items-center gap-2">
           {/* Compact Role Badge */}
           <span
-            className={`text-[10px] font-mono font-bold px-2 py-1 rounded-md border ${
+            className={`text-xs font-mono font-medium px-2 py-1 rounded-md border ${
               roleBadgeColors[user?.role] || 'bg-slate-100 text-slate-700 border-slate-200'
             }`}
           >
@@ -155,7 +155,7 @@ export default function Navbar() {
           {/* Mobile User Summary Card */}
           <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 rounded-full bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-800 font-bold text-sm shrink-0">
+              <div className="w-10 h-10 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 font-bold text-sm shrink-0">
                 {user?.name?.charAt(0) || 'U'}
               </div>
               <div className="min-w-0">
@@ -164,7 +164,7 @@ export default function Navbar() {
               </div>
             </div>
             <span
-              className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border shrink-0 ${
+              className={`text-xs font-mono font-medium px-2 py-0.5 rounded border shrink-0 ${
                 roleBadgeColors[user?.role] || 'bg-slate-100 text-slate-700 border-slate-200'
               }`}
             >
@@ -179,12 +179,12 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
                 isActive('/dashboard')
-                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                   : 'text-slate-700 hover:bg-slate-100'
               }`}
             >
               <div className="flex items-center gap-3">
-                <LayoutDashboard className="w-4 h-4 text-emerald-600" />
+                <LayoutDashboard className="w-4 h-4 text-emerald-700" />
                 <span>Workspace ({user?.role})</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -195,12 +195,12 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition ${
                 isActive('/profile')
-                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                   : 'text-slate-700 hover:bg-slate-100'
               }`}
             >
               <div className="flex items-center gap-3">
-                <User className="w-4 h-4 text-emerald-600" />
+                <User className="w-4 h-4 text-emerald-700" />
                 <span>Profile & Security</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />
@@ -212,7 +212,7 @@ export default function Navbar() {
               className="flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100 transition"
             >
               <div className="flex items-center gap-3">
-                <Globe className="w-4 h-4 text-emerald-600" />
+                <Globe className="w-4 h-4 text-emerald-700" />
                 <span>Public Landing Page</span>
               </div>
               <ChevronRight className="w-4 h-4 text-slate-400" />

@@ -190,7 +190,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-900">
+    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-900 overflow-x-hidden">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link to="/" className="inline-block mb-3">
           <img
@@ -204,8 +204,8 @@ export default function Login() {
         </p>
       </div>
 
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-2xl sm:px-10">
+      <div className="mt-6 w-full max-w-md mx-auto px-4">
+        <div className="bg-white border border-slate-200 py-8 px-6 shadow-xl shadow-slate-200/70 rounded-xl sm:px-10">
 
           {/* Idle Timeout Warning Banner */}
           {idleTimeoutNotice && (
@@ -223,7 +223,7 @@ export default function Login() {
           {/* Success Banner (e.g. from password reset) */}
           {resetSuccess && (
             <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs flex items-start gap-2.5 shadow-sm">
-              <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600 mt-0.5" />
+              <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-700 mt-0.5" />
               <div>
                 <p className="font-bold">Password Updated Successfully</p>
                 <p className="text-slate-600 mt-0.5">Please sign in with your new password credentials.</p>
@@ -257,7 +257,7 @@ export default function Login() {
           {step === 'credentials' && (
             <div>
               <h2 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
-                <Lock className="w-5 h-5 text-emerald-600" />
+                <Lock className="w-5 h-5 text-emerald-700" />
                 <span>Authorized Personnel Sign In</span>
               </h2>
 
@@ -280,9 +280,8 @@ export default function Login() {
                         if (generalError) setGeneralError('');
                       }}
                       placeholder="e.g. analyst@riskradar.io"
-                      className={`w-full bg-white border ${
-                        emailError ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
-                      } rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition disabled:bg-slate-100 disabled:opacity-60`}
+                      className={`w-full bg-white border ${emailError ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
+                        } rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition disabled:bg-slate-100 disabled:opacity-60`}
                     />
                   </div>
                   {/* Distinct Email Error Message */}
@@ -300,7 +299,7 @@ export default function Login() {
                     <label className="block text-xs font-semibold uppercase tracking-wider text-slate-700">
                       Password
                     </label>
-                    <span className="text-[11px] text-slate-400 font-mono">Min 8 chars (#, abc, 123)</span>
+                    <span className="text-xs text-slate-400 font-mono">Min 8 chars (#, abc, 123)</span>
                   </div>
                   <div className="relative">
                     <KeyRound className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -315,9 +314,8 @@ export default function Login() {
                         if (generalError) setGeneralError('');
                       }}
                       placeholder="••••••••••••"
-                      className={`w-full bg-white border ${
-                        passwordError ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-500/20'
-                      } rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition disabled:bg-slate-100 disabled:opacity-60`}
+                      className={`w-full bg-white border ${passwordError ? 'border-red-400 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-300 focus:border-emerald-700 focus:ring-emerald-700/20'
+                        } rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 transition disabled:bg-slate-100 disabled:opacity-60`}
                     />
                     <button
                       type="button"
@@ -359,18 +357,18 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={loading || lockoutSeconds > 0}
-                  className="w-full mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                  className="w-full mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
                 >
                   {loading ? 'Verifying Identity...' : lockoutSeconds > 0 ? `Locked (${lockoutSeconds}s)` : 'Verify Credentials'}
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
 
-              {/* Strict Registration Link Notice */}
+              {/* Registration Link */}
               <div className="mt-6 pt-5 border-t border-slate-200 text-center text-xs text-slate-500">
-                <span>New Personnel? </span>
+                <span>Need an account? </span>
                 <Link to="/register" className="font-semibold text-emerald-700 hover:underline">
-                  Submit Clearance Request (Invite Code Required)
+                  Request Access (Invite Code Required)
                 </Link>
               </div>
             </div>
@@ -395,8 +393,8 @@ export default function Login() {
               {simulatedMfaCode && (
                 <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs shadow-sm">
                   <div className="flex items-center gap-2 font-bold text-emerald-800 mb-1">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Enterprise Security Alert (Simulated MFA Channel)</span>
+                    <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                    <span>Two-Factor Verification Code</span>
                   </div>
                   <p className="text-slate-700 leading-relaxed">
                     Your single-use 6-digit MFA access verification code is:
@@ -424,7 +422,7 @@ export default function Login() {
                         if (generalError) setGeneralError('');
                       }}
                       placeholder="••••••"
-                      className="w-full bg-white border border-slate-300 rounded-lg py-3 text-center font-mono text-xl tracking-[0.4em] font-bold text-slate-900 placeholder-slate-300 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition"
+                      className="w-full bg-white border border-slate-300 rounded-lg py-3 text-center font-mono text-xl tracking-[0.4em] font-bold text-slate-900 placeholder-slate-300 focus:outline-none focus:border-emerald-700 focus:ring-2 focus:ring-emerald-700/20 transition"
                     />
                   </div>
                 </div>
@@ -458,7 +456,7 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={loading || mfaCode.length !== 6}
-                  className="w-full mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm transition shadow-md shadow-emerald-600/20 disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                  className="w-full mt-3 flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm transition shadow-xs disabled:opacity-50 hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
                 >
                   {loading ? 'Authorizing Session...' : 'Authorize & Enter Workspace'}
                   <ShieldCheck className="w-4 h-4" />
