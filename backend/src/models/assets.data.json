@@ -1,0 +1,75 @@
+[
+  {
+    "id": "AST-131",
+    "name": "AAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "location": "US-East-1",
+    "category": "Cloud",
+    "criticality": "Tier 5 Critical",
+    "sensitivity": "Confidential",
+    "owner": "Noor",
+    "ip": "10.0.7.82",
+    "createdAt": "2026-11-18T17:43:30.295Z"
+  },
+  {
+    "id": "AST-130",
+    "name": "Customer Profile",
+    "location": "aaaaaaaa",
+    "category": "Cloud",
+    "criticality": "Tier 5 Critical",
+    "sensitivity": "Confidential",
+    "owner": "Noor",
+    "ip": "10.0.13.85",
+    "createdAt": "2026-11-18T17:42:47.052Z"
+  },
+  {
+    "id": "AST-129",
+    "name": "Facebook Credentials",
+    "location": "Uttora 18",
+    "category": "Hardware",
+    "criticality": "Tier 3 Medium",
+    "sensitivity": "Confidential",
+    "owner": "Hasib",
+    "ip": "10.0.18.9",
+    "createdAt": "2026-11-16T14:19:07.670Z"
+  },
+  {
+    "id": "AST-101",
+    "name": "Production Database - AWS US-East",
+    "location": "AWS US-East",
+    "category": "Cloud",
+    "criticality": "Tier 5 Critical",
+    "sensitivity": "Restricted",
+    "owner": "Elena Rostova",
+    "ip": "10.0.4.12"
+  },
+  {
+    "id": "AST-102",
+    "name": "Customer CRM Portal - SaaS",
+    "location": "SaaS",
+    "category": "Software",
+    "criticality": "Tier 4 High",
+    "sensitivity": "Confidential",
+    "owner": "Marc Jenkins",
+    "ip": "crm.salesforce.com"
+  },
+  {
+    "id": "AST-103",
+    "name": "Internal HR Server - On-Prem",
+    "location": "On-Prem",
+    "category": "Hardware",
+    "criticality": "Tier 4 High",
+    "sensitivity": "Confidential",
+    "owner": "Afri Alam",
+    "ip": "192.168.10.5"
+  },
+  {
+    "id": "AST-104",
+    "name": "Financial Ledger DB - Azure",
+    "location": "Azure",
+    "category": "Database",
+    "criticality": "Tier 5 Critical",
+    "sensitivity": "Restricted",
+    "owner": "Sarah Chen",
+    "ip": "10.0.6.10"
+  }
+]
