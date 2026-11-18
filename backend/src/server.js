@@ -6,6 +6,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
+import assetRoutes from './routes/asset.routes.js';
+import riskRoutes from './routes/risk.routes.js';
 
 dotenv.config();
 
@@ -29,7 +31,7 @@ app.get('/', (req, res) => {
     version: '1.0.0 (Module 1 Active)',
     motto: 'See the Risk. Secure the Future.',
     healthCheck: '/api/health',
-    endpoints: ['/api/auth', '/api/users'],
+    endpoints: ['/api/auth', '/api/users', '/api/assets', '/api/risks'],
   });
 });
 
@@ -46,6 +48,8 @@ app.get('/api/health', (req, res) => {
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/assets', assetRoutes);
+app.use('/api/risks', riskRoutes);
 
 // 404 Handler
 app.use((req, res) => {
