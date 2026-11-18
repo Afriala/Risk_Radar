@@ -170,37 +170,28 @@ export const getTeamRoster = async (req, res) => {
   }
 };
 
-// 3b. My Personal Security Activity Log (Filtered for authenticated user)
+// 3b. My Personal Security Activity Log (Strictly scoped to actions performed by the authenticated user)
 export const getMyAuditLogs = async (req, res) => {
   try {
     const user = req.user;
-    const allLogs = AuditStore.findAll(100);
-    const myEmail = (user.email || '').toLowerCase();
-    const myName = (user.name || '').toLowerCase();
+    const allLogs = AuditStore.findAll(200);
+    const normalizeActor = (str) =>
+      (str || '').replace(/(\s*\((?:Admin|Analyst|Executive|Auditor)\))+/gi, '').trim().toLowerCase();
 
-    // Filter logs matching current user
-    const filtered = allLogs.filter((log) => {
-      const actor = (log.actor || '').toLowerCase();
-      const target = (log.target || '').toLowerCase();
-      const details = (log.details || '').toLowerCase();
-      return (
-        actor.includes(myEmail) ||
-        actor.includes(myName) ||
-        target.includes(myEmail) ||
-        target.includes(myName) ||
-        details.includes(myEmail) ||
-        details.includes(myName)
-      );
-    });
+    const myEmail = (user.email || '').trim().toLowerCase();
+    const myNormName = normalizeActor(user.name);
 
-    // If few personal logs exist, include base system security policy logs for context
-    let logs = filtered;
-    if (filtered.length < 3) {
-      const baseLogs = allLogs.filter(
-        (l) => l.action.startsWith('SYSTEM_') || l.action.startsWith('POLICY_') || l.action.startsWith('RATE_LIMIT_')
-      );
-      logs = [...filtered, ...baseLogs].slice(0, 25);
-    }
+    // Strictly match ONLY actions where the authenticated user is the actor
+    const logs = allLogs
+      .filter((log) => {
+        const rawActor = (log.actor || '').trim().toLowerCase();
+        const normActor = normalizeActor(log.actor);
+        return (
+          (myEmail && rawActor === myEmail) ||
+          (myNormName && normActor === myNormName)
+        );
+      })
+      .slice(0, 50);
 
     return res.json({
       success: true,

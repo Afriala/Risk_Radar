@@ -1,0 +1,1676 @@
+[
+  {
+    "id": "aud_seed_01",
+    "timestamp": "2026-11-16T03:45:29.440Z",
+    "action": "SYSTEM_BOOT",
+    "actor": "RiskRadar Security Daemon",
+    "target": "System Core",
+    "details": "Cryptographic policy initialized with 10 salt rounds and NIST SP 800-63B idle timeout guard.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_seed_02",
+    "timestamp": "2026-11-16T04:45:29.440Z",
+    "action": "POLICY_ENFORCEMENT",
+    "actor": "Access Guard",
+    "target": "Invite Gate",
+    "details": "Enforced enterprise authorization code RR-ORG-2026 for organizational onboarding.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_seed_03",
+    "timestamp": "2026-11-16T05:45:29.440Z",
+    "action": "RATE_LIMIT_ACTIVE",
+    "actor": "Firewall Daemon",
+    "target": "POST /api/auth/login",
+    "details": "Sliding window rate limiter activated (max 10 attempts / 15 minutes per origin IP).",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_seed_04",
+    "timestamp": "2026-11-16T06:45:29.440Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman",
+    "target": "admin@riskradar.io",
+    "details": "Administrator logged in with verified 6-digit MFA challenge code.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794815141985_fenm",
+    "timestamp": "2026-11-16T07:45:41.985Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794815265270_d24u",
+    "timestamp": "2026-11-16T07:47:45.270Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794815267400_ewjl",
+    "timestamp": "2026-11-16T07:47:47.400Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794815268175_syun",
+    "timestamp": "2026-11-16T07:47:48.175Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794815268998_404z",
+    "timestamp": "2026-11-16T07:47:48.998Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794815271867_8tcs",
+    "timestamp": "2026-11-16T07:47:51.868Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794815274487_xrpp",
+    "timestamp": "2026-11-16T07:47:54.487Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794815405241_ejq4",
+    "timestamp": "2026-11-16T07:50:05.241Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam Dipto",
+    "target": "afri.gobeent@gmail.com",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794816596493_vrlp",
+    "timestamp": "2026-11-16T08:09:56.493Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam Dipto",
+    "target": "afri.gobeent@gmail.com",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794816606241_nfc2",
+    "timestamp": "2026-11-16T08:10:06.241Z",
+    "action": "RISK_LIFECYCLE_ADVANCED",
+    "actor": "Afri Alam Dipto (Analyst)",
+    "target": "RSK-2026-0098: Default Credentials on Internal Gateway",
+    "details": "Lifecycle state transitioned from 'Identified' to 'Assessed'.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_1794816662525_smdk",
+    "timestamp": "2026-11-16T08:11:02.526Z",
+    "action": "ASSET_REGISTERED",
+    "actor": "Afri Alam Dipto (Analyst)",
+    "target": "AST-129: Foodbridge",
+    "details": "Registered new IT asset under category 'Software', criticality 'Tier 5 Critical'.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794816705594_94kd",
+    "timestamp": "2026-11-16T08:11:45.594Z",
+    "action": "ASSET_UPDATED",
+    "actor": "Afri Alam Dipto (Analyst)",
+    "target": "AST-129: Foodbridge",
+    "details": "Asset details updated (Criticality: Tier 4 High, Sensitivity: Confidential).",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_1794816780531_c7vb",
+    "timestamp": "2026-11-16T08:13:00.531Z",
+    "action": "RISK_LOGGED",
+    "actor": "Afri Alam Dipto (Analyst)",
+    "target": "RSK-2026-0102: Weak Security",
+    "details": "Threat logged into Kanban pipeline (Score: 16/25, Severity: High) on asset 'AST-129'.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_1794829425397_bj3n",
+    "timestamp": "2026-11-16T11:43:45.397Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam Dipto",
+    "target": "afri.gobeent@gmail.com",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794829540893_wfef",
+    "timestamp": "2026-11-16T11:45:40.893Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831447488_k71j",
+    "timestamp": "2026-11-16T12:17:27.488Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam Dipto",
+    "target": "afri.gobeent@gmail.com",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831463800_0o20",
+    "timestamp": "2026-11-16T12:17:43.800Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Afri Alam Dipto (Analyst)",
+    "target": "AST-113: Cloudflare WAF Proxy",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831464608_h4x2",
+    "timestamp": "2026-11-16T12:17:44.608Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Afri Alam Dipto (Analyst)",
+    "target": "AST-112: Corporate Email Gateway",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831634072_ec6y",
+    "timestamp": "2026-11-16T12:20:34.072Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831658893_x4cq",
+    "timestamp": "2026-11-16T12:20:58.893Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831659883_ow9s",
+    "timestamp": "2026-11-16T12:20:59.883Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831660775_2qy0",
+    "timestamp": "2026-11-16T12:21:00.775Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831661526_5fov",
+    "timestamp": "2026-11-16T12:21:01.526Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831661940_gcxg",
+    "timestamp": "2026-11-16T12:21:01.940Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831662410_tj87",
+    "timestamp": "2026-11-16T12:21:02.410Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831666594_7ifb",
+    "timestamp": "2026-11-16T12:21:06.594Z",
+    "action": "MFA_POLICY_TOGGLED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Administrator enforced mandatory MFA shield.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831668353_0ix3",
+    "timestamp": "2026-11-16T12:21:08.353Z",
+    "action": "MFA_POLICY_TOGGLED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "External Auditor (auditor@riskradar.io)",
+    "details": "Administrator enforced mandatory MFA shield.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831669710_rdmx",
+    "timestamp": "2026-11-16T12:21:09.710Z",
+    "action": "MFA_POLICY_TOGGLED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (SecOps) (afri.sec@riskradar.io)",
+    "details": "Administrator enforced mandatory MFA shield.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831670538_f7yj",
+    "timestamp": "2026-11-16T12:21:10.538Z",
+    "action": "MFA_POLICY_TOGGLED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam Dipto (afri.gobeent@gmail.com)",
+    "details": "Administrator enforced mandatory MFA shield.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794831683004_ur2o",
+    "timestamp": "2026-11-16T12:21:23.004Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-128: Elasticsearch Log Node",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831683592_73hy",
+    "timestamp": "2026-11-16T12:21:23.592Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-127: Slack Enterprise Grid",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831684127_1orf",
+    "timestamp": "2026-11-16T12:21:24.127Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-126: MongoDB Lead Store",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831684546_ory3",
+    "timestamp": "2026-11-16T12:21:24.546Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-125: SIEM Splunk Indexer",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831684927_4y80",
+    "timestamp": "2026-11-16T12:21:24.927Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-124: Public Marketing Site",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831685408_b0df",
+    "timestamp": "2026-11-16T12:21:25.408Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-123: Core Distribution Switch B",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831685728_wjjh",
+    "timestamp": "2026-11-16T12:21:25.728Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-122: Core Distribution Switch A",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831685737_g689",
+    "timestamp": "2026-11-16T12:21:25.737Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-121: Offsite Cold S3 Archive",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831686041_drx9",
+    "timestamp": "2026-11-16T12:21:26.041Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-120: Stripe API Webhook Node",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831686124_mllg",
+    "timestamp": "2026-11-16T12:21:26.124Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-119: Redis Cache Cluster",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831686424_900e",
+    "timestamp": "2026-11-16T12:21:26.424Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-118: Core SAN Storage Vault",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831686744_mbje",
+    "timestamp": "2026-11-16T12:21:26.744Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-117: Employee Active Directory",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831686753_ajt9",
+    "timestamp": "2026-11-16T12:21:26.753Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-116: Customer Service Desk Jira",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831687074_1c7p",
+    "timestamp": "2026-11-16T12:21:27.074Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-115: PostgreSQL Secondary Replica",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831687404_h71x",
+    "timestamp": "2026-11-16T12:21:27.404Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-114: DevOps CI/CD Runner Cluster",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831687416_hwx6",
+    "timestamp": "2026-11-16T12:21:27.416Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-111: Payment Processing Service",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831687821_zkg0",
+    "timestamp": "2026-11-16T12:21:27.821Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-110: Crypto Key Vault HSM",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831687832_dhsn",
+    "timestamp": "2026-11-16T12:21:27.832Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-109: Kubernetes Ingress Gateway",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831688140_0w0x",
+    "timestamp": "2026-11-16T12:21:28.140Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-108: Edge Cisco Firewall Cluster",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831688466_bbvh",
+    "timestamp": "2026-11-16T12:21:28.466Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-107: Customer Analytics Warehouse",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831688480_3isf",
+    "timestamp": "2026-11-16T12:21:28.480Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-106: SRV-PROD-AUTH01",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831689230_pent",
+    "timestamp": "2026-11-16T12:21:29.230Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-105: Docker Host 04",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831689906_2pje",
+    "timestamp": "2026-11-16T12:21:29.906Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-104: Main Finance DB",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831690380_qya0",
+    "timestamp": "2026-11-16T12:21:30.380Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-103: Salesforce CRM",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831690773_beym",
+    "timestamp": "2026-11-16T12:21:30.773Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-102: Internal HR Portal",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831692119_oeie",
+    "timestamp": "2026-11-16T12:21:32.119Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-101: AWS Production DB",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794831759064_l4tt",
+    "timestamp": "2026-11-16T12:22:39.064Z",
+    "action": "ASSET_REGISTERED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-130: Bkash Production BD",
+    "details": "Registered new IT asset under category 'Database', criticality 'Tier 4 High'.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794833161822_hrgg",
+    "timestamp": "2026-11-16T12:46:01.822Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0091: SQL Injection Vulnerability on Customer DB",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833162860_39hs",
+    "timestamp": "2026-11-16T12:46:02.860Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0092: SQL Injection Vulnerability on Customer DB",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833163708_xxok",
+    "timestamp": "2026-11-16T12:46:03.708Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0093: Phishing vulnerability in marketing dept",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833164109_a512",
+    "timestamp": "2026-11-16T12:46:04.109Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0097: Zero-Day Memory Leak in SSH Daemon",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833164531_j2vj",
+    "timestamp": "2026-11-16T12:46:04.531Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0098: Default Credentials on Internal Gateway",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833165019_28g1",
+    "timestamp": "2026-11-16T12:46:05.019Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0081: Unauthorized API access on gateway",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833165029_phoh",
+    "timestamp": "2026-11-16T12:46:05.029Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0082: Unauthorized API access on gateway",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833165460_pmq3",
+    "timestamp": "2026-11-16T12:46:05.460Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0099: Misconfigured S3 Bucket Permissions",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833165471_7b7l",
+    "timestamp": "2026-11-16T12:46:05.471Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0071: Lack of encrypted backups",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833165806_eknj",
+    "timestamp": "2026-11-16T12:46:05.806Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0072: Insecure TLS 1.1 protocol enabled",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833166155_sng5",
+    "timestamp": "2026-11-16T12:46:06.155Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0100: Unpatched Apache Struts Framework",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833168373_0c2a",
+    "timestamp": "2026-11-16T12:46:08.373Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0061: Phishing vulnerability in marketing dept",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833169404_f6mn",
+    "timestamp": "2026-11-16T12:46:09.404Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0062: Weak password policies",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833170116_p05i",
+    "timestamp": "2026-11-16T12:46:10.116Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0063: Weak password policies",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833170669_5h4d",
+    "timestamp": "2026-11-16T12:46:10.669Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0064: Expired SSL Certificate on Dev Sandbox",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833171852_7nbk",
+    "timestamp": "2026-11-16T12:46:11.852Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0101: Cross-Site Scripting in User Portal",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833172355_3e6r",
+    "timestamp": "2026-11-16T12:46:12.355Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0065: Outdated Node.js Version in Staging",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833172803_l5a3",
+    "timestamp": "2026-11-16T12:46:12.803Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0066: Public Directory Listing in Backup Subdomain",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833174331_dmbz",
+    "timestamp": "2026-11-16T12:46:14.331Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0067: Unrestricted File Upload on Avatar Service",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833175433_q0pf",
+    "timestamp": "2026-11-16T12:46:15.433Z",
+    "action": "RISK_PURGED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0068: CORS Wildcard Allowed on Internal API",
+    "details": "Threat purged permanently from active risk register.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833399839_qs41",
+    "timestamp": "2026-11-16T12:49:59.839Z",
+    "action": "SESSION_EXTENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Active Session Guard",
+    "details": "Active session idle timer refreshed (+15 mins) under NIST SP 800-63B specification.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794833419206_s041",
+    "timestamp": "2026-11-16T12:50:19.206Z",
+    "action": "MFA_DISABLED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "User personally turned OFF 2-Step MFA protection.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794833420242_4iwe",
+    "timestamp": "2026-11-16T12:50:20.242Z",
+    "action": "MFA_ENABLED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "User personally turned ON 2-Step MFA protection.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794835066626_iud6",
+    "timestamp": "2026-11-16T13:17:46.626Z",
+    "action": "RISK_LIFECYCLE_ADVANCED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0102: Weak Security",
+    "details": "Lifecycle state transitioned from 'Identified' to 'Assessed'.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_1794835069133_3n1i",
+    "timestamp": "2026-11-16T13:17:49.133Z",
+    "action": "RISK_LIFECYCLE_ADVANCED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0102: Weak Security",
+    "details": "Lifecycle state transitioned from 'Assessed' to 'Mitigating'.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_1794835070566_kj09",
+    "timestamp": "2026-11-16T13:17:50.566Z",
+    "action": "RISK_LIFECYCLE_ADVANCED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0102: Weak Security",
+    "details": "Lifecycle state transitioned from 'Mitigating' to 'Resolved'.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794835072429_eq02",
+    "timestamp": "2026-11-16T13:17:52.429Z",
+    "action": "RISK_LIFECYCLE_ADVANCED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "RSK-2026-0102: Weak Security",
+    "details": "Lifecycle state transitioned from 'Resolved' to 'Resolved'.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794835230591_0xyf",
+    "timestamp": "2026-11-16T13:20:30.591Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794837246394_rqya",
+    "timestamp": "2026-11-16T13:54:06.394Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794837504187_gs35",
+    "timestamp": "2026-11-16T13:58:24.187Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794837589539_vig3",
+    "timestamp": "2026-11-16T13:59:49.539Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794837636178_g3ma",
+    "timestamp": "2026-11-16T14:00:36.178Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838265918_nndc",
+    "timestamp": "2026-11-16T14:11:05.918Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838299758_mfvx",
+    "timestamp": "2026-11-16T14:11:39.758Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838534892_6cju",
+    "timestamp": "2026-11-16T14:15:34.892Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838560684_p5et",
+    "timestamp": "2026-11-16T14:16:00.684Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838689919_13wl",
+    "timestamp": "2026-11-16T14:18:09.919Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838747671_dptg",
+    "timestamp": "2026-11-16T14:19:07.671Z",
+    "action": "ASSET_REGISTERED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "AST-129: Facebook Credentials",
+    "details": "Registered new IT asset under category 'Hardware', criticality 'Tier 3 Medium'.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794838975953_t8fd",
+    "timestamp": "2026-11-16T14:22:55.953Z",
+    "action": "RISK_LOGGED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "RSK-2026-0099: Phishing Attempt on Finance",
+    "details": "Threat logged into Kanban pipeline (Score: 20/25, Severity: Critical) on asset 'AST-129'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794839096161_65n7",
+    "timestamp": "2026-11-16T14:24:56.161Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839141995_xr80",
+    "timestamp": "2026-11-16T14:25:41.995Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839232354_no5r",
+    "timestamp": "2026-11-16T14:27:12.354Z",
+    "action": "SESSION_EXTENDED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "Active Session Guard",
+    "details": "Active session idle timer refreshed (+15 mins) under NIST SP 800-63B specification.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839233051_txu9",
+    "timestamp": "2026-11-16T14:27:13.051Z",
+    "action": "SESSION_EXTENDED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "Active Session Guard",
+    "details": "Active session idle timer refreshed (+15 mins) under NIST SP 800-63B specification.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839234397_kdjn",
+    "timestamp": "2026-11-16T14:27:14.397Z",
+    "action": "SESSION_EXTENDED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "Active Session Guard",
+    "details": "Active session idle timer refreshed (+15 mins) under NIST SP 800-63B specification.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839435798_wbry",
+    "timestamp": "2026-11-16T14:30:35.798Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839688249_j3yo",
+    "timestamp": "2026-11-16T14:34:48.249Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839716270_7ckn",
+    "timestamp": "2026-11-16T14:35:16.270Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794839754462_j4xa",
+    "timestamp": "2026-11-16T14:35:54.462Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794840147978_vyhv",
+    "timestamp": "2026-11-16T14:42:27.978Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794841176170_c58m",
+    "timestamp": "2026-11-16T14:59:36.170Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794841329167_ccdf",
+    "timestamp": "2026-11-16T15:02:09.167Z",
+    "action": "SESSION_EXTENDED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "Active Session Guard",
+    "details": "Active session idle timer refreshed (+15 mins) under NIST SP 800-63B specification.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794842284865_kpti",
+    "timestamp": "2026-11-16T15:18:04.865Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794842348439_7dx4",
+    "timestamp": "2026-11-16T15:19:08.439Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794843630797_qj47",
+    "timestamp": "2026-11-16T15:40:30.797Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794848580727_b0xz",
+    "timestamp": "2026-11-16T17:03:00.727Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794894414436_pcne",
+    "timestamp": "2026-11-17T05:46:54.436Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794894495902_yces",
+    "timestamp": "2026-11-17T05:48:15.902Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794897425007_kes5",
+    "timestamp": "2026-11-17T06:37:05.007Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794897472341_k3u2",
+    "timestamp": "2026-11-17T06:37:52.341Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794897927786_mvhs",
+    "timestamp": "2026-11-17T06:45:27.786Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794898022904_jc7r",
+    "timestamp": "2026-11-17T06:47:02.904Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794901046276_ynhr",
+    "timestamp": "2026-11-17T07:37:26.276Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794902278678_yy8n",
+    "timestamp": "2026-11-17T07:57:58.678Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794905147342_5ove",
+    "timestamp": "2026-11-17T08:45:47.342Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794911046467_cp70",
+    "timestamp": "2026-11-17T10:24:06.467Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794911594689_s1wh",
+    "timestamp": "2026-11-17T10:33:14.689Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794911638791_iz4a",
+    "timestamp": "2026-11-17T10:33:58.791Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794911851320_hr6q",
+    "timestamp": "2026-11-17T10:37:31.320Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794912047528_96oe",
+    "timestamp": "2026-11-17T10:40:47.528Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794912079234_dn7x",
+    "timestamp": "2026-11-17T10:41:19.234Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794912090500_dhcf",
+    "timestamp": "2026-11-17T10:41:30.500Z",
+    "action": "ROLE_UPDATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Role updated from 'Analyst' to 'Admin'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794912105949_pbgz",
+    "timestamp": "2026-11-17T10:41:45.949Z",
+    "action": "ROLE_UPDATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Role updated from 'Admin' to 'Analyst'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794912115987_p0a5",
+    "timestamp": "2026-11-17T10:41:55.988Z",
+    "action": "ROLE_UPDATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Role updated from 'Analyst' to 'Executive'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794912140329_s6pe",
+    "timestamp": "2026-11-17T10:42:20.329Z",
+    "action": "ROLE_UPDATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Role updated from 'Executive' to 'Auditor'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794912156411_mxby",
+    "timestamp": "2026-11-17T10:42:36.411Z",
+    "action": "ROLE_UPDATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Role updated from 'Auditor' to 'Analyst'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794912163826_lk8k",
+    "timestamp": "2026-11-17T10:42:43.826Z",
+    "action": "ROLE_UPDATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (SecOps) (afri.sec@riskradar.io)",
+    "details": "Role updated from 'Analyst' to 'Executive'.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794912472283_ri5e",
+    "timestamp": "2026-11-17T10:47:52.283Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794918069903_v7rp",
+    "timestamp": "2026-11-17T12:21:09.904Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794918431033_b16a",
+    "timestamp": "2026-11-17T12:27:11.033Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794919558570_knqf",
+    "timestamp": "2026-11-17T12:45:58.570Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794919686401_s173",
+    "timestamp": "2026-11-17T12:48:06.401Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794919737201_19sa",
+    "timestamp": "2026-11-17T12:48:57.201Z",
+    "action": "RISK_LIFECYCLE_ADVANCED",
+    "actor": "Afri Alam (Analyst)",
+    "target": "RSK-2026-0099: Phishing Attempt on Finance",
+    "details": "Lifecycle state transitioned from 'Identified' to 'Assessed'.",
+    "severity": "INFO"
+  },
+  {
+    "id": "aud_1794919772267_3def",
+    "timestamp": "2026-11-17T12:49:32.267Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794919840677_sj7f",
+    "timestamp": "2026-11-17T12:50:40.677Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794920040962_thwv",
+    "timestamp": "2026-11-17T12:54:00.962Z",
+    "action": "MFA_DISABLED",
+    "actor": "External Auditor (Auditor)",
+    "target": "auditor@riskradar.io",
+    "details": "User personally turned OFF 2-Step MFA protection.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794920041793_vqm3",
+    "timestamp": "2026-11-17T12:54:01.793Z",
+    "action": "MFA_ENABLED",
+    "actor": "External Auditor (Auditor)",
+    "target": "auditor@riskradar.io",
+    "details": "User personally turned ON 2-Step MFA protection.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794920112972_yaol",
+    "timestamp": "2026-11-17T12:55:12.972Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794920126664_qkxo",
+    "timestamp": "2026-11-17T12:55:26.665Z",
+    "action": "USER_SUSPENDED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been suspended. Access revoked.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1794920128211_jwxz",
+    "timestamp": "2026-11-17T12:55:28.211Z",
+    "action": "USER_ACTIVATED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "Afri Alam (Analyst) (analyst@riskradar.io)",
+    "details": "Account for 'Afri Alam (Analyst)' has been reactivated.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794920363951_4tig",
+    "timestamp": "2026-11-17T12:59:23.951Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794920432751_6crm",
+    "timestamp": "2026-11-17T13:00:32.751Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794923678234_rq9e",
+    "timestamp": "2026-11-17T13:54:38.234Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794924907986_mj2q",
+    "timestamp": "2026-11-17T14:15:07.986Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794973117426_jrfo",
+    "timestamp": "2026-11-18T03:38:37.426Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794973127909_exuu",
+    "timestamp": "2026-11-18T03:38:47.909Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794973140318_en0y",
+    "timestamp": "2026-11-18T03:39:00.318Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1794973156510_lzg6",
+    "timestamp": "2026-11-18T03:39:16.510Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1795018133071_0hek",
+    "timestamp": "2026-11-18T16:08:53.072Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "admin@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Admin' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1795018154581_6uh4",
+    "timestamp": "2026-11-18T16:09:14.581Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Afri Alam (Analyst)",
+    "target": "analyst@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Analyst' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1795018177047_1hwj",
+    "timestamp": "2026-11-18T16:09:37.047Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "External Auditor",
+    "target": "auditor@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Auditor' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1795018189794_j5li",
+    "timestamp": "2026-11-18T16:09:49.794Z",
+    "action": "AUTH_SUCCESS",
+    "actor": "Executive Leader",
+    "target": "executive@riskradar.io",
+    "details": "Identity verified. Authenticated under role 'Executive' via 2-Step MFA challenge.",
+    "severity": "SUCCESS"
+  },
+  {
+    "id": "aud_1795023001754_y0pu",
+    "timestamp": "2026-11-18T17:30:01.754Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-128: Elasticsearch Log Node",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023008901_fkqo",
+    "timestamp": "2026-11-18T17:30:08.901Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-127: Slack Enterprise Grid",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023014704_rjro",
+    "timestamp": "2026-11-18T17:30:14.704Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-126: MongoDB Lead Store",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023015332_8yes",
+    "timestamp": "2026-11-18T17:30:15.332Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-125: SIEM Splunk Indexer",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023016381_pf4v",
+    "timestamp": "2026-11-18T17:30:16.381Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-124: Public Marketing Site",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023017717_2pk6",
+    "timestamp": "2026-11-18T17:30:17.717Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-123: Core Distribution Switch B",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023018200_cd9n",
+    "timestamp": "2026-11-18T17:30:18.200Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-122: Core Distribution Switch A",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023018533_mzoq",
+    "timestamp": "2026-11-18T17:30:18.533Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-121: Offsite Cold S3 Archive",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023018543_lxz5",
+    "timestamp": "2026-11-18T17:30:18.543Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-120: Stripe API Webhook Node",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023018958_7eho",
+    "timestamp": "2026-11-18T17:30:18.958Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-119: Redis Cache Cluster",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023018970_lr8w",
+    "timestamp": "2026-11-18T17:30:18.970Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-118: Core SAN Storage Vault",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023019331_zpys",
+    "timestamp": "2026-11-18T17:30:19.331Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-117: Employee Active Directory",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023019370_ix4g",
+    "timestamp": "2026-11-18T17:30:19.370Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-116: Customer Service Desk Jira",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023019783_qj3h",
+    "timestamp": "2026-11-18T17:30:19.783Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-115: PostgreSQL Secondary Replica",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023019827_yf83",
+    "timestamp": "2026-11-18T17:30:19.827Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-114: DevOps CI/CD Runner Cluster",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023020173_soph",
+    "timestamp": "2026-11-18T17:30:20.173Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-113: Cloudflare WAF Proxy",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023020272_9ht3",
+    "timestamp": "2026-11-18T17:30:20.272Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-112: Corporate Email Gateway",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023020551_nxjv",
+    "timestamp": "2026-11-18T17:30:20.551Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-111: Payment Processing Service",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023020950_q836",
+    "timestamp": "2026-11-18T17:30:20.950Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-110: Crypto Key Vault HSM",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023020964_avax",
+    "timestamp": "2026-11-18T17:30:20.964Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-109: Kubernetes Ingress Gateway",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023021429_48yy",
+    "timestamp": "2026-11-18T17:30:21.429Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-108: Edge Cisco Firewall Cluster",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023021440_ee78",
+    "timestamp": "2026-11-18T17:30:21.440Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-107: Customer Analytics Warehouse",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023021765_elji",
+    "timestamp": "2026-11-18T17:30:21.765Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-106: SRV-PROD-AUTH01",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023022184_a0y0",
+    "timestamp": "2026-11-18T17:30:22.184Z",
+    "action": "ASSET_DECOMMISSIONED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-105: Biometric Access Control",
+    "details": "Asset decommissioned and permanently removed from active inventory.",
+    "severity": "WARNING"
+  },
+  {
+    "id": "aud_1795023767053_bykc",
+    "timestamp": "2026-11-18T17:42:47.053Z",
+    "action": "ASSET_REGISTERED",
+    "actor": "Mahabubur Rahman (Admin)",
+    "target": "AST-130: Customer Profile",
+    "details": "Registered new IT asset under category 'Cloud', criticality 'Tier 5 Critical'.",
+    "severity": "SUCCESS"
+  }
+]

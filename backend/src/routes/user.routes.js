@@ -29,13 +29,13 @@ router.put('/credentials', verifyToken, updateSecurityCredentials);
 router.get('/team-roster', verifyToken, getTeamRoster);
 router.get('/my-logs', verifyToken, getMyAuditLogs);
 router.post('/extend-session', verifyToken, extendUserSession);
-router.get('/api-key', verifyToken, getApiKey);
-router.post('/api-key/regenerate', verifyToken, regenerateApiKey);
+router.get('/api-key', verifyToken, requireRole('Admin', 'Analyst'), getApiKey);
+router.post('/api-key/regenerate', verifyToken, requireRole('Admin', 'Analyst'), regenerateApiKey);
 
 // Granular Role-Based Access Control (Admin Clearance Level 4)
 router.get('/', verifyToken, requireRole('Admin'), listUsers);
 router.post('/', verifyToken, requireRole('Admin'), provisionUserByAdmin);
-router.get('/audit-logs', verifyToken, requireRole('Admin'), getAuditLogs);
+router.get('/audit-logs', verifyToken, requireRole('Admin', 'Auditor'), getAuditLogs);
 router.put('/:id/role', verifyToken, requireRole('Admin'), updateUserRole);
 router.put('/:id/status', verifyToken, requireRole('Admin'), updateUserStatus);
 router.put('/:id/mfa-force', verifyToken, requireRole('Admin'), toggleUserMfa);

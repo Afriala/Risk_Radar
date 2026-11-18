@@ -9,7 +9,8 @@
     "mfaEnabled": true,
     "isActive": true,
     "createdAt": "2026-11-05T05:21:58.694Z",
-    "updatedAt": "2026-11-05T17:13:24.133Z"
+    "updatedAt": "2026-11-16T14:35:57.579Z",
+    "apiKey": "rr_live_soc_admin_q2nik0mwjd90cr"
   },
   {
     "id": "usr_analyst_01",
@@ -18,10 +19,12 @@
     "passwordHash": "$2a$10$6w7q.eu3F/lmjTS9uzyPXetn.i5JFGOpe1v1U8VlmEbRtdqg/zPMS",
     "role": "Analyst",
     "department": "SOC / Threat Intelligence",
-    "mfaEnabled": false,
+    "mfaEnabled": true,
     "isActive": true,
     "createdAt": "2026-11-05T05:21:58.695Z",
-    "updatedAt": "2026-11-08T12:24:30.369Z"
+    "updatedAt": "2026-11-18T17:02:58.895Z",
+    "status": "active",
+    "apiKey": "rr_live_soc_analyst_svrejcmwjc1teg"
   },
   {
     "id": "usr_exec_01",
@@ -32,7 +35,9 @@
     "department": "Executive Board",
     "mfaEnabled": true,
     "isActive": true,
-    "createdAt": "2026-11-05T05:21:58.695Z"
+    "createdAt": "2026-11-05T05:21:58.695Z",
+    "apiKey": "rr_live_soc_executive_fgnl7amwjd36x5",
+    "updatedAt": "2026-11-16T14:31:26.153Z"
   },
   {
     "id": "usr_auditor_01",
@@ -41,20 +46,23 @@
     "passwordHash": "$2a$10$SfmMIa0Ju10AshygYhBFguAF.thlbzP2FpfiSrVHOZ7JuTmH24sF2",
     "role": "Auditor",
     "department": "Compliance & Audit",
-    "mfaEnabled": false,
+    "mfaEnabled": true,
     "isActive": true,
-    "createdAt": "2026-11-05T05:21:58.695Z"
+    "createdAt": "2026-11-05T05:21:58.695Z",
+    "updatedAt": "2026-11-17T12:54:01.793Z",
+    "apiKey": "rr_live_soc_auditor_47l1i0mwkekne6"
   },
   {
     "id": "usr_1793856413719_zjix",
     "name": "Afri Alam (SecOps)",
     "email": "afri.sec@riskradar.io",
     "passwordHash": "$2a$10$Nxp633uP0RX5teavvjaPKOOsuY80wx4mFdWssxli2d.w8jsnSfW8e",
-    "role": "Analyst",
+    "role": "Executive",
     "department": "Threat Response",
-    "mfaEnabled": false,
+    "mfaEnabled": true,
     "isActive": true,
-    "createdAt": "2026-11-05T05:26:53.719Z"
+    "createdAt": "2026-11-05T05:26:53.719Z",
+    "updatedAt": "2026-11-17T10:42:43.825Z"
   },
   {
     "id": "usr_1793899204961_i9ml",
@@ -63,8 +71,9 @@
     "passwordHash": "$2a$10$bZG/xt2GU3/zy7Gny57FzOZ3rLquss6KcD3i4SjvTn4DQL/ZpxLzq",
     "role": "Analyst",
     "department": "Cyber Defense",
-    "mfaEnabled": false,
+    "mfaEnabled": true,
     "isActive": true,
-    "createdAt": "2026-11-05T17:20:04.961Z"
+    "createdAt": "2026-11-05T17:20:04.961Z",
+    "updatedAt": "2026-11-16T12:21:10.538Z"
   }
 ]
