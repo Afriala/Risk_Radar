@@ -12,6 +12,7 @@ import { assetApi } from '../api/asset.api';
 import { riskApi } from '../api/risk.api';
 import { reportApi } from '../api/report.api';
 import { exportRisksToCSV, exportAuditTrailToCSV, printExecutivePDFReport } from '../utils/reportExport';
+import { calculateRiskScore } from '../utils/riskScoring';
 import {
   Shield,
   Users,

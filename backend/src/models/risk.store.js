@@ -1,9 +1,11 @@
 // In-Memory & File-backed Risk Register Store
-// Module 3: Threat Intelligence & Lifecycle Workflow
+// Module 3: Threat Intelligence & Automated Risk Scoring Engine
+// Contributor: Mahabubur Rahman (Sakib) (ID: 232-35-706)
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { computeRiskScore } from '../services/riskScoring.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,11 +70,15 @@ export const RiskStore = {
   },
 
   create: (riskData) => {
-    const l = Number(riskData.likelihood) || 3;
-    const i = Number(riskData.impact) || 3;
-    const score = l * i;
-    const computedSeverity =
-      score >= 20 ? 'Critical' : score >= 12 ? 'High' : score >= 6 ? 'Medium' : 'Low';
+    const scored = computeRiskScore({
+      likelihood: riskData.likelihood,
+      impact: riskData.impact,
+      criticality: riskData.criticality,
+    });
+    const l = scored.likelihood;
+    const i = scored.impact;
+    const score = scored.score;
+    const computedSeverity = scored.severity;
 
     const nextNum = risksCache.length > 0
       ? Math.max(...risksCache.map((r) => parseInt(r.id.replace('RSK-2026-', ''), 10) || 100)) + 1
@@ -125,13 +131,14 @@ export const RiskStore = {
     if (index === -1) return null;
 
     if (updates.likelihood || updates.impact) {
-      const l = Number(updates.likelihood ?? risksCache[index].likelihood);
-      const i = Number(updates.impact ?? risksCache[index].impact);
-      updates.likelihood = l;
-      updates.impact = i;
-      updates.score = l * i;
-      updates.severity =
-        updates.score >= 20 ? 'Critical' : updates.score >= 12 ? 'High' : updates.score >= 6 ? 'Medium' : 'Low';
+      const scored = computeRiskScore({
+        likelihood: updates.likelihood ?? risksCache[index].likelihood,
+        impact: updates.impact ?? risksCache[index].impact,
+      });
+      updates.likelihood = scored.likelihood;
+      updates.impact = scored.impact;
+      updates.score = scored.score;
+      updates.severity = scored.severity;
     }
 
     risksCache[index] = {
