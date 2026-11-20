@@ -1,5 +1,6 @@
 // RiskRadar - Enterprise Cybersecurity Risk Governance Platform
-// Modular Sidebar Architecture & Executive Command Center
+// Module 3: Executive KPI Dashboard, 5x5 Heatmap Visualization & Report Export Engine
+// Contributor: Afri Alam Dipto (ID: 232-35-643)
 // Fully Connected Modules 1, 2, and 3 with Real-time State & Live Calculations
 // Roles: Admin, Analyst, Executive, Auditor
 
@@ -9,6 +10,8 @@ import { useAuth } from '../context/AuthContext';
 import { userApi } from '../api/user.api';
 import { assetApi } from '../api/asset.api';
 import { riskApi } from '../api/risk.api';
+import { reportApi } from '../api/report.api';
+import { exportRisksToCSV, exportAuditTrailToCSV, printExecutivePDFReport } from '../utils/reportExport';
 import {
   Shield,
   Users,
@@ -898,55 +901,23 @@ export default function Dashboard() {
     showFeedback(`Risk '${threatId}' removed from register.`, 'info');
   };
 
-  // Real CSV Export Functions
+  // Real CSV Export Functions (Module 3 - Feature 10: Afri Alam Dipto)
   const handleExportCSV = () => {
-    const headers = ['Risk ID', 'CVE', 'Title', 'Asset ID', 'Asset Name', 'Severity', 'Likelihood', 'Impact', 'Score', 'Status', 'Assignee', 'Date'];
-    const rows = threats.map((t) => [
-      t.id,
-      t.cve || '',
-      `"${(t.title || '').replace(/"/g, '""')}"`,
-      t.assetId || '',
-      `"${(t.assetName || '').replace(/"/g, '""')}"`,
-      t.severity,
-      t.likelihood,
-      t.impact,
-      t.score,
-      t.status,
-      `"${(t.assignee || 'Unassigned').replace(/"/g, '""')}"`,
-      t.date || '',
-    ]);
-
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `RiskRadar_Risk_Register_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showFeedback('Risk Register exported successfully to CSV!', 'success');
+    const success = exportRisksToCSV(threats);
+    if (success) {
+      showFeedback('Risk Register exported successfully to CSV!', 'success');
+    } else {
+      showFeedback('No risk records available to export.', 'warning');
+    }
   };
 
   const handleDownloadAuditCSV = () => {
-    const headers = ['Timestamp', 'Actor', 'Role', 'Event Type', 'Target', 'Details', 'Status'];
-    const rows = auditLogs.map((log) => [
-      `"${new Date(log.timestamp).toLocaleString()}"`,
-      `"${log.actor || 'Mahabubur Rahman (Admin)'}"`,
-      `"${log.role || ((log.actor || '').includes('Auditor') ? 'Auditor' : (log.actor || '').includes('Executive') ? 'Executive' : (log.actor || '').includes('Analyst') ? 'Analyst' : (log.actor || '').includes('Daemon') || (log.actor || '').includes('Guard') || (log.actor || '').includes('System') ? 'System' : 'Admin')}"`,
-      `"${log.action}"`,
-      `"${log.target || 'System'}"`,
-      `"${(log.details || '').replace(/"/g, '""')}"`,
-      '"Verified ✓"',
-    ]);
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `RiskRadar_Audit_Trail_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showFeedback('Security Audit Trail exported to CSV successfully!', 'success');
+    const success = exportAuditTrailToCSV(auditLogs);
+    if (success) {
+      showFeedback('Security Audit Trail exported to CSV successfully!', 'success');
+    } else {
+      showFeedback('No audit logs available to export.', 'warning');
+    }
   };
 
   // ==========================================

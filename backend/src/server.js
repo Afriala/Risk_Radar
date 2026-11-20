@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import assetRoutes from './routes/asset.routes.js';
 import riskRoutes from './routes/risk.routes.js';
+import reportRoutes from './routes/report.routes.js';
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/risks', riskRoutes);
+app.use('/api/reports', reportRoutes);
 
 // 404 Handler
 app.use((req, res) => {
