@@ -4,13 +4,22 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import assetRoutes from './routes/asset.routes.js';
 import riskRoutes from './routes/risk.routes.js';
 import reportRoutes from './routes/report.routes.js';
+import { connectDB, getDbStatus } from './config/db.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '../.env') });
 dotenv.config();
+
+// Connect to MongoDB Atlas (Graceful Hybrid Cloud / File-fallback)
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -41,7 +50,8 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     message: 'RiskRadar API is running',
-    version: '1.0.0 (Module 1: User Management & RBAC)',
+    version: '1.0.0 (Enterprise Cybersecurity Risk Governance Platform)',
+    database: getDbStatus(),
     timestamp: new Date().toISOString(),
   });
 });

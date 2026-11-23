@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { computeRiskScore } from '../services/riskScoring.service.js';
+import { RiskModel } from './mongodb/risk.schema.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -102,6 +103,7 @@ export const RiskStore = {
 
     risksCache = [newRisk, ...risksCache];
     saveRisks(risksCache);
+    RiskModel.findOneAndUpdate({ id: newRisk.id }, newRisk, { upsert: true }).catch(() => {});
     return newRisk;
   },
 
@@ -120,6 +122,7 @@ export const RiskStore = {
         updatedAt: new Date().toISOString(),
       };
       saveRisks(risksCache);
+      RiskModel.findOneAndUpdate({ id }, { status: nextStage, updatedAt: risksCache[index].updatedAt }).catch(() => {});
       return { risk: risksCache[index], previousStage: currentStage, newStage: nextStage };
     }
 
@@ -147,6 +150,7 @@ export const RiskStore = {
       updatedAt: new Date().toISOString(),
     };
     saveRisks(risksCache);
+    RiskModel.findOneAndUpdate({ id }, risksCache[index], { upsert: true }).catch(() => {});
     return risksCache[index];
   },
 
@@ -155,6 +159,7 @@ export const RiskStore = {
     if (!existing) return false;
     risksCache = risksCache.filter((r) => r.id !== id);
     saveRisks(risksCache);
+    RiskModel.deleteOne({ id }).catch(() => {});
     return true;
   },
 };

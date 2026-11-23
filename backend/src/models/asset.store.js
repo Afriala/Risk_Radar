@@ -4,6 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { AssetModel } from './mongodb/asset.schema.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -74,6 +75,7 @@ export const AssetStore = {
     };
     assetsCache = [newAsset, ...assetsCache];
     saveAssets(assetsCache);
+    AssetModel.findOneAndUpdate({ id: newAsset.id }, newAsset, { upsert: true }).catch(() => {});
     return newAsset;
   },
 
@@ -87,6 +89,7 @@ export const AssetStore = {
       updatedAt: new Date().toISOString(),
     };
     saveAssets(assetsCache);
+    AssetModel.findOneAndUpdate({ id }, assetsCache[index], { upsert: true }).catch(() => {});
     return assetsCache[index];
   },
 
@@ -95,6 +98,7 @@ export const AssetStore = {
     if (!existing) return false;
     assetsCache = assetsCache.filter((a) => a.id !== id);
     saveAssets(assetsCache);
+    AssetModel.deleteOne({ id }).catch(() => {});
     return true;
   },
 };
